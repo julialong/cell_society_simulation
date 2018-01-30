@@ -11,6 +11,9 @@ The goal is to create a 2D simulation of cells arranged in a grid. These cells h
 ### Overview 
 
 In our program, we plan to make several classes, including a Simulation, Cell Controller, Cell, and State class. The Simulation class will be responsible for the overall user interface and structure, and it will have methods that set up specific simulations. We will have a Cell Controller superclass for each set of rules. The Cell Controller class will extract information from the cells, apply rules, and inform the cells of what state to change to next. We will have Cell Controller subclasses for each set of rules. The Cell Controller will be responsible for all the cells in the simulation; it will let cells know what their next state should be and when they should update their states. The cell class will contain information about its current state, next state and its adjacent cells. It will pass this information to the Cell Controller, and receive information from the Cell Controller about when to change to the next state. The state class will hold a color value, which will represent various states (on, off, etc.). The color will likely be represented by an imageView.
+The design of our program is as follows. The methods given are the ones that are public and will allow the classes to interact with one another.
+![alt text](./design/design.png)
+
 
 ### User Interface
 
