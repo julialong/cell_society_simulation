@@ -17,8 +17,8 @@ The design of our program is as follows. The methods given are the ones that are
 
 ### User Interface
 
-The user interface will feature a main display where the user can see the starting grid. On this screen, the user can choose which simulation they would like to run, potentially by a drop down menu.. The user will also be able to choose the grid size of the simulation. There will be a “play” button that will start the simulation, a “pause” button that will allow the user to pause the simulation, a “skip” button that will move the simulation forward a specified amount of time, and a “stop” button that will stop the simulation and reset to the beginning. In addition, there will be labels that present statistics about the current simulation (ex. How many cells are on). When the simulation is finished, the programme will restart and the user can choose another simulation.
-
+The user interface will feature a main display where the user can see the starting grid. On this screen, the user can choose which simulation they would like to run, potentially by a drop down menu. The user will also be able to choose the grid size of the simulation. There will be a “play” button that will start the simulation, a “pause” button that will allow the user to pause the simulation, a “skip” button that will move the simulation forward a specified amount of time, and a “stop” button that will stop the simulation and reset to the beginning. In addition, there will be labels that present statistics about the current simulation (ex. How many cells are on). When the simulation is finished, the programme will restart and the user can choose another simulation.
+![alt text](./design/MockupCellSociety.png)
 ### Design Details
 
 Our design contains the classes: Simulator, CellController (Super class), Cell (Super Class) and State.
