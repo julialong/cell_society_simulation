@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<life>
+  <title>Conway&apos;s Game of Life</title>
+  <authors>
+    <name>Edward Zhuang</name>
+    <name>Julia Long</name>
+    <name>Jeffrey Li</name>
+  </authors>
+  <dimensions>
+    <xsize>50</xsize>
+    <ysize>50</ysize>
+  </dimensions>
+  <cell_on_list>
+    <cell>
+      <xcoord>30</xcoord>
+      <ycoord>30</ycoord>
+    </cell>
+    <cell>
+      <xcoord>40</xcoord>
+      <ycoord>40</ycoord>
+    </cell>
+  </cell_on_list>
+
+
+</life>
