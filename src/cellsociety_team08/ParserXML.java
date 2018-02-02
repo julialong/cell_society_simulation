@@ -5,7 +5,7 @@ import org.w3c.dom.*;
 import javax.xml.parsers.*;
 
 public class ParserXML {
-	Document doc;
+	private Document doc;
 	public ParserXML(String filename) {
 		try {
 		File input = new File(filename);
@@ -18,17 +18,27 @@ public class ParserXML {
 		doc.getDocumentElement().normalize();
 	}
 	
-	public void getCells() {
+	public int[][] getCellList() {
+		
 		NodeList cellList = doc.getElementsByTagName("cell");
+		int[][] onCells = new int[cellList.getLength()][];
+		
 		for (int x = 0; x < cellList.getLength(); x++) {
 			Node cellNode = cellList.item(x);
-			System.out.println(cellNode.getNodeName());
+			
 			Element eElement = (Element) cellNode;
-			System.out.println("x: " + eElement.getElementsByTagName("xcoord").item(0).getTextContent());
-			System.out.println("y: " + eElement.getElementsByTagName("ycoord").item(0).getTextContent());
+			
+			int xsize = Integer.parseInt(eElement.getElementsByTagName("xcoord").item(0).getTextContent());
+			int ysize = Integer.parseInt(eElement.getElementsByTagName("ycoord").item(0).getTextContent());			
+			
+			int[] tempCoordinate = {xsize, ysize};
+			onCells[x] = tempCoordinate;			
 			
 		}
+		
+		return onCells;
 	}
+	
 	
 	public String getSimulationType() {
 		return doc.getDocumentElement().getNodeName();
@@ -45,9 +55,8 @@ public class ParserXML {
 			
 			System.out.println("Dimensions: " + xsize + " wide by " + ysize + " tall");
 			
-			int[] dim = new int[2];
-			dim[0] = xsize;
-			dim[1] = ysize;
+			int[] dim = {xsize, ysize};
+	
 			return dim;
 	
 	}
