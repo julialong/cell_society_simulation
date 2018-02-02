@@ -23,7 +23,7 @@ public class Cell {
 	}
 
 	public void updateState() {
-		currentState = nextState;
+		currentState = nextState; //Merge Test 1232345
 	}
 
 	public ArrayList<String> getNeighbourStates() {
