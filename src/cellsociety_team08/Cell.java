@@ -30,6 +30,14 @@ public class Cell {
 		currentState = nextState; //Merge Test 1232345
 	}
 	
+	public void setNextState(State state) {
+		nextState = state;
+	}
+	
+	public State getState() {
+		return currentState;
+	}
+	
 	//  passes array neighbor cells with specific order
 	//  0 1 2
 	//  3 x 4
@@ -40,6 +48,14 @@ public class Cell {
 			neighbors = inputNeighbors;
 	}
 
+	public String[] getNeighborStateNames() {
+		String[] neighborStateNames = new String[8];
+		for (int x = 0; x < neighborStateNames.length; x++) {
+			if (neighbors[x] != null) neighborStateNames[x] = neighbors[x].getState().getStateName();
+		}
+		return neighborStateNames;
+	}
+	
 //	public ArrayList<String> getNeighbourStates() {
 //		ArrayList<String> neighbours = new ArrayList<String>();
 //		neighbours.add(left.currentState.getState());

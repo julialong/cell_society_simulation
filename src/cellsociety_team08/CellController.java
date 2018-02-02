@@ -2,7 +2,7 @@ package cellsociety_team08;
 
 public class CellController {
 
-	private Cell[][] cellGrid;
+	public Cell[][] cellGrid;
 	
 	
 	/**
@@ -31,6 +31,8 @@ public class CellController {
 			cellGrid[xCoord][yCoord] = new Cell(tempState);
 			
 		}			
+		
+		includeNeighbors();
 		
 	}
 	
@@ -73,7 +75,13 @@ public class CellController {
 		return cellGrid[x][y];
 	}
 	
+	public void setNextStates() {
+		
+	}
 	
+	public void updateCells() {
+		
+	}
 	
 	
 }

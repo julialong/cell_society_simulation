@@ -7,17 +7,33 @@
     <name>Jeffrey Li</name>
   </authors>
   <dimensions>
-    <xsize>50</xsize>
-    <ysize>50</ysize>
+    <xsize>6</xsize>
+    <ysize>6</ysize>
   </dimensions>
   <cell_on_list>
     <cell>
-      <xcoord>30</xcoord>
-      <ycoord>30</ycoord>
+      <ycoord>2</ycoord>
+      <xcoord>2</xcoord>
     </cell>
     <cell>
-      <xcoord>40</xcoord>
-      <ycoord>40</ycoord>
+      <ycoord>2</ycoord>
+      <xcoord>3</xcoord>
+    </cell>
+    <cell>
+      <ycoord>2</ycoord>
+      <xcoord>4</xcoord>
+    </cell>
+    <cell>
+      <ycoord>3</ycoord>
+      <xcoord>1</xcoord>
+    </cell>
+    <cell>
+      <ycoord>3</ycoord>
+      <xcoord>2</xcoord>
+    </cell>
+    <cell>
+      <ycoord>3</ycoord>
+      <xcoord>3</xcoord>
     </cell>
   </cell_on_list>
 
