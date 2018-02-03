@@ -6,9 +6,13 @@ public class State {
 	ImageView image;
 	String stateName;
 	
-	public State(String name, ImageView imageview) {
+	public State(String name) {
 		stateName = name;
-		image = imageview;
+//		image = imageview;
+	}
+	
+	public String getStateName() {
+		return stateName;
 	}
 	
 	public void changeState(String name, ImageView imageview) {
