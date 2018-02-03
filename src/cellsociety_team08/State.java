@@ -1,23 +1,31 @@
 package cellsociety_team08;
 
-import javafx.scene.image.ImageView;
+import java.awt.Color;
 
 public class State {
-	ImageView image;
-	String stateName;
+	private Color colour;
+	private String stateName;
 	
 	public State(String name) {
 		stateName = name;
-//		image = imageview;
 	}
 	
 	public String getStateName() {
 		return stateName;
 	}
 	
-	public void changeState(String name, ImageView imageview) {
+	public void changeState(String name) {
 		stateName = name;
-		image = imageview;
+		if (stateName.equals("on")){
+			colour = Color.BLACK;
+		}
+		else {
+			colour = Color.WHITE;
+		}
+	}
+	
+	public Color getColor() {
+		return colour;
 	}
 	
 	public String getState() {
