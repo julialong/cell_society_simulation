@@ -17,8 +17,8 @@ import javafx.util.Duration;
 public class Simulator {
 	public static final String NAME = "Cell Society";
 	private Scene startScene;
-	private final int XSIZE = 1000;
-	private final int YSIZE = 1000;
+	private final int XSIZE = 800;
+	private final int YSIZE = 800;
 	private static final int FRAMES_PER_SECOND = 40;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -76,9 +76,6 @@ public class Simulator {
 	}
 
 	private void setupGrid(Group root) {
-		System.out.println(dimensions[0]);
-		System.out.println(XSIZE);
-		System.out.println(XSIZE/dimensions[0]);
 		gridWidth = XSIZE/dimensions[0];
 		gridHeight = YSIZE/dimensions[1];
 		updateGridColors(root);
