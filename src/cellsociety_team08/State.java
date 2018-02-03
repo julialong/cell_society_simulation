@@ -11,6 +11,10 @@ public class State {
 //		image = imageview;
 	}
 	
+	public String getStateName() {
+		return stateName;
+	}
+	
 	public void changeState(String name, ImageView imageview) {
 		stateName = name;
 		image = imageview;

@@ -28,8 +28,8 @@ public class ParserXML {
 			
 			Element eElement = (Element) cellNode;
 			
-			int xsize = Integer.parseInt(eElement.getElementsByTagName("xcoord").item(0).getTextContent());
-			int ysize = Integer.parseInt(eElement.getElementsByTagName("ycoord").item(0).getTextContent());			
+			int xsize = Integer.parseInt(eElement.getElementsByTagName("ycoord").item(0).getTextContent());
+			int ysize = Integer.parseInt(eElement.getElementsByTagName("xcoord").item(0).getTextContent());			
 			
 			int[] tempCoordinate = {xsize, ysize};
 			onCells[x] = tempCoordinate;			
