@@ -1,8 +1,12 @@
 package cellsociety_team08;
 
-public class CellController {
+import java.awt.Color;
+
+public abstract class CellController {
 
 	public Cell[][] cellGrid;
+	public int xSize;
+	public int ySize;
 	
 	
 	/**
@@ -11,29 +15,10 @@ public class CellController {
 	 * @param cellsOn contains a list of cells which should be on (default cell config is off)
 	 */
 	public CellController(int[] dimensions, int[][] cellsOn) {
-		int xCells = dimensions[0];
-		int yCells = dimensions[1];
+		xSize = dimensions[0];
+		ySize = dimensions[1];
 		
-		cellGrid = new Cell[xCells][yCells];
-		
-		for (int x = 0; x < xCells; x++) {
-			for (int y = 0; y < yCells; y++) {
-			State tempState = new State("off");
-			Cell tempCell = new	Cell(tempState);
-			cellGrid[x][y] = tempCell;					
-			}
-		}
-		
-		for (int z = 0; z < cellsOn.length; z++) {			
-			int xCoord = cellsOn[z][0];
-			int yCoord = cellsOn[z][1];
-			State tempState = new State("on");
-			cellGrid[xCoord][yCoord] = new Cell(tempState);
-			
-		}			
-		
-		includeNeighbors();
-		
+		cellGrid = new Cell[xSize][ySize];
 	}
 	
 	/**
@@ -43,9 +28,9 @@ public class CellController {
 	 *  3   4 
 	 *  5 6 7 
 	 */
-	public void includeNeighbors() {
-		for (int x = 0; x < cellGrid.length; x++) {
-			for (int y = 0; y < cellGrid[x].length; y++) {
+	public void initializeNeighbors() {
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
 
 				Cell[] tempArray = new Cell[8];
 				tempArray[0] = retrieveCell(x-1, y-1);
@@ -57,7 +42,6 @@ public class CellController {
 				tempArray[6] = retrieveCell(x+1, y);
 				tempArray[7] = retrieveCell(x+1, y+1);		
 				cellGrid[x][y].addNeighbors(tempArray);
-				
 			}
 		}
 	}
@@ -75,13 +59,24 @@ public class CellController {
 		return cellGrid[x][y];
 	}
 	
-	public void setNextStates() {
-		
-	}
+	public abstract void setNextStates();
 	
 	public void updateCells() {
-		
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				cellGrid[x][y].updateState();
+			}
+		}
 	}
 	
+	public Color[][] getColors(){
+		Color[][] colors = new Color[xSize][ySize];
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				colors[x][y] = retrieveCell(x,y).getColor();
+			}
+		}
+		return colors;
+	}
 	
 }

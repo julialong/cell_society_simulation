@@ -1,18 +1,11 @@
 package cellsociety_team08;
 
-import java.util.ArrayList;
+import java.awt.Color;
 
 public class Cell {
-	State currentState;
-	State nextState;
-//	Cell left;
-//	Cell right;
-//	Cell top;
-//	Cell bottom;
-//	Cell topLeft;
-//	Cell topRight;
-//	Cell bottomLeft;
-//	Cell bottomRight;
+	String currentState;
+	String nextState;
+	Color colour;
 	
 	Cell[] neighbors; 
 	 
@@ -22,27 +15,34 @@ public class Cell {
 	//  5 6 7
 	
 
-	public Cell(State state) {
+	public Cell(String state) {
 		currentState = state;
 	}
 
 	public void updateState() {
-		currentState = nextState; //Merge Test 1232345
+		currentState = nextState; 
 	}
 	
-	public void setNextState(State state) {
+	public void setNextState(String state) {
 		nextState = state;
 	}
 	
-	public State getState() {
+	public void setState(Color newColour) {
+		colour = newColour;
+	}
+	
+	public String getState() {
 		return currentState;
+	}
+	
+	public Color getColor() {
+		return colour;
 	}
 	
 	//  passes array neighbor cells with specific order
 	//  0 1 2
 	//  3 x 4
 	//  5 6 7
-
 	
 	public void addNeighbors(Cell[] inputNeighbors) {		
 			neighbors = inputNeighbors;
@@ -51,18 +51,10 @@ public class Cell {
 	public String[] getNeighborStateNames() {
 		String[] neighborStateNames = new String[8];
 		for (int x = 0; x < neighborStateNames.length; x++) {
-			if (neighbors[x] != null) neighborStateNames[x] = neighbors[x].getState().getStateName();
+			if (neighbors[x] != null) neighborStateNames[x] = neighbors[x].currentState;
 		}
 		return neighborStateNames;
 	}
 	
-//	public ArrayList<String> getNeighbourStates() {
-//		ArrayList<String> neighbours = new ArrayList<String>();
-//		neighbours.add(left.currentState.getState());
-//		neighbours.add(top.currentState.getState());
-//		neighbours.add(bottom.currentState.getState());
-//		neighbours.add(right.currentState.getState());
-//		return neighbours;
-//	}
 
 }
