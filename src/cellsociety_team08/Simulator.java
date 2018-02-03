@@ -1,5 +1,4 @@
 package cellsociety_team08;
-import java.awt.*;
 import java.util.Arrays;
 
 import javafx.animation.KeyFrame;
@@ -15,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.util.Duration;
 
-public class Simulator extends Application {
+public class Simulator {
 	public static final String NAME = "Cell Society";
 	private Scene startScene;
 	private final int XSIZE = 1000;
@@ -29,15 +28,14 @@ public class Simulator extends Application {
 	private int[][] cellTypes;
 	private CellController control;
 
-	private Group root = new Group();
+//	private Group root = new Group();
 	private Timeline animation;
 	private KeyFrame frame;
 
-	@Override
-	public void start(Stage stage) {
-		stage.setTitle(NAME);
-		startScene = new Scene(root, XSIZE, YSIZE);
-		stage.setScene(startScene);
+	public void startSimulation(Stage stage, Group root) {
+//		stage.setTitle(NAME);
+//		startScene = new Scene(root, XSIZE, YSIZE);
+//		stage.setScene(startScene);
 		ParserXML parser = new ParserXML("life.xml");
 		dimensions = parser.getDimensions();
 		cellTypes = parser.getCellList();
@@ -49,23 +47,23 @@ public class Simulator extends Application {
 		}
 
 		setupCellController();
-		setupGrid();
+		setupGrid(root);
 
 		root.getChildren().add(gridPane);
 
 		stage.show();
 
-		startAnimation();
+		startAnimation(root);
 	}
 
-	private void step() {
+	private void step(Group root) {
 		control.setNextStates();
 		control.updateCells();
-		updateGridColors();
+		updateGridColors(root);
 	}
 
-	private void startAnimation() {
-		frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
+	private void startAnimation(Group root) {
+		frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(root));
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
@@ -77,19 +75,19 @@ public class Simulator extends Application {
 		control = new LifeCellController(dimensions,cellTypes);
 	}
 
-	private void setupGrid() {
+	private void setupGrid(Group root) {
 		System.out.println(dimensions[0]);
 		System.out.println(XSIZE);
 		System.out.println(XSIZE/dimensions[0]);
 		gridWidth = XSIZE/dimensions[0];
 		gridHeight = YSIZE/dimensions[1];
-		updateGridColors();
+		updateGridColors(root);
 	}
 
-	private void updateGridColors() {
+	private void updateGridColors(Group root) {
 		Color[][] newColors = control.getColors();
-		for (int i = 0; i < dimensions[0]; i++){
-			for (int j = 0; j < dimensions[1]; j++){
+		for (int i = 0; i < dimensions[0]; i++) {
+			for (int j = 0; j < dimensions[1]; j++) {
 				Rectangle currentCell = new Rectangle(i * gridWidth, j * gridHeight, gridWidth, gridHeight);
 				currentCell.setFill(newColors[i][j]);
 				currentCell.setStroke(Color.DARKGREY);
@@ -97,11 +95,5 @@ public class Simulator extends Application {
 				root.getChildren().add(currentCell);
 			}
 		}
-	}
-
-	public static void main (String[] args) {
-		launch(args);
-		ParserXML parser = new ParserXML("life.xml");
-		System.out.println(Arrays.toString(parser.getDimensions()));
 	}
 }
