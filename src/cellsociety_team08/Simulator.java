@@ -28,7 +28,10 @@ public class Simulator extends Application {
 	private int gridHeight;
 	private int[][] cellTypes;
 	private CellController control;
+
 	private Group root = new Group();
+	private Timeline animation;
+	private KeyFrame frame;
 
 	@Override
 	public void start(Stage stage) {
@@ -51,17 +54,19 @@ public class Simulator extends Application {
 		root.getChildren().add(gridPane);
 
 		stage.show();
+
+		startAnimation();
 	}
 
-	private void step(double elapsedTime) {
+	private void step() {
 		control.setNextStates();
 		control.updateCells();
 		updateGridColors();
 	}
 
 	private void startAnimation() {
-		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
-		Timeline animation = new Timeline();
+		frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
+		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
 		animation.setDelay(Duration.seconds(2));
@@ -69,12 +74,10 @@ public class Simulator extends Application {
 	}
 
 	private void setupCellController() {
-		control = new CellController(dimensions,cellTypes);
+		control = new LifeCellController(dimensions,cellTypes);
 	}
 
 	private void setupGrid() {
-		int x = 0;
-		int y = 0;
 		System.out.println(dimensions[0]);
 		System.out.println(XSIZE);
 		System.out.println(XSIZE/dimensions[0]);
@@ -84,12 +87,12 @@ public class Simulator extends Application {
 	}
 
 	private void updateGridColors() {
+		Color[][] newColors = control.getColors();
 		for (int i = 0; i < dimensions[0]; i++){
 			for (int j = 0; j < dimensions[1]; j++){
 				Rectangle currentCell = new Rectangle(i * gridWidth, j * gridHeight, gridWidth, gridHeight);
-				// TODO: change color to color of cells
-				currentCell.setFill(Color.BLACK);
-				currentCell.setStroke(Color.WHITE);
+				currentCell.setFill(newColors[i][j]);
+				currentCell.setStroke(Color.DARKGREY);
 				currentCell.setStrokeType(StrokeType.INSIDE);
 				root.getChildren().add(currentCell);
 			}

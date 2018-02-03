@@ -1,6 +1,6 @@
 package cellsociety_team08;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 
 public class Cell {
 	String currentState;
