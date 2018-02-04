@@ -17,6 +17,7 @@ public class Cell {
 
 	public Cell(String state) {
 		currentState = state;
+		nextState = state;
 	}
 
 	public void updateState() {

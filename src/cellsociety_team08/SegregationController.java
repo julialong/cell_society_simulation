@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
 
-public class SegregationSimulator extends CellController {
+public class SegregationController extends CellController {
 	private float threshold;
 
-	public SegregationSimulator(int[] dimensions, int[][] cellsX, int[][] cellsO, float thresholdValue) {
+	public SegregationController(int[] dimensions, int[][] cellsX, int[][] cellsO, float thresholdValue) {
 		super(dimensions);
 		threshold = thresholdValue;
 		for (int x = 0; x < cellsX.length; x++) {
@@ -36,6 +36,7 @@ public class SegregationSimulator extends CellController {
 				Cell toSet = retrieveCell(x, y);
 				String toSetType = toSet.getState();
 				
+				// deal with x and o
 				if (!toSetType.equals("default")) {
 					float same = 0;
 					float diff = 0;
@@ -59,6 +60,8 @@ public class SegregationSimulator extends CellController {
 						toSet.setNextState(toSetType);
 					}
 				}
+				
+				// deal with default
 				else if (toSetType.equals("default")) {
 					if (movers.size()!=0) {
 						String race = movers.remove(0);
