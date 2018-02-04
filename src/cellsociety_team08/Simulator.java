@@ -28,14 +28,14 @@ public class Simulator {
 	private int[][] cellTypes;
 	private CellController control;
 
-//	private Group root = new Group();
+	private Boolean simulationState = false;
+	private Boolean simulationStarted = false;
+	private int stepTime;
+
 	private Timeline animation;
 	private KeyFrame frame;
 
 	public void startSimulation(Stage stage, Group root) {
-//		stage.setTitle(NAME);
-//		startScene = new Scene(root, XSIZE, YSIZE);
-//		stage.setScene(startScene);
 		ParserXML parser = new ParserXML("life.xml");
 		dimensions = parser.getDimensions();
 		cellTypes = parser.getCellList();
@@ -45,6 +45,8 @@ public class Simulator {
 			RowConstraints row = new RowConstraints(30);
 			gridPane.getRowConstraints().add(row);
 		}
+
+		stepTime = 3;
 
 		setupCellController();
 		setupGrid(root);
@@ -57,6 +59,7 @@ public class Simulator {
 	}
 
 	private void step(Group root) {
+		if (!simulationState) return;
 		control.setNextStates();
 		control.updateCells();
 		updateGridColors(root);
@@ -67,7 +70,7 @@ public class Simulator {
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
-		animation.setDelay(Duration.seconds(2));
+		animation.setDelay(Duration.seconds(stepTime));
 		animation.play();
 	}
 
@@ -92,5 +95,21 @@ public class Simulator {
 				root.getChildren().add(currentCell);
 			}
 		}
+	}
+
+	public void turnOn(){
+		this.simulationState = true;
+	}
+
+	public void turnOff() {
+		this.simulationState = false;
+	}
+
+	public void speedUp() {
+		this.stepTime += 2;
+	}
+
+	public void speedDown() {
+		this.stepTime -= 2;
 	}
 }
