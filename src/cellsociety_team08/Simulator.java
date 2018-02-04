@@ -46,7 +46,7 @@ public class Simulator {
 			gridPane.getRowConstraints().add(row);
 		}
 
-		stepTime = 3;
+		stepTime = 10;
 
 		setupCellController();
 		setupGrid(root);
@@ -63,6 +63,7 @@ public class Simulator {
 		control.setNextStates();
 		control.updateCells();
 		updateGridColors(root);
+		
 	}
 
 	private void startAnimation(Group root) {
