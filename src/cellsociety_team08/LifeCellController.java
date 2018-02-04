@@ -1,6 +1,6 @@
 package cellsociety_team08;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 
 public class LifeCellController extends CellController {
 	public LifeCellController(int[] dimensions, int[][] cellsOn) {
@@ -82,16 +82,16 @@ public class LifeCellController extends CellController {
 		System.out.println("");
 	}
 
-	public static void main(String[] args) {
-		ParserXML parser = new ParserXML("life.xml");
-		LifeCellController lifeCellController = new LifeCellController(parser.getDimensions(), parser.getCellList());
-		lifeCellController.printCells();
-		lifeCellController.setNextStates();
-		lifeCellController.updateCells();
-		lifeCellController.printCells();
-		lifeCellController.setNextStates();
-		lifeCellController.updateCells();
-		lifeCellController.printCells();
-	}
+//	public static void main(String[] args) {
+//		ParserXML parser = new ParserXML("life.xml");
+//		LifeCellController lifeCellController = new LifeCellController(parser.getDimensions(), parser.getCellList());
+//		lifeCellController.printCells();
+//		lifeCellController.setNextStates();
+//		lifeCellController.updateCells();
+//		lifeCellController.printCells();
+//		lifeCellController.setNextStates();
+//		lifeCellController.updateCells();
+//		lifeCellController.printCells();
+//	}
 
 }
