@@ -14,11 +14,18 @@ public abstract class CellController {
 	 * @param dimensions the dimensions of the cellGrid
 	 * @param cellsOn contains a list of cells which should be on (default cell config is off)
 	 */
-	public CellController(int[] dimensions, int[][] cellsOn) {
+	public CellController(int[] dimensions) {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
 		
 		cellGrid = new Cell[xSize][ySize];
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+			Cell tempCell = new	Cell("default");
+			cellGrid[x][y] = tempCell;	
+			tempCell.setState(Color.WHITE);
+			}
+		}
 	}
 	
 	/**

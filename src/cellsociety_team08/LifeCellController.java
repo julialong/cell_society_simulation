@@ -4,14 +4,7 @@ import javafx.scene.paint.Color;
 
 public class LifeCellController extends CellController {
 	public LifeCellController(int[] dimensions, int[][] cellsOn) {
-		super(dimensions, cellsOn);
-		for (int x = 0; x < xSize; x++) {
-			for (int y = 0; y < ySize; y++) {
-			Cell tempCell = new	Cell("off");
-			cellGrid[x][y] = tempCell;	
-			tempCell.setState(Color.WHITE);
-			}
-		}
+		super(dimensions);
 		
 		for (int z = 0; z < cellsOn.length; z++) {			
 			int xCoord = cellsOn[z][0];
@@ -42,31 +35,26 @@ public class LifeCellController extends CellController {
 
 						if (toSet.getState().equals("on")) {
 							if (numberOn < 2 || numberOn > 3) {
-								toSet.nextState = "off"; // if cell is on and has either <2 or >3
+								toSet.setNextStateDefault();; // if cell is on and has either <2 or >3
 																				// neighbors, then turn next state off
 							}
 							else {
 								
-								toSet.nextState = "on";
+								toSet.setNextState("on");
 							}
 						} else {
 							if (numberOn == 3) {
-								toSet.nextState = "on"; // if cell is off, and 3 cells around are on																	// on,
+								toSet.setNextState("on");; // if cell is off, and 3 cells around are on																	// on,
 																			// then turn next state on
 							}
 							else {
 								    // otherwise keep next state off
-								toSet.nextState = "off";
+								toSet.setNextStateDefault();;
 							}
 						}
-						if (toSet.nextState.equals("on")) {
+						if (toSet.getNextState().equals("on")) {
 							toSet.setState(Color.BLACK);
 						}
-						else {
-							toSet.setState((Color.WHITE));
-						}
-						
-					
 				}
 			}
 		}
@@ -82,16 +70,16 @@ public class LifeCellController extends CellController {
 		System.out.println("");
 	}
 
-//	public static void main(String[] args) {
-//		ParserXML parser = new ParserXML("life.xml");
-//		LifeCellController lifeCellController = new LifeCellController(parser.getDimensions(), parser.getCellList());
-//		lifeCellController.printCells();
-//		lifeCellController.setNextStates();
-//		lifeCellController.updateCells();
-//		lifeCellController.printCells();
-//		lifeCellController.setNextStates();
-//		lifeCellController.updateCells();
-//		lifeCellController.printCells();
-//	}
+	public static void main(String[] args) {
+		ParserXML parser = new ParserXML("life.xml");
+		LifeCellController lifeCellController = new LifeCellController(parser.getDimensions(), parser.getCellList());
+		lifeCellController.printCells();
+		lifeCellController.setNextStates();
+		lifeCellController.updateCells();
+		lifeCellController.printCells();
+		lifeCellController.setNextStates();
+		lifeCellController.updateCells();
+		lifeCellController.printCells();
+	}
 
 }
