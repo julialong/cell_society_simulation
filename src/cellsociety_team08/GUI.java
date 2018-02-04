@@ -68,7 +68,7 @@ public class GUI extends Application{
     private void addPlayButton() {
         playButton = new ToggleButton("Play");
         playButton.setLayoutX(20);
-        playButton.setLayoutY(YSIZE - 50);
+        playButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(playButton);
         playButton.setOnAction((ActionEvent event) ->  sim.turnOn());
     }
@@ -76,7 +76,7 @@ public class GUI extends Application{
     private void addPauseButton() {
         pauseButton = new ToggleButton("Pause");
         pauseButton.setLayoutX(playButton.getLayoutX() + 50);
-        pauseButton.setLayoutY(YSIZE - 50);
+        pauseButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(pauseButton);
         pauseButton.setOnAction((ActionEvent event) ->  sim.turnOff());
     }
@@ -84,7 +84,7 @@ public class GUI extends Application{
     private void addFasterButton() {
         fasterButton = new Button("Increase speed");
         fasterButton.setLayoutX(pauseButton.getLayoutX() + 60);
-        fasterButton.setLayoutY(YSIZE - 50);
+        fasterButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(fasterButton);
         fasterButton.setOnAction((ActionEvent event) ->  sim.speedUp());
     }
@@ -92,7 +92,7 @@ public class GUI extends Application{
     private void addSlowerButton() {
         slowerButton = new Button("Decrease speed");
         slowerButton.setLayoutX(fasterButton.getLayoutX() + 120);
-        slowerButton.setLayoutY(YSIZE - 50);
+        slowerButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(slowerButton);
         slowerButton.setOnAction((ActionEvent event) ->  sim.speedDown());
     }
@@ -100,7 +100,7 @@ public class GUI extends Application{
     private void addFileButton(Stage stage) {
         fileButton = new Button("Upload configuration");
         fileButton.setLayoutX(slowerButton.getLayoutX() + 140);
-        fileButton.setLayoutY(YSIZE - 50);
+        fileButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(fileButton);
         fileButton.setOnAction((ActionEvent event) ->  openFileChooser(stage));
     }
