@@ -1,4 +1,5 @@
 package cellsociety_team08;
+import java.io.File;
 import java.util.Arrays;
 
 import javafx.animation.KeyFrame;
@@ -36,9 +37,7 @@ public class Simulator {
 	private KeyFrame frame;
 
 	public void startSimulation(Stage stage, Group root) {
-		ParserXML parser = new ParserXML("life.xml");
-		dimensions = parser.getDimensions();
-		cellTypes = parser.getCellList();
+
 
 		GridPane gridPane = new GridPane();
 		for (int x = 0; x < dimensions[0]; x++) {
@@ -96,6 +95,16 @@ public class Simulator {
 				root.getChildren().add(currentCell);
 			}
 		}
+	}
+
+	public void manualStep(Group root) {
+		this.step(root);
+	}
+
+	public void setFile(File file){
+		ParserXML parser = new ParserXML(file);
+		dimensions = parser.getDimensions();
+		cellTypes = parser.getCellList();
 	}
 
 	public void turnOn(){

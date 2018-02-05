@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ResourceBundle;
 
 public class GUI extends Application{
 
@@ -24,9 +25,12 @@ public class GUI extends Application{
 
     private ToggleButton playButton;
     private ToggleButton pauseButton;
+    private Button stepButton;
     private Button fasterButton;
     private Button slowerButton;
     private Button fileButton;
+
+    private ResourceBundle myResources;
 
     private FileChooser fileChooser = new FileChooser();
     private File configFile;
@@ -42,24 +46,22 @@ public class GUI extends Application{
 
         sim = new Simulator();
 
-        // I am trying to place a rectangle on the screen to improve the visuals with the
-        // buttons, but this causes nothing to show up
-        Rectangle settingsBar = new Rectangle(0,YSIZE - YBAR,XSIZE,YBAR);
+        Rectangle settingsBar = new Rectangle(0,YSIZE,XSIZE,YBAR);
         settingsBar.setFill(Color.LIGHTGRAY);
         root.getChildren().add(settingsBar);
 
-        // I am having trouble with this -- The steps of the simulation are overriding
-        // the buttons for the GUI once the simulation begins
+        File start = new File("startfile.xml");
+        sim.setFile(start);
+
         sim.startSimulation(stage, root);
 
         addButtons(stage);
-
-
     }
 
     private void addButtons(Stage stage) {
         addPlayButton();
         addPauseButton();
+        addStepButton();
         addFasterButton();
         addSlowerButton();
         addFileButton(stage);
@@ -81,9 +83,17 @@ public class GUI extends Application{
         pauseButton.setOnAction((ActionEvent event) ->  sim.turnOff());
     }
 
+    private void addStepButton() {
+        stepButton = new Button("Step");
+        stepButton.setLayoutX(pauseButton.getLayoutX() + 50);
+        stepButton.setLayoutY(YSIZE + 10);
+        root.getChildren().add(stepButton);
+        stepButton.setOnAction((ActionEvent event) ->  sim.manualStep(root));
+    }
+
     private void addFasterButton() {
         fasterButton = new Button("Increase speed");
-        fasterButton.setLayoutX(pauseButton.getLayoutX() + 60);
+        fasterButton.setLayoutX(stepButton.getLayoutX() + 60);
         fasterButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(fasterButton);
         fasterButton.setOnAction((ActionEvent event) ->  sim.speedUp());
@@ -102,13 +112,28 @@ public class GUI extends Application{
         fileButton.setLayoutX(slowerButton.getLayoutX() + 140);
         fileButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(fileButton);
-        fileButton.setOnAction((ActionEvent event) ->  openFileChooser(stage));
+        fileButton.setOnAction((ActionEvent event) -> changeFile(stage));
     }
 
+    /**
+     * Opens the file chooser for the user to choose a new file and starts the new
+     * simulation
+     * @param stage is the window currently showing the simulation
+     */
+    private void changeFile(Stage stage) {
+        openFileChooser(stage);
+        sim.startSimulation(stage, root);
+    }
+
+    /**
+     * Opens a file chooser window for the user to select their configuration
+     * XML file
+     * @param stage is the window currently showing the simulation
+     */
     private void openFileChooser(Stage stage) {
         configFile = fileChooser.showOpenDialog(stage);
         if (configFile != null) {
-            // TODO: read file
+            sim.setFile(configFile);
         }
     }
 
