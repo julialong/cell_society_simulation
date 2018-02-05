@@ -1,4 +1,5 @@
 package cellsociety_team08;
+import java.io.File;
 import java.util.Arrays;
 
 import javafx.animation.KeyFrame;
@@ -17,8 +18,9 @@ import javafx.util.Duration;
 public class Simulator {
 	public static final String NAME = "Cell Society";
 	private Scene startScene;
-	private final int XSIZE = 800;
-	private final int YSIZE = 800;
+	private final int XSIZE = GUI.XSIZE;
+	private final int YSIZE = GUI.YSIZE;
+	private final int XBAR = GUI.XBAR;
 	private static final int FRAMES_PER_SECOND = 40;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -36,9 +38,7 @@ public class Simulator {
 	private KeyFrame frame;
 
 	public void startSimulation(Stage stage, Group root) {
-		ParserXML parser = new ParserXML("life.xml");
-		dimensions = parser.getDimensions();
-		cellTypes = parser.getCellList();
+
 
 		GridPane gridPane = new GridPane();
 		for (int x = 0; x < dimensions[0]; x++) {
@@ -89,13 +89,23 @@ public class Simulator {
 		Color[][] newColors = control.getColors();
 		for (int i = 0; i < dimensions[0]; i++) {
 			for (int j = 0; j < dimensions[1]; j++) {
-				Rectangle currentCell = new Rectangle(i * gridWidth, j * gridHeight, gridWidth, gridHeight);
+				Rectangle currentCell = new Rectangle(XBAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight);
 				currentCell.setFill(newColors[i][j]);
 				currentCell.setStroke(Color.DARKGREY);
 				currentCell.setStrokeType(StrokeType.INSIDE);
 				root.getChildren().add(currentCell);
 			}
 		}
+	}
+
+	public void manualStep(Group root) {
+		this.step(root);
+	}
+
+	public void setFile(File file){
+		ParserXML parser = new ParserXML(file);
+		dimensions = parser.getDimensions();
+		cellTypes = parser.getCellList();
 	}
 
 	public void turnOn(){

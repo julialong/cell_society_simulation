@@ -6,12 +6,12 @@ import javax.xml.parsers.*;
 
 public class ParserXML {
 	private Document doc;
-	public ParserXML(String filename) {
+	public ParserXML(File file) {
 		try {
-		File input = new File(filename);
+		//File input = new File(filename);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); // https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		doc = dBuilder.parse(input);
+		doc = dBuilder.parse(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
