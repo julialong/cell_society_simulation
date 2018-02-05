@@ -1,7 +1,8 @@
-package cellsociety_team08;
+package cell_controllers;
 
 import java.util.ArrayList;
 
+import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
 
 public class SegregationController extends CellController {

@@ -1,21 +1,22 @@
-package cellsociety_team08;
+package cell_controllers;
 
+import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
 
 public class FireController extends CellController {
 
-	float catchProbability;
+	double catchProbability;
 
-	public FireController(int[] dimensions, int[][] cellsOnFire, float probability) {
+	public FireController(int[] dimensions, int[][] cellsOnFire, int[][] cellsTree, double probability) {
 		super(dimensions);
 		catchProbability = probability;
-		for (int x = 0; x < xSize; x++) {
-			for (int y = 0; y < ySize; y++) {
-				Cell tempCell = new Cell("tree");
-				cellGrid[x][y] = tempCell;
-				tempCell.setState(Color.GREEN);
-			}
+		for (int i = 0; i < cellsTree.length; i++) {
+			int xCoord = cellsOnFire[i][0];
+			int yCoord = cellsOnFire[i][1];
+			cellGrid[xCoord][yCoord] = new Cell("tree");
+			cellGrid[xCoord][yCoord].setState(Color.GREEN);
 		}
+		
 		for (int x = 0; x < cellsOnFire.length; x++) {
 			int xCoord = cellsOnFire[x][0];
 			int yCoord = cellsOnFire[x][1];
@@ -26,7 +27,7 @@ public class FireController extends CellController {
 
 	@Override
 	public void setNextStates() {
-		for (int x = 0; x < xSize; x++) {
+		for (int x = 0; x < this.xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				Cell toSet = retrieveCell(x, y);
 				String toSetType = toSet.getState();
@@ -51,11 +52,11 @@ public class FireController extends CellController {
 		}
 	}
 
-	public boolean catchResult() {
+	private boolean catchResult() {
 		return Math.random() < catchProbability;
 	}
 
-	public boolean fireBeside(Cell cell) {
+	private boolean fireBeside(Cell cell) {
 		for (String state : cell.getNeighborStateNames()) {
 			if (state.equals("fire")) {
 				return true;

@@ -1,5 +1,6 @@
-package cellsociety_team08;
+package cell_controllers;
 
+import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
 
 public class LifeCellController extends CellController {
@@ -49,7 +50,7 @@ public class LifeCellController extends CellController {
 			}
 		}
 	}
-	public int calcNumbersOn(String[] neighbourStates) {
+	private int calcNumbersOn(String[] neighbourStates) {
 		int numberOn = 0;
 		
 		for (int z = 0; z < neighbourStates.length; z++) {
@@ -63,16 +64,16 @@ public class LifeCellController extends CellController {
 		return numberOn;
 	}
 
-	public static void main(String[] args) {
-		ParserXML parser = new ParserXML("life.xml");
-		LifeCellController lifeCellController = new LifeCellController(parser.getDimensions(), parser.getCellList());
-		lifeCellController.printCells();
-		lifeCellController.setNextStates();
-		lifeCellController.updateCells();
-		lifeCellController.printCells();
-		lifeCellController.setNextStates();
-		lifeCellController.updateCells();
-		lifeCellController.printCells();
-	}
+//	public static void main(String[] args) {
+//		ParserXML parser = new ParserXML("life.xml");
+//		LifeCellController lifeCellController = new LifeCellController(parser.getDimensions(), parser.getCellList());
+//		lifeCellController.printCells();
+//		lifeCellController.setNextStates();
+//		lifeCellController.updateCells();
+//		lifeCellController.printCells();
+//		lifeCellController.setNextStates();
+//		lifeCellController.updateCells();
+//		lifeCellController.printCells();
+//	}
 
 }

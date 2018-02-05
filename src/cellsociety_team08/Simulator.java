@@ -2,6 +2,8 @@ package cellsociety_team08;
 import java.io.File;
 import java.util.Arrays;
 
+import cell_controllers.CellController;
+import cell_controllers.LifeCellController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
