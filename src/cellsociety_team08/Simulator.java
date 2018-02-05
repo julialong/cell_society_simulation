@@ -18,8 +18,9 @@ import javafx.util.Duration;
 public class Simulator {
 	public static final String NAME = "Cell Society";
 	private Scene startScene;
-	private final int XSIZE = 600;
-	private final int YSIZE = 600;
+	private final int XSIZE = GUI.XSIZE;
+	private final int YSIZE = GUI.YSIZE;
+	private final int XBAR = GUI.XBAR;
 	private static final int FRAMES_PER_SECOND = 40;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -88,7 +89,7 @@ public class Simulator {
 		Color[][] newColors = control.getColors();
 		for (int i = 0; i < dimensions[0]; i++) {
 			for (int j = 0; j < dimensions[1]; j++) {
-				Rectangle currentCell = new Rectangle(i * gridWidth, j * gridHeight, gridWidth, gridHeight);
+				Rectangle currentCell = new Rectangle(XBAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight);
 				currentCell.setFill(newColors[i][j]);
 				currentCell.setStroke(Color.DARKGREY);
 				currentCell.setStrokeType(StrokeType.INSIDE);

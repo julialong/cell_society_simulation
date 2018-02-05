@@ -19,9 +19,10 @@ public class GUI extends Application{
     public static final String NAME = "Cell Society";
     private Scene startScene;
     private Stage myStage;
-    private final int XSIZE = 600;
-    private final int YSIZE = 600;
-    private final int YBAR = 200;
+    public static final int XSIZE = 600;
+    public static final int YSIZE = 600;
+    public static final int XBAR = 200;
+    //private final int YBAR = 200;
 
     private final String DEFAULT_RESOURCE_PATH = "resources/";
 
@@ -47,7 +48,7 @@ public class GUI extends Application{
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + language);
         sim = new Simulator();
 
-        Rectangle settingsBar = new Rectangle(0,YSIZE,XSIZE,YBAR);
+        Rectangle settingsBar = new Rectangle(0,0,XBAR,YSIZE);
         settingsBar.setFill(Color.LIGHTGRAY);
         root.getChildren().add(settingsBar);
 
@@ -61,7 +62,7 @@ public class GUI extends Application{
     private void setStage(Stage stage) {
         myStage = stage;
         stage.setTitle(NAME);
-        startScene = new Scene(root, XSIZE, YSIZE + YBAR);
+        startScene = new Scene(root, XSIZE + XBAR, YSIZE);
         stage.setScene(startScene);
     }
 
@@ -89,7 +90,7 @@ public class GUI extends Application{
     private void addPlayButton() {
         playButton = new ToggleButton(myResources.getString("Play"));
         playButton.setLayoutX(20);
-        playButton.setLayoutY(YSIZE + 10);
+        playButton.setLayoutY(50);
         root.getChildren().add(playButton);
         playButton.setOnAction((ActionEvent event) ->  sim.turnOn());
     }
@@ -99,8 +100,8 @@ public class GUI extends Application{
      */
     private void addPauseButton() {
         pauseButton = new ToggleButton(myResources.getString("Pause"));
-        pauseButton.setLayoutX(playButton.getLayoutX() + 50);
-        pauseButton.setLayoutY(YSIZE + 10);
+        pauseButton.setLayoutX(20);
+        pauseButton.setLayoutY(playButton.getLayoutY() + 50);
         root.getChildren().add(pauseButton);
         pauseButton.setOnAction((ActionEvent event) ->  sim.turnOff());
     }
@@ -110,8 +111,8 @@ public class GUI extends Application{
      */
     private void addStepButton() {
         stepButton = new Button(myResources.getString("Step"));
-        stepButton.setLayoutX(pauseButton.getLayoutX() + 70);
-        stepButton.setLayoutY(YSIZE + 10);
+        stepButton.setLayoutX(20);
+        stepButton.setLayoutY(pauseButton.getLayoutY() + 50);
         root.getChildren().add(stepButton);
         stepButton.setOnAction((ActionEvent event) ->  sim.manualStep(root));
     }
@@ -121,8 +122,8 @@ public class GUI extends Application{
      */
     private void addFasterButton() {
         fasterButton = new Button(myResources.getString("Faster"));
-        fasterButton.setLayoutX(stepButton.getLayoutX() + 60);
-        fasterButton.setLayoutY(YSIZE + 10);
+        fasterButton.setLayoutX(20);
+        fasterButton.setLayoutY(stepButton.getLayoutY() + 50);
         root.getChildren().add(fasterButton);
         fasterButton.setOnAction((ActionEvent event) ->  sim.speedUp());
     }
@@ -132,8 +133,8 @@ public class GUI extends Application{
      */
     private void addSlowerButton() {
         slowerButton = new Button(myResources.getString("Slower"));
-        slowerButton.setLayoutX(fasterButton.getLayoutX() + 120);
-        slowerButton.setLayoutY(YSIZE + 10);
+        slowerButton.setLayoutX(20);
+        slowerButton.setLayoutY(fasterButton.getLayoutY() + 50);
         root.getChildren().add(slowerButton);
         slowerButton.setOnAction((ActionEvent event) ->  sim.speedDown());
     }
@@ -144,8 +145,8 @@ public class GUI extends Application{
      */
     private void addFileButton(Stage stage) {
         fileButton = new Button(myResources.getString("UploadFile"));
-        fileButton.setLayoutX(slowerButton.getLayoutX() + 140);
-        fileButton.setLayoutY(YSIZE + 10);
+        fileButton.setLayoutX(20);
+        fileButton.setLayoutY(slowerButton.getLayoutY() + 50);
         root.getChildren().add(fileButton);
         fileButton.setOnAction((ActionEvent event) -> changeFile(stage));
     }
