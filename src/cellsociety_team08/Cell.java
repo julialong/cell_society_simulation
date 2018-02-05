@@ -3,9 +3,9 @@ package cellsociety_team08;
 import javafx.scene.paint.Color;
 
 public class Cell {
-	String currentState;
-	String nextState;
-	Color colour;
+	private String currentState;
+	private String nextState;
+	private Color colour;
 	
 	Cell[] neighbors; 
 	 
@@ -17,6 +17,7 @@ public class Cell {
 
 	public Cell(String state) {
 		currentState = state;
+		nextState = state;
 	}
 
 	public void updateState() {
@@ -31,8 +32,17 @@ public class Cell {
 		colour = newColour;
 	}
 	
+	public void setNextStateDefault() {
+		colour = Color.WHITE;
+		nextState = "default";
+	}
+	
 	public String getState() {
 		return currentState;
+	}
+	
+	public String getNextState() {
+		return nextState;
 	}
 	
 	public Color getColor() {
