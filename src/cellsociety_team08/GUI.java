@@ -19,9 +19,11 @@ public class GUI extends Application{
     public static final String NAME = "Cell Society";
     private Scene startScene;
     private Stage myStage;
-    private final int XSIZE = 800;
-    private final int YSIZE = 800;
-    private final int YBAR = 300;
+    private final int XSIZE = 600;
+    private final int YSIZE = 600;
+    private final int YBAR = 200;
+
+    private final String DEFAULT_RESOURCE_PATH = "resources/";
 
     private ToggleButton playButton;
     private ToggleButton pauseButton;
@@ -31,6 +33,7 @@ public class GUI extends Application{
     private Button fileButton;
 
     private ResourceBundle myResources;
+    private String language = "English";
 
     private FileChooser fileChooser = new FileChooser();
     private File configFile;
@@ -39,25 +42,38 @@ public class GUI extends Application{
     private Simulator sim;
 
     public void start(Stage stage) {
-        myStage = stage;
-        stage.setTitle(NAME);
-        startScene = new Scene(root, XSIZE, YSIZE + YBAR);
-        stage.setScene(startScene);
+        setStage(stage);
 
+        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + language);
         sim = new Simulator();
 
         Rectangle settingsBar = new Rectangle(0,YSIZE,XSIZE,YBAR);
         settingsBar.setFill(Color.LIGHTGRAY);
         root.getChildren().add(settingsBar);
 
-        File start = new File("startfile.xml");
-        sim.setFile(start);
+        openStartFile();
 
         sim.startSimulation(stage, root);
 
         addButtons(stage);
     }
 
+    private void setStage(Stage stage) {
+        myStage = stage;
+        stage.setTitle(NAME);
+        startScene = new Scene(root, XSIZE, YSIZE + YBAR);
+        stage.setScene(startScene);
+    }
+
+    private void openStartFile() {
+        File start = new File("startfile.xml");
+        sim.setFile(start);
+    }
+
+    /**
+     * Adds necessary buttons to user interface
+     * @param stage
+     */
     private void addButtons(Stage stage) {
         addPlayButton();
         addPauseButton();
@@ -67,48 +83,67 @@ public class GUI extends Application{
         addFileButton(stage);
     }
 
+    /**
+     * Adds button that allows user to play simulation
+     */
     private void addPlayButton() {
-        playButton = new ToggleButton("Play");
+        playButton = new ToggleButton(myResources.getString("Play"));
         playButton.setLayoutX(20);
         playButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(playButton);
         playButton.setOnAction((ActionEvent event) ->  sim.turnOn());
     }
 
+    /**
+     * Adds button that allows user to pause simulation
+     */
     private void addPauseButton() {
-        pauseButton = new ToggleButton("Pause");
+        pauseButton = new ToggleButton(myResources.getString("Pause"));
         pauseButton.setLayoutX(playButton.getLayoutX() + 50);
         pauseButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(pauseButton);
         pauseButton.setOnAction((ActionEvent event) ->  sim.turnOff());
     }
 
+    /**
+     * Adds button that allows user to manually step the simulation
+     */
     private void addStepButton() {
-        stepButton = new Button("Step");
-        stepButton.setLayoutX(pauseButton.getLayoutX() + 50);
+        stepButton = new Button(myResources.getString("Step"));
+        stepButton.setLayoutX(pauseButton.getLayoutX() + 70);
         stepButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(stepButton);
         stepButton.setOnAction((ActionEvent event) ->  sim.manualStep(root));
     }
 
+    /**
+     * Adds button to speed up simulation
+     */
     private void addFasterButton() {
-        fasterButton = new Button("Increase speed");
+        fasterButton = new Button(myResources.getString("Faster"));
         fasterButton.setLayoutX(stepButton.getLayoutX() + 60);
         fasterButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(fasterButton);
         fasterButton.setOnAction((ActionEvent event) ->  sim.speedUp());
     }
 
+    /**
+     * Adds button to slow down simulation
+     */
     private void addSlowerButton() {
-        slowerButton = new Button("Decrease speed");
+        slowerButton = new Button(myResources.getString("Slower"));
         slowerButton.setLayoutX(fasterButton.getLayoutX() + 120);
         slowerButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(slowerButton);
         slowerButton.setOnAction((ActionEvent event) ->  sim.speedDown());
     }
 
+    /**
+     * Adds button to upload file to user interface
+     * @param stage is the window currently showing the simulation
+     */
     private void addFileButton(Stage stage) {
-        fileButton = new Button("Upload configuration");
+        fileButton = new Button(myResources.getString("UploadFile"));
         fileButton.setLayoutX(slowerButton.getLayoutX() + 140);
         fileButton.setLayoutY(YSIZE + 10);
         root.getChildren().add(fileButton);

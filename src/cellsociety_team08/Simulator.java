@@ -18,8 +18,8 @@ import javafx.util.Duration;
 public class Simulator {
 	public static final String NAME = "Cell Society";
 	private Scene startScene;
-	private final int XSIZE = 800;
-	private final int YSIZE = 800;
+	private final int XSIZE = 600;
+	private final int YSIZE = 600;
 	private static final int FRAMES_PER_SECOND = 40;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
