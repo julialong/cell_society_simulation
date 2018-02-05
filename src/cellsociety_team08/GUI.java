@@ -59,6 +59,10 @@ public class GUI extends Application{
         addButtons(stage);
     }
 
+    /**
+     * Sets up the beginning JavaFX stage with the appropriate dimensions
+     * @param stage
+     */
     private void setStage(Stage stage) {
         myStage = stage;
         stage.setTitle(NAME);
@@ -66,6 +70,9 @@ public class GUI extends Application{
         stage.setScene(startScene);
     }
 
+    /**
+     * Opens the blank "start" file to display when the program opens
+     */
     private void openStartFile() {
         File start = new File("startfile.xml");
         sim.setFile(start);
