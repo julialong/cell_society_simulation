@@ -84,7 +84,6 @@ public class Simulator {
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
-        animation.setDelay(Duration.seconds(stepTime));
         animation.play();
     }
 
@@ -95,7 +94,7 @@ public class Simulator {
         if (simulationType.equals(CONWAYS)) control = new LifeCellController(dimensions, cellTypes);
         else if (simulationType.equals(SPREADINGFIRE)) control = new FireController(dimensions, cellTypes, parameters);
         else if (simulationType.equals(SEGREGATION)) control = new SegregationController(dimensions, cellTypes, parameters);
-        else if (simulationType.equals(WATOR)) control = new WatorController(dimensions, parameters);
+        //else if (simulationType.equals(WATOR)) control = new WatorController(dimensions, parameters);
         else throw new IllegalArgumentException();
     }
 
