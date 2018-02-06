@@ -1,6 +1,7 @@
 package cellsociety_team08;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,6 @@ public class ParserXML {
 	private Document doc;
 	public ParserXML(File file) {
 		try {
-		//File input = new File(filename);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); // https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		doc = dBuilder.parse(file);
@@ -110,7 +110,7 @@ public class ParserXML {
 			int xsize = Integer.parseInt(eElement.getElementsByTagName("xsize").item(0).getTextContent());
 			int ysize = Integer.parseInt(eElement.getElementsByTagName("ysize").item(0).getTextContent());
 			
-			System.out.println("Dimensions: " + xsize + " wide by " + ysize + " tall");
+			//System.out.println("Dimensions: " + xsize + " wide by " + ysize + " tall");
 			
 			int[] dim = {xsize, ysize};
 	

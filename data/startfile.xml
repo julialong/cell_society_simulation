@@ -10,8 +10,11 @@
     <xsize>20</xsize>
     <ysize>20</ysize>
   </dimensions>
+  <parameter_list>
+  </parameter_list>
   <cell_on_list>
+    <type id="on">
+    </type>
   </cell_on_list>
-
-
 </life>
+
