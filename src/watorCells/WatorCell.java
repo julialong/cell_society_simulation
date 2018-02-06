@@ -10,15 +10,7 @@ public class WatorCell extends Cell{
 	public WatorCell(String state, Animal object) {
 		super(state);
 		animal = object;
-		if (animal.getType().equals("shark")){
-			colour = Color.RED;
-		}
-		else if (animal.getType().equals("fish")){
-			colour = Color.GREENYELLOW;
-		}
-		else if (animal.getType().equals("water")){
-			colour = Color.CORNFLOWERBLUE;
-		}
+		updateColor();
 	}
 	
 	public String getAnimalType() {
@@ -34,8 +26,21 @@ public class WatorCell extends Cell{
 		colour = Color.CORNFLOWERBLUE;
 	}
 	
+	public void updateColor() {
+		if (animal.getType().equals("shark")){
+			colour = Color.RED;
+		}
+		else if (animal.getType().equals("fish")){
+			colour = Color.GREENYELLOW;
+		}
+		else if (animal.getType().equals("water")){
+			colour = Color.CORNFLOWERBLUE;
+		}
+	}
+	
 	public void setNewAnimal(Animal newAnimal) {
 		animal = newAnimal;
+		updateColor();
 	}
 	
 }

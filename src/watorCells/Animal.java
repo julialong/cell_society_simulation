@@ -1,7 +1,7 @@
 package watorCells;
 
 public abstract class Animal {
-	protected int health;
+	public int health = 10;
 	protected int time = 0;
 	
 	public int getHealth() {

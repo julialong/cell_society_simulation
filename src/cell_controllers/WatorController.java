@@ -56,6 +56,7 @@ public class WatorController extends CellController {
 	public void setNextStates() {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
+				
 				WatorCell toSet = (WatorCell) retrieveCell(x, y);
 				toSet.getAnimal().incrementTime();
 				if (toSet.getAnimalType().equals("shark")) {
@@ -77,6 +78,7 @@ public class WatorController extends CellController {
 				fishCell.setToWater();
 			}
 			moveHere.setNewAnimal(fishCell.getAnimal());
+			
 		}
 	}
 
