@@ -117,9 +117,5 @@ public class ParserXML {
 			return dim;
 	
 	}
-	
-	
-
-	
 }
 
