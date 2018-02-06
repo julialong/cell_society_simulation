@@ -26,7 +26,7 @@ public class GUI {
     public final int POPUP_BOX_HEIGHT = 50;
 
     private final String DEFAULT_RESOURCE_PATH = "resources/";
-    private final String START_FILE = "./data/startfile.xml";
+    private final String START_FILE = "./data/randomlife.xml";
 
     private ToggleButton playButton;
     private ToggleButton pauseButton;

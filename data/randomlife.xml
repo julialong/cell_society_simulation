@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<wator>
-  <title>Wa-Tor Simulation</title>
+<life>
+  <title>Conway&apos;s Game of Life</title>
   <authors>
     <name>Edward Zhuang</name>
     <name>Julia Long</name>
@@ -11,13 +11,12 @@
     <ysize>50</ysize>
   </dimensions>
   <parameter_list>
-    <parameters id="sharkrate">
-      <value>.12</value>
-    </parameters>
-    <parameters id="fishrate">
-      <value>.2</value>
-    </parameters>
+  <parameters id="onrate">
+    <value>.2</value>
+  </parameters>
   </parameter_list>
   <cell_on_list>
+    <type id="on">
+    </type>
   </cell_on_list>
-</wator>
+</life>

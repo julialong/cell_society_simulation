@@ -8,16 +8,30 @@ import java.util.Map;
 import javafx.scene.paint.Color;
 
 public class LifeCellController extends CellController {
-	public LifeCellController(int[] dimensions, Map<String, int[][]> map) {
+	public LifeCellController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
 		super(dimensions);
+		
+		double onrate = paramMap.get("onrate");
+		
 		int[][] cellsOn =  map.get("on");
 		for (int z = 0; z < cellsOn.length; z++) {
 			int xCoord = cellsOn[z][0];
 			int yCoord = cellsOn[z][1];
 			cellGrid[xCoord][yCoord] = new Cell("on");
 			cellGrid[xCoord][yCoord].setState(Color.BLACK);
-
 		}
+		
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				double rand = Math.random();
+				if (rand < onrate) {
+					Cell tempCell = new Cell("on");
+					tempCell.setState(Color.BLACK);
+					cellGrid[x][y] = tempCell;
+				} 
+			}
+		}
+		
 		initializeNeighbors();
 	}
 
