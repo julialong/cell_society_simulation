@@ -12,6 +12,7 @@ public class Shark extends Animal{
 	}
 	@Override
 	public void decrementHealth() {
+		System.out.println(health);
 		health--;
 	}
 	@Override

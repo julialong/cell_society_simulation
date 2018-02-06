@@ -2,6 +2,7 @@ package cell_controllers;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 
 import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
@@ -70,6 +71,7 @@ public class WatorController extends CellController {
 
 	public void updateFish(WatorCell fishCell) {
 		WatorCell moveHere = newSpot(fishCell);
+		moveHere.setNewAnimal(fishCell.getAnimal());
 		if (moveHere != fishCell) {
 			if (fishCell.getAnimal().getTime() % 10 == 0) {
 				fishCell.setNewAnimal(new Fish());
@@ -77,19 +79,18 @@ public class WatorController extends CellController {
 			} else {
 				fishCell.setToWater();
 			}
-			moveHere.setNewAnimal(fishCell.getAnimal());
-			
 		}
 	}
 
 	public void updateShark(WatorCell sharkCell) {
-		sharkCell.getAnimal().decrementHealth();
+		sharkCell.decrementAnimalHealth();
 		if (sharkCell.getAnimal().getHealth() == 0) {
 			sharkCell.setToWater();
 		} else {
 			WatorCell moveHere = newSpot(sharkCell);
 			if (moveHere != sharkCell) {
 				moveHere.setNewAnimal(sharkCell.getAnimal());
+
 				if (sharkCell.getAnimal().getTime() % 10 == 0) {
 					sharkCell.setNewAnimal(new Shark());
 					sharkCell.setState(Color.RED);
@@ -115,17 +116,19 @@ public class WatorController extends CellController {
 				}
 			}
 		}
+		Random rand = new Random();
 
 		if (animal.getAnimalType().equals("shark")) {
 			if (possibleFish.size() == 0 && possibleWater.size() == 0) {
 				return animal; // throw exception because no where to move. returning self for now.
 			}
 			if (possibleFish.size() != 0) {
-				int index = (int) (long) Math.random() * possibleFish.size();
+				
+				int index = rand.nextInt(possibleFish.size());
 				animal.getAnimal().replenishHealth();
 				return possibleFish.get(index);
 			} else {
-				int index = (int) (long) Math.random() * possibleWater.size();
+				int index = rand.nextInt(possibleWater.size());
 				return possibleWater.get(index);
 			}
 		}
@@ -134,7 +137,7 @@ public class WatorController extends CellController {
 			if (possibleWater.size() == 0) {
 				return animal; // throw exception because no where to move. returning self for now.
 			}
-			int index = (int) (long) Math.random() * possibleWater.size();
+			int index = rand.nextInt(possibleWater.size());
 			return possibleWater.get(index);
 		}
 

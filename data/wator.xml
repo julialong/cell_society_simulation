@@ -12,7 +12,7 @@
   </dimensions>
   <parameter_list>
     <parameters id="sharkrate">
-      <value>.3</value>
+      <value>0.1</value>
     </parameters>
     <parameters id="fishrate">
       <value>.2</value>
