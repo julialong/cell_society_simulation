@@ -3,6 +3,10 @@ package cellsociety_team08;
 import java.io.File;
 import java.util.*;
 
+import cell_controllers.CellController;
+import cell_controllers.FireController;
+import cell_controllers.LifeCellController;
+import cell_controllers.SegregationController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.paint.Color;

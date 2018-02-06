@@ -5,9 +5,9 @@ import javafx.scene.paint.Color;
 public class Cell {
 	private String currentState;
 	private String nextState;
-	private Color colour;
+	protected Color colour;
 	
-	Cell[] neighbors; 
+	public Cell[] neighbors; 
 	 
     //  array of neighbor cells with specific order
 	//  0 1 2
@@ -61,10 +61,9 @@ public class Cell {
 	public String[] getNeighborStateNames() {
 		String[] neighborStateNames = new String[8];
 		for (int x = 0; x < neighborStateNames.length; x++) {
+			
 			if (neighbors[x] != null) neighborStateNames[x] = neighbors[x].currentState;
 		}
 		return neighborStateNames;
 	}
-	
-
 }

@@ -1,12 +1,13 @@
-package cellsociety_team08;
+package cell_controllers;
 
+import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
 
-	public Cell[][] cellGrid;
-	public int xSize;
-	public int ySize;
+	protected Cell[][] cellGrid;
+	protected int xSize;
+	protected int ySize;
 
 	/**
 	 * 
@@ -32,8 +33,10 @@ public abstract class CellController {
 
 	/**
 	 * Goes through the cellGrid, and sets up the neighbors of all the cells. Cells
-	 * have neighbors around them stored in an array, with this configuration: 0 1 2
-	 * 3 4 5 6 7
+	 * have neighbors around them stored in an array, with this configuration:
+	 *  0 1 2
+	 *  3 x 4 
+	 * 	5 6 7
 	 */
 	public void initializeNeighbors() {
 		for (int x = 0; x < xSize; x++) {

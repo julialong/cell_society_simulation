@@ -1,14 +1,17 @@
-package cellsociety_team08;
+package cell_controllers;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
 
 public class SegregationController extends CellController {
 	private double threshold;
 
+
 	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
+
 		super(dimensions);
 		int[][] cellsX =  map.get("x");
 		int[][] cellsO =  map.get("o");
@@ -48,17 +51,22 @@ public class SegregationController extends CellController {
 							if (type.equals(toSetType)) {
 								same++;
 							}
-							else if (!type.equals(toSetType)){
+							else if (!type.equals(toSetType) && !type.equals("default")){
 								diff++;
 							}
 						}
 					}
+					if (diff > 0) {
 					double myRatio = same/diff;
 					if (myRatio < threshold) {
 						toSet.setNextStateDefault();
 						movers.add(toSetType);
 					}
 					else if (myRatio >= threshold) {
+						toSet.setNextState(toSetType);
+					}
+					}
+					else {
 						toSet.setNextState(toSetType);
 					}
 				}
