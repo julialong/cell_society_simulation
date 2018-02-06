@@ -3,10 +3,7 @@ package cellsociety_team08;
 import java.io.File;
 import java.util.*;
 
-import cell_controllers.CellController;
-import cell_controllers.FireController;
-import cell_controllers.LifeCellController;
-import cell_controllers.SegregationController;
+import cell_controllers.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
@@ -98,6 +95,7 @@ public class Simulator {
         if (simulationType.equals(CONWAYS)) control = new LifeCellController(dimensions, cellTypes);
         else if (simulationType.equals(SPREADINGFIRE)) control = new FireController(dimensions, cellTypes, parameters);
         else if (simulationType.equals(SEGREGATION)) control = new SegregationController(dimensions, cellTypes, parameters);
+        else if (simulationType.equals(WATOR)) control = new WatorController(dimensions, parameters);
         else throw new IllegalArgumentException();
     }
 
