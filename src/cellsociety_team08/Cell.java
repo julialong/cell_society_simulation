@@ -61,6 +61,7 @@ public class Cell {
 	public String[] getNeighborStateNames() {
 		String[] neighborStateNames = new String[8];
 		for (int x = 0; x < neighborStateNames.length; x++) {
+			
 			if (neighbors[x] != null) neighborStateNames[x] = neighbors[x].currentState;
 		}
 		return neighborStateNames;
