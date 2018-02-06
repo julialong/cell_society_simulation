@@ -31,8 +31,7 @@ public class SegregationController extends CellController {
 
 	@Override
 	public void setNextStates() {
-		// TODO Auto-generated method stub
-		ArrayList<String> movers = new ArrayList<String>();
+		ArrayList<String> movers = new ArrayList<>();
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				
@@ -45,7 +44,7 @@ public class SegregationController extends CellController {
 					double diff = 0;
 					String[] neighbours = toSet.getNeighborStateNames();
 					for (String type:neighbours) {
-						if (type!=null) {
+						if (!type.equals("default")) {
 							if (type.equals(toSetType)) {
 								same++;
 							}

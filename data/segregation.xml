@@ -61,6 +61,14 @@
         <ycoord>1</ycoord>
         <xcoord>1</xcoord>
       </cell>
+      <cell>
+        <ycoord>9</ycoord>
+        <xcoord>10</xcoord>
+      </cell>
+      <cell>
+        <ycoord>11</ycoord>
+        <xcoord>11</xcoord>
+      </cell>
     </type>
   </cell_on_list>
 </segregation>

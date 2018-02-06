@@ -46,7 +46,7 @@ public class Simulator {
      * @param root  the JavaFX Group root in GUI
      */
     public void startSimulation(Stage stage, Group root) {
-        stepTime = 2;
+        stepTime = 10;
         setupCellController();
         setupGrid(root);
         stage.show();
@@ -141,7 +141,7 @@ public class Simulator {
      * @param root the JavaFX Group root in GUI
      */
     public void manualStep(Group root) {
-        this.step(root);
+        this.updateCells(root);
     }
 
     /**

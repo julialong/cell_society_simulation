@@ -20,7 +20,6 @@ public class GUI {
 
     public static final String NAME = "Cell Society";
     private Scene startScene;
-    private Stage myStage;
     public static final int XSIZE = 600;
     public static final int YSIZE = 600;
     public static final int XBAR = 200;
@@ -54,14 +53,10 @@ public class GUI {
      */
     public void start(Stage stage) {
         setStage(stage);
-
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + language);
         sim = new Simulator();
-
-        addUserBars(stage);
-
+        addUserBar(stage);
         openStartFile();
-
         startSimulation(stage);
     }
 
@@ -71,7 +66,6 @@ public class GUI {
      * @param stage is the window currently showing the simulation
      */
     private void setStage(Stage stage) {
-        myStage = stage;
         stage.setTitle(NAME);
         startScene = new Scene(root, XSIZE + XBAR, YSIZE);
         stage.setScene(startScene);
@@ -81,7 +75,7 @@ public class GUI {
      * Adds setting bar and buttons
      * @param stage
      */
-    private void addUserBars(Stage stage) {
+    private void addUserBar(Stage stage) {
         addSettingsBar();
         addButtons(stage);
     }
