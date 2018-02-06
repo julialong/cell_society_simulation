@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<wator>
+  <title>Model of Segregation</title>
+  <authors>
+    <name>Edward Zhuang</name>
+    <name>Julia Long</name>
+    <name>Jeffrey Li</name>
+  </authors>
+  <dimensions>
+    <xsize>20</xsize>
+    <ysize>20</ysize>
+  </dimensions>
+  <parameter_list>
+    <parameters id="threshold">
+      <value>.75</value>
+    </parameters>
+  </parameter_list>
+  <cell_on_list>
+    <type id="x">
+      <cell>
+        <ycoord>2</ycoord>
+        <xcoord>3</xcoord>
+      </cell>
+      <cell>
+        <ycoord>5</ycoord>
+        <xcoord>6</xcoord>
+      </cell>
+      <cell>
+        <ycoord>6</ycoord>
+        <xcoord>7</xcoord>
+      </cell>
+      <cell>
+        <ycoord>7</ycoord>
+        <xcoord>6</xcoord>
+
+      </cell>
+      <cell>
+        <ycoord>10</ycoord>
+        <xcoord>11</xcoord>
+
+      </cell>
+    </type>
+
+    <type id="o">
+      <cell>
+        <ycoord>11</ycoord>
+        <xcoord>10</xcoord>
+
+      </cell>
+      <cell>
+        <ycoord>10</ycoord>
+        <xcoord>10</xcoord>
+
+      </cell>
+      <cell>
+        <ycoord>9</ycoord>
+        <xcoord>10</xcoord>
+
+      </cell>
+      <cell>
+        <ycoord>1</ycoord>
+        <xcoord>1</xcoord>
+      </cell>
+    </type>
+  </cell_on_list>
+</wator>
