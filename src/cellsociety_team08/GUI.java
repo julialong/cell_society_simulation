@@ -203,6 +203,7 @@ public class GUI {
      * @param stage is the window currently showing the simulation
      */
     private void changeFile(Stage stage) {
+        sim.turnOff();
         openFileChooser(stage);
         startSimulation(stage);
     }
