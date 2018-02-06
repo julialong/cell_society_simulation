@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ResourceBundle;
 
-public class GUI extends Application {
+public class GUI {
 
     public static final String NAME = "Cell Society";
     private Scene startScene;
@@ -24,8 +24,11 @@ public class GUI extends Application {
     public static final int XSIZE = 600;
     public static final int YSIZE = 600;
     public static final int XBAR = 200;
+    public final int POPUP_BOX_WIDTH = 300;
+    public final int POPUP_BOX_HEIGHT = 50;
 
     private final String DEFAULT_RESOURCE_PATH = "resources/";
+    private final String START_FILE = "./data/startfile.xml";
 
     private ToggleButton playButton;
     private ToggleButton pauseButton;
@@ -55,15 +58,11 @@ public class GUI extends Application {
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + language);
         sim = new Simulator();
 
-        Rectangle settingsBar = new Rectangle(0, 0, XBAR, YSIZE);
-        settingsBar.setFill(Color.LIGHTGRAY);
-        root.getChildren().add(settingsBar);
+        addUserBars(stage);
 
         openStartFile();
 
         startSimulation(stage);
-
-        addButtons(stage);
     }
 
     /**
@@ -79,11 +78,29 @@ public class GUI extends Application {
     }
 
     /**
+     * Adds setting bar and buttons
+     * @param stage
+     */
+    private void addUserBars(Stage stage) {
+        addSettingsBar();
+        addButtons(stage);
+    }
+
+    /**
      * Opens the blank "start" file to display when the program opens
      */
     private void openStartFile() {
-        File start = new File("startfile.xml");
+        File start = new File(START_FILE);
         sim.setFile(start);
+    }
+
+    /**
+     * Adds bar to the left of the simulator
+     */
+    private void addSettingsBar() {
+        Rectangle settingsBar = new Rectangle(0, 0, XBAR, YSIZE);
+        settingsBar.setFill(Color.LIGHTGRAY);
+        root.getChildren().add(settingsBar);
     }
 
     /**
@@ -219,21 +236,12 @@ public class GUI extends Application {
             sim.startSimulation(stage, root);
         }
         catch (Exception e) {
-            Rectangle errorBar = new Rectangle(XSIZE/2 - 50, YSIZE/2 - 25, 300, 50);
+            Rectangle errorBar = new Rectangle(XSIZE/2 - 50, YSIZE/2 - 25, POPUP_BOX_WIDTH, POPUP_BOX_HEIGHT);
             errorBar.setFill(Color.DARKRED);
-            Text errorText = new Text(XSIZE/2, YSIZE/2, "Error: incompatible simulation type");
+            Text errorText = new Text(XSIZE/2, YSIZE/2, myResources.getString("Error"));
             errorText.setFill(Color.WHITE);
             root.getChildren().add(errorBar);
             root.getChildren().add(errorText);
         }
-    }
-
-    /**
-     * Open the program and start the simulation
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 }

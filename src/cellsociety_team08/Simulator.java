@@ -1,8 +1,7 @@
 package cellsociety_team08;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -24,8 +23,9 @@ public class Simulator {
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 
     private int[] dimensions;
-    private int[][] cellTypes;
+    private Map<String, int[][]> cellTypes;
     private String simulationType;
+    private Map<String, Double> parameters;
 
     private int gridWidth;
     private int gridHeight;
@@ -92,8 +92,8 @@ public class Simulator {
      */
     private void setupCellController() {
         if (simulationType.equals(CONWAYS)) control = new LifeCellController(dimensions, cellTypes);
-        else if (simulationType.equals(SPREADINGFIRE)) control = new FireController(dimensions, cellTypes, 0);
-        else if (simulationType.equals(SEGREGATION)) control = new SegregationController(dimensions, cellTypes, new int[0][0], 0);
+        else if (simulationType.equals(SPREADINGFIRE)) control = new FireController(dimensions, cellTypes, parameters);
+        else if (simulationType.equals(SEGREGATION)) control = new SegregationController(dimensions, cellTypes, parameters);
         else throw new IllegalArgumentException();
     }
 
@@ -153,7 +153,8 @@ public class Simulator {
         ParserXML parser = new ParserXML(file);
         simulationType = parser.getSimulationType();
         dimensions = parser.getDimensions();
-        cellTypes = parser.getCellList();
+        cellTypes = parser.getAllCells();
+        parameters = parser.getParameters();
     }
 
     /**
