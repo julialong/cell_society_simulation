@@ -46,7 +46,7 @@ public class Simulator {
      * @param root  the JavaFX Group root in GUI
      */
     public void startSimulation(Stage stage, Group root) {
-        stepTime = 10;
+        stepTime = 5;
         setupCellController();
         setupGrid(root);
         stage.show();
@@ -134,6 +134,7 @@ public class Simulator {
      */
     private void clearGrid(Group root) {
         for (Rectangle cell : currentGrid) root.getChildren().remove(cell);
+        currentGrid = new ArrayList<>();
     }
 
     /**
