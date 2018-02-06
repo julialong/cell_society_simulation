@@ -6,9 +6,9 @@ import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
 
 public class SegregationController extends CellController {
-	private float threshold;
+	private double threshold;
 
-	public SegregationController(int[] dimensions, int[][] cellsX, int[][] cellsO, float thresholdValue) {
+	public SegregationController(int[] dimensions, int[][] cellsX, int[][] cellsO, double thresholdValue) {
 		super(dimensions);
 		threshold = thresholdValue;
 		for (int x = 0; x < cellsX.length; x++) {

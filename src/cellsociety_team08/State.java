@@ -1,6 +1,6 @@
 package cellsociety_team08;
 
-import java.awt.Color;
+import javafx.scene.paint.Color;
 
 public class State {
 	private Color colour;
@@ -14,21 +14,12 @@ public class State {
 		return stateName;
 	}
 	
-	public void changeState(String name) {
-		stateName = name;
-		if (stateName.equals("on")){
-			colour = Color.BLACK;
-		}
-		else {
-			colour = Color.WHITE;
-		}
-	}
-	
 	public Color getColor() {
 		return colour;
 	}
 	
-	public String getState() {
-		return stateName;
+	public void setColor(Color color) {
+		colour = color;
 	}
+	
 }

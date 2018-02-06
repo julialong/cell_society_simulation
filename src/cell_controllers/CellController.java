@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public abstract class CellController {
 
-	public Cell[][] cellGrid;
+	protected Cell[][] cellGrid;
 	protected int xSize;
 	protected int ySize;
 
