@@ -1,14 +1,17 @@
-package cellsociety_team08;
+package cell_controllers;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
 
 public class SegregationController extends CellController {
 	private double threshold;
 
+
 	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
+
 		super(dimensions);
 		int[][] cellsX =  map.get("x");
 		int[][] cellsO =  map.get("o");

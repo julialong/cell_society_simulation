@@ -1,12 +1,13 @@
-package cellsociety_team08;
+package cell_controllers;
 
+import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
 
-	public Cell[][] cellGrid;
-	public int xSize;
-	public int ySize;
+	protected Cell[][] cellGrid;
+	protected int xSize;
+	protected int ySize;
 
 	/**
 	 * 
