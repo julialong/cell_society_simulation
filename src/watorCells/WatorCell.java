@@ -31,6 +31,7 @@ public class WatorCell extends Cell{
 	
 	public void setToWater() {
 		animal = new Water();
+		colour = Color.CORNFLOWERBLUE;
 	}
 	
 	public void setNewAnimal(Animal newAnimal) {

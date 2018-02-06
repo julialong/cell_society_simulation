@@ -72,9 +72,11 @@ public class WatorController extends CellController {
 		if (moveHere != fishCell) {
 			if (fishCell.getAnimal().getTime() % 10 == 0) {
 				fishCell.setNewAnimal(new Fish());
+				fishCell.setState(Color.GREENYELLOW);
 			} else {
 				fishCell.setToWater();
 			}
+			moveHere.setNewAnimal(fishCell.getAnimal());
 		}
 	}
 
@@ -88,6 +90,7 @@ public class WatorController extends CellController {
 				moveHere.setNewAnimal(sharkCell.getAnimal());
 				if (sharkCell.getAnimal().getTime() % 10 == 0) {
 					sharkCell.setNewAnimal(new Shark());
+					sharkCell.setState(Color.RED);
 				} else {
 					sharkCell.setToWater();
 				}
@@ -101,11 +104,13 @@ public class WatorController extends CellController {
 
 		WatorCell[] neighbours = (WatorCell[]) animal.neighbors;
 		for (WatorCell wc : neighbours) {
-			if (wc.getAnimalType().equals("fish")) {
-				possibleFish.add(wc);
-			}
-			if (wc.getAnimalType().equals("water")) {
-				possibleWater.add(wc);
+			if (wc!= null) {
+				if (wc.getAnimalType().equals("fish")) {
+					possibleFish.add(wc);
+				}
+				if (wc.getAnimalType().equals("water")) {
+					possibleWater.add(wc);
+				}
 			}
 		}
 
@@ -115,6 +120,7 @@ public class WatorController extends CellController {
 			}
 			if (possibleFish.size() != 0) {
 				int index = (int) (long) Math.random() * possibleFish.size();
+				animal.getAnimal().replenishHealth();
 				return possibleFish.get(index);
 			} else {
 				int index = (int) (long) Math.random() * possibleWater.size();

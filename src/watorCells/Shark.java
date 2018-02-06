@@ -1,7 +1,11 @@
 package watorCells;
 
 public class Shark extends Animal{
-	int health = 10;
+	int health;
+	
+	public Shark() {
+		health = 10;
+	}
 	
 	public String getType() {
 		return "shark";
