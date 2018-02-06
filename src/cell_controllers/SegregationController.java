@@ -1,6 +1,7 @@
 package cell_controllers;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
@@ -8,9 +9,13 @@ import javafx.scene.paint.Color;
 public class SegregationController extends CellController {
 	private double threshold;
 
-	public SegregationController(int[] dimensions, int[][] cellsX, int[][] cellsO, double thresholdValue) {
+
+	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
+
 		super(dimensions);
-		threshold = thresholdValue;
+		int[][] cellsX =  map.get("x");
+		int[][] cellsO =  map.get("o");
+		threshold = paramMap.get("threshold");
 		for (int x = 0; x < cellsX.length; x++) {
 			int xCoord = cellsX[x][0];
 			int yCoord = cellsX[x][1];
@@ -29,8 +34,7 @@ public class SegregationController extends CellController {
 
 	@Override
 	public void setNextStates() {
-		// TODO Auto-generated method stub
-		ArrayList<String> movers = new ArrayList<String>();
+		ArrayList<String> movers = new ArrayList<>();
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				
@@ -39,25 +43,30 @@ public class SegregationController extends CellController {
 				
 				// deal with x and o
 				if (!toSetType.equals("default")) {
-					float same = 0;
-					float diff = 0;
+					double same = 0;
+					double diff = 0;
 					String[] neighbours = toSet.getNeighborStateNames();
 					for (String type:neighbours) {
-						if (type!=null) {
+						if (!type.equals("default")) {
 							if (type.equals(toSetType)) {
 								same++;
 							}
-							else if (!type.equals(toSetType)){
+							else if (!type.equals(toSetType) && !type.equals("default")){
 								diff++;
 							}
 						}
 					}
-					float myRatio = same/diff;
+					if (diff > 0) {
+					double myRatio = same/diff;
 					if (myRatio < threshold) {
 						toSet.setNextStateDefault();
 						movers.add(toSetType);
 					}
 					else if (myRatio >= threshold) {
+						toSet.setNextState(toSetType);
+					}
+					}
+					else {
 						toSet.setNextState(toSetType);
 					}
 				}

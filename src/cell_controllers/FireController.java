@@ -1,5 +1,9 @@
 package cell_controllers;
 
+
+import java.util.Arrays;
+import java.util.Map;
+
 import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
 
@@ -7,14 +11,18 @@ public class FireController extends CellController {
 
 	double catchProbability;
 
-	public FireController(int[] dimensions, int[][] cellsOnFire, int[][] cellsTree, double probability) {
+
+	public FireController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
 		super(dimensions);
-		catchProbability = probability;
-		for (int i = 0; i < cellsTree.length; i++) {
-			int xCoord = cellsOnFire[i][0];
-			int yCoord = cellsOnFire[i][1];
-			cellGrid[xCoord][yCoord] = new Cell("tree");
-			cellGrid[xCoord][yCoord].setState(Color.GREEN);
+		int[][] cellsOnFire =  map.get("burning");
+		
+		catchProbability = paramMap.get("probability");
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				Cell tempCell = new Cell("tree");
+				cellGrid[x][y] = tempCell;
+				tempCell.setState(Color.GREEN);
+			}
 		}
 		
 		for (int x = 0; x < cellsOnFire.length; x++) {
@@ -23,6 +31,8 @@ public class FireController extends CellController {
 			cellGrid[xCoord][yCoord] = new Cell("fire");
 			cellGrid[xCoord][yCoord].setState(Color.RED);
 		}
+		initializeNeighbors();
+		
 	}
 
 	@Override
@@ -58,8 +68,10 @@ public class FireController extends CellController {
 
 	private boolean fireBeside(Cell cell) {
 		for (String state : cell.getNeighborStateNames()) {
+			if (state != null) {
 			if (state.equals("fire")) {
 				return true;
+			}
 			}
 		}
 		return false;

@@ -1,6 +1,10 @@
 package cellsociety_team08;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 
@@ -8,7 +12,6 @@ public class ParserXML {
 	private Document doc;
 	public ParserXML(File file) {
 		try {
-		//File input = new File(filename);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); // https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		doc = dBuilder.parse(file);
@@ -18,25 +21,79 @@ public class ParserXML {
 		doc.getDocumentElement().normalize();
 	}
 	
-	public int[][] getCellList() {
+	
+	public void findCellTypes() {
+		NodeList typeList = doc.getElementsByTagName("state");
+		for (int x = 0; x < typeList.getLength(); x++) {
+			Node typeNode = typeList.item(x);
+			System.out.println("\nCurrent Element:" + typeNode.getNodeName());
+			Element eElement = (Element) typeNode;
+			System.out.println("Type: " + eElement.getAttribute("category"));
+			System.out.println("Name: " + eElement.getElementsByTagName("label").item(0).getTextContent());
+		}
 		
-		NodeList cellList = doc.getElementsByTagName("cell");
-		int[][] onCells = new int[cellList.getLength()][];
+	}
+	
+	public int[] getCellInfo(Node cellNode) {
 		
-		for (int x = 0; x < cellList.getLength(); x++) {
-			Node cellNode = cellList.item(x);
+//		NodeList cellList = doc.getElementsByTagName(cells);
+//		int[][] onCells = new int[cellList.getLength()][];
+		
 			
 			Element eElement = (Element) cellNode;
 			
 			int xsize = Integer.parseInt(eElement.getElementsByTagName("ycoord").item(0).getTextContent());
-			int ysize = Integer.parseInt(eElement.getElementsByTagName("xcoord").item(0).getTextContent());			
+			int ysize = Integer.parseInt(eElement.getElementsByTagName("xcoord").item(0).getTextContent());		
 			
-			int[] tempCoordinate = {xsize, ysize};
-			onCells[x] = tempCoordinate;			
 			
-		}
+			int[] cell = {xsize, ysize};
+
 		
-		return onCells;
+		return cell;
+	}
+	
+	public Map<String, int[][]> getAllCells() {
+
+		Map<String, int[][]> cellMap = new HashMap<String, int[][]>();
+		NodeList types = doc.getElementsByTagName("type");
+		for (int i = 0; i < types.getLength(); i++) {
+			Node node = types.item(i);
+			Element eElement = (Element) node;
+
+			String temp = eElement.getAttribute("id");
+
+			NodeList childNodes = eElement.getElementsByTagName("cell");
+
+			int[][] tempArray = new int[childNodes.getLength()][];
+
+			for (int x = 0; x < childNodes.getLength(); x++) {
+				Node cellNode = childNodes.item(x);
+				Element cElement = (Element) cellNode;
+
+				tempArray[x] = getCellInfo(cellNode);
+			}
+
+			cellMap.put(temp, tempArray);
+		}
+
+		return cellMap;
+	}
+	
+	public Map<String, Double> getParameters(){
+		Map<String, Double> paramMap = new HashMap<String, Double>();
+		NodeList params = doc.getElementsByTagName("parameters");
+		for (int i = 0; i < params.getLength(); i++) {
+			Node node = params.item(i);
+			Element eElement = (Element) node;
+
+			String temp = eElement.getAttribute("id");
+
+			Double tempDouble = Double.parseDouble(eElement.getElementsByTagName("value").item(0).getTextContent());
+
+			paramMap.put(temp, tempDouble);
+		}
+
+		return paramMap;
 	}
 	
 	
@@ -53,13 +110,16 @@ public class ParserXML {
 			int xsize = Integer.parseInt(eElement.getElementsByTagName("xsize").item(0).getTextContent());
 			int ysize = Integer.parseInt(eElement.getElementsByTagName("ysize").item(0).getTextContent());
 			
-			System.out.println("Dimensions: " + xsize + " wide by " + ysize + " tall");
+			//System.out.println("Dimensions: " + xsize + " wide by " + ysize + " tall");
 			
 			int[] dim = {xsize, ysize};
 	
 			return dim;
 	
 	}
+	
+	
+
 	
 }
 
