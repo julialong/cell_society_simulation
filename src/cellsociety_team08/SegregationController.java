@@ -49,17 +49,22 @@ public class SegregationController extends CellController {
 							if (type.equals(toSetType)) {
 								same++;
 							}
-							else if (!type.equals(toSetType)){
+							else if (!type.equals(toSetType) && !type.equals("default")){
 								diff++;
 							}
 						}
 					}
+					if (diff > 0) {
 					double myRatio = same/diff;
 					if (myRatio < threshold) {
 						toSet.setNextStateDefault();
 						movers.add(toSetType);
 					}
 					else if (myRatio >= threshold) {
+						toSet.setNextState(toSetType);
+					}
+					}
+					else {
 						toSet.setNextState(toSetType);
 					}
 				}

@@ -1,5 +1,6 @@
 package cellsociety_team08;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import javafx.scene.paint.Color;
@@ -26,6 +27,8 @@ public class FireController extends CellController {
 			cellGrid[xCoord][yCoord] = new Cell("fire");
 			cellGrid[xCoord][yCoord].setState(Color.RED);
 		}
+		initializeNeighbors();
+		
 	}
 
 	@Override
@@ -61,8 +64,10 @@ public class FireController extends CellController {
 
 	public boolean fireBeside(Cell cell) {
 		for (String state : cell.getNeighborStateNames()) {
+			if (state != null) {
 			if (state.equals("fire")) {
 				return true;
+			}
 			}
 		}
 		return false;

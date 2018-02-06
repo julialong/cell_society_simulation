@@ -141,7 +141,7 @@ public class Simulator {
      * @param root the JavaFX Group root in GUI
      */
     public void manualStep(Group root) {
-        this.step(root);
+        this.updateCells(root);
     }
 
     /**
