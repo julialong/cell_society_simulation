@@ -3,6 +3,11 @@ package watorCells;
 public class Shark extends Animal{
 	int health;
 	
+	@Override
+	public int getHealth() {
+		return health;
+	}
+	
 	public Shark() {
 		health = 10;
 	}
