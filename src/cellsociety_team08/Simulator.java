@@ -14,7 +14,7 @@ import javafx.scene.Group;
 import javafx.util.Duration;
 
 public class Simulator {
-
+	
     private final String CONWAYS = "life";
     private final String SPREADINGFIRE = "fire";
     private final String SEGREGATION = "segregation";

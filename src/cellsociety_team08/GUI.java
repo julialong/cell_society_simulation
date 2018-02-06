@@ -1,6 +1,5 @@
 package cellsociety_team08;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;

@@ -1,7 +1,5 @@
 package cell_controllers;
 
-
-import java.util.Arrays;
 import java.util.Map;
 
 import cellsociety_team08.Cell;

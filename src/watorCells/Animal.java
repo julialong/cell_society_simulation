@@ -1,11 +1,10 @@
 package watorCells;
 
 public abstract class Animal {
-	protected int health;
-	protected int time = 0;
+	protected int time;
 	
 	public int getHealth() {
-		return health;
+		return 1;
 	}
 	
 	public void incrementTime() {
