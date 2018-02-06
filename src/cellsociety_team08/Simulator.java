@@ -137,7 +137,11 @@ public class Simulator {
      * @param root the JavaFX Group root in GUI
      */
     private void clearGrid(Group root) {
-        for (Rectangle cell : currentGrid) root.getChildren().remove(cell);
+        for (Rectangle cell : currentGrid) {
+        	root.getChildren().remove(cell);
+        
+        }
+        currentGrid = new ArrayList<>();
     }
 
     /**

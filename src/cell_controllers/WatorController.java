@@ -1,6 +1,7 @@
 package cell_controllers;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import cellsociety_team08.Cell;
 import javafx.scene.paint.Color;
@@ -12,8 +13,10 @@ import watorCells.WatorCell;
 
 public class WatorController extends CellController {
 
-	public WatorController(int[] dimensions, double fishPercent, double sharkPercent) {
+	public WatorController(int[] dimensions, Map<String, Double> paramMap) {
 		super(dimensions);
+		double fishPercent = paramMap.get("fishrate");
+		double sharkPercent = paramMap.get("sharkrate");
 
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
