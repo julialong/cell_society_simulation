@@ -1,15 +1,18 @@
 package cellsociety_team08;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import javafx.scene.paint.Color;
 
 public class SegregationController extends CellController {
-	private float threshold;
+	private double threshold;
 
-	public SegregationController(int[] dimensions, int[][] cellsX, int[][] cellsO, float thresholdValue) {
+	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
 		super(dimensions);
-		threshold = thresholdValue;
+		int[][] cellsX =  map.get("x");
+		int[][] cellsO =  map.get("o");
+		threshold = paramMap.get("threshold");
 		for (int x = 0; x < cellsX.length; x++) {
 			int xCoord = cellsX[x][0];
 			int yCoord = cellsX[x][1];
@@ -38,8 +41,8 @@ public class SegregationController extends CellController {
 				
 				// deal with x and o
 				if (!toSetType.equals("default")) {
-					float same = 0;
-					float diff = 0;
+					double same = 0;
+					double diff = 0;
 					String[] neighbours = toSet.getNeighborStateNames();
 					for (String type:neighbours) {
 						if (type!=null) {
@@ -51,7 +54,7 @@ public class SegregationController extends CellController {
 							}
 						}
 					}
-					float myRatio = same/diff;
+					double myRatio = same/diff;
 					if (myRatio < threshold) {
 						toSet.setNextStateDefault();
 						movers.add(toSetType);

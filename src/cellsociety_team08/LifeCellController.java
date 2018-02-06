@@ -1,11 +1,14 @@
 package cellsociety_team08;
 
+import java.io.File;
+import java.util.Map;
+
 import javafx.scene.paint.Color;
 
 public class LifeCellController extends CellController {
-	public LifeCellController(int[] dimensions, int[][] cellsOn) {
+	public LifeCellController(int[] dimensions, Map<String, int[][]> map) {
 		super(dimensions);
-
+		int[][] cellsOn =  map.get("on");
 		for (int z = 0; z < cellsOn.length; z++) {
 			int xCoord = cellsOn[z][0];
 			int yCoord = cellsOn[z][1];

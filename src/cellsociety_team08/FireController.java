@@ -1,14 +1,18 @@
 package cellsociety_team08;
 
+import java.util.Map;
+
 import javafx.scene.paint.Color;
 
 public class FireController extends CellController {
 
-	float catchProbability;
+	double catchProbability;
 
-	public FireController(int[] dimensions, int[][] cellsOnFire, float probability) {
+	public FireController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
 		super(dimensions);
-		catchProbability = probability;
+		int[][] cellsOnFire =  map.get("burning");
+		
+		catchProbability = paramMap.get("probability");
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				Cell tempCell = new Cell("tree");
