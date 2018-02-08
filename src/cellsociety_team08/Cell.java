@@ -6,6 +6,7 @@ public class Cell {
 	private String currentState;
 	private String nextState;
 	protected Color colour;
+	private final int NUMBER_OF_NEIGHBOURS = 8;
 	
 	public Cell[] neighbors; 
 	 
@@ -59,7 +60,7 @@ public class Cell {
 	}
 
 	public String[] getNeighborStateNames() {
-		String[] neighborStateNames = new String[8];
+		String[] neighborStateNames = new String[NUMBER_OF_NEIGHBOURS];
 		for (int x = 0; x < neighborStateNames.length; x++) {
 			
 			if (neighbors[x] != null) neighborStateNames[x] = neighbors[x].currentState;
