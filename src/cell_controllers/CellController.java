@@ -8,14 +8,14 @@ public abstract class CellController {
 	protected Cell[][] cellGrid;
 	protected int xSize;
 	protected int ySize;
-	private final int TOPLEFT = 0;
-	private final int TOP = 1;
-	private final int TOPRIGHT = 2;
-	private final int LEFT = 3;
-	private final int RIGHT = 4;
-	private final int BOTTOMLEFT = 5;
-	private final int BOTTOM = 6;
-	private final int BOTTOMRIGHT = 7;
+	private static final int TOPLEFT = 0;
+	private static final int TOP = 1;
+	private static final int TOPRIGHT = 2;
+	private static final int LEFT = 3;
+	private static final int RIGHT = 4;
+	private static final int BOTTOMLEFT = 5;
+	private static final int BOTTOM = 6;
+	private static final int BOTTOMRIGHT = 7;
 	
 	
 	
@@ -105,13 +105,4 @@ public abstract class CellController {
 		return colors;
 	}
 
-	public void printCells() {
-		for (int x = 0; x < cellGrid.length; x++) {
-			System.out.println("");
-			for (int y = 0; y < cellGrid[x].length; y++) {
-				System.out.print(cellGrid[x][y].getState() + " ");
-			}
-		}
-		System.out.println("");
-	}
 }

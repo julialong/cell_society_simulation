@@ -8,8 +8,8 @@ import java.util.Map;
 import javafx.scene.paint.Color;
 
 public class LifeCellController extends CellController {
-	private final int MIN_NEIGHBOUR = 2;
-	private final int MAX_NEIGHBOUR = 3;
+	private static final int MIN_NEIGHBOUR = 2;
+	private static final int MAX_NEIGHBOUR = 3;
 	
 	public LifeCellController(int[] dimensions, Map<String, int[][]> map) {
 		super(dimensions);

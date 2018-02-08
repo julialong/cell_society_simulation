@@ -2,8 +2,8 @@ package watorCells;
 
 public class Shark extends Animal {
 	private int health;
-	private final int SHARKHEALTH = 10;
-	private final int HEALTHGAIN = 5;
+	private static final int SHARKHEALTH = 10;
+	private static final int HEALTHGAIN = 5;
 
 	public Shark() {
 		health = SHARKHEALTH;
