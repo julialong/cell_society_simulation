@@ -15,13 +15,14 @@ import javafx.util.Duration;
 
 public class Simulator {
 
-    private final String CONWAYS = "life";
-    private final String SPREADINGFIRE = "fire";
-    private final String SEGREGATION = "segregation";
-    private final String WATOR = "wator";
+    private static final String CONWAYS = "life";
+    private static final String SPREADINGFIRE = "fire";
+    private static final String SEGREGATION = "segregation";
+    private static final String WATOR = "wator";
 
     private static final int FRAMES_PER_SECOND = 40;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final int START_STEP = 5;
 
     private int[] dimensions;
     private Map<String, int[][]> cellTypes;
@@ -47,7 +48,7 @@ public class Simulator {
      * @param root  the JavaFX Group root in GUI
      */
     public void startSimulation(Stage stage, Group root) {
-        stepTime = 5;
+        stepTime = START_STEP;
         setupCellController();
         setupGrid(root);
         stage.show();
@@ -60,7 +61,9 @@ public class Simulator {
      * @param root the JavaFX Group root in GUI
      */
     private void step(Group root) {
-        if (!simulationState) return;
+        if (!simulationState) {
+            return;
+        }
         updateCells(root);
     }
 
@@ -91,11 +94,21 @@ public class Simulator {
      * Sets up the cell controller based on the simulation type from the XML file
      */
     private void setupCellController() {
-        if (simulationType.equals(CONWAYS)) control = new LifeCellController(dimensions, cellTypes);
-        else if (simulationType.equals(SPREADINGFIRE)) control = new FireController(dimensions, cellTypes, parameters);
-        else if (simulationType.equals(SEGREGATION)) control = new SegregationController(dimensions, cellTypes, parameters);
-        else if (simulationType.equals(WATOR)) control = new WatorController(dimensions, parameters);
-        else throw new IllegalArgumentException();
+        if (simulationType.equals(CONWAYS)) {
+            control = new LifeCellController(dimensions, cellTypes);
+        }
+        else if (simulationType.equals(SPREADINGFIRE)) {
+            control = new FireController(dimensions, cellTypes, parameters);
+        }
+        else if (simulationType.equals(SEGREGATION)) {
+            control = new SegregationController(dimensions, cellTypes, parameters);
+        }
+        else if (simulationType.equals(WATOR)) {
+            control = new WatorController(dimensions, parameters);
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
     }
 
     /**
@@ -149,7 +162,9 @@ public class Simulator {
      * @param root the JavaFX Group root in GUI
      */
     private void clearGrid(Group root) {
-        for (Rectangle cell : currentGrid) root.getChildren().remove(cell);
+        for (Rectangle cell : currentGrid) {
+            root.getChildren().remove(cell);
+        }
         currentGrid = null;
     }
 
@@ -192,7 +207,9 @@ public class Simulator {
      * Decreases the delay time for the simulation so it moves more quickly
      */
     public void speedUp() {
-        if (this.stepTime > 0) this.stepTime--;
+        if (this.stepTime > 0) {
+            this.stepTime--;
+        }
     }
 
     /**
