@@ -9,13 +9,8 @@ public class Shark extends Animal {
 		health = SHARKHEALTH;
 	}
 	
-	@Override
-	public int getHealth() {
-		return health;
-	}
-	
 	public boolean isDead() {
-		return SHARKHEALTH == 0;
+		return health == 0;
 	}
 	
 	@Override

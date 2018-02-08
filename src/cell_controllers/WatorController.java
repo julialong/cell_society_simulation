@@ -117,7 +117,7 @@ public class WatorController extends CellController {
 		ArrayList<WatorCell> possibleFish = new ArrayList<WatorCell>();
 		ArrayList<WatorCell> possibleWater = new ArrayList<WatorCell>();
 
-		WatorCell[] neighbours = (WatorCell[]) animal.neighbors;
+		WatorCell[] neighbours = (WatorCell[]) animal.getNeighbors();
 		for (WatorCell wc : neighbours) {
 			if (wc!= null) {
 				if (wc.getAnimalType().equals(FISH)) {

@@ -5,13 +5,7 @@ public abstract class Animal {
 	protected int time;
 	private final int TIME_TO_MULTIPLY = 10;
 
-	public int getHealth() {
-
-		return 1;
-	}
-
 	public void incrementTime() {
-
 		time++;
 	}
 	
