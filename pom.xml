@@ -7,6 +7,7 @@
     <properties>
         <project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
     </properties>
+
     <build>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
@@ -26,3 +27,4 @@
         </plugins>
     </build>
 </project>
+

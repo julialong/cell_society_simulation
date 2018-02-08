@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 
 public class SegregationController extends CellController {
 	private double threshold;
+	private final String DEFAULT = "default";
 
 
 	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
@@ -42,16 +43,16 @@ public class SegregationController extends CellController {
 				String toSetType = toSet.getState();
 				
 				// deal with x and o
-				if (!toSetType.equals("default")) {
+				if (!toSetType.equals(DEFAULT)) {
 					double same = 0;
 					double diff = 0;
 					String[] neighbours = toSet.getNeighborStateNames();
 					for (String type:neighbours) {
-						if (!type.equals("default")) {
+						if (!type.equals(DEFAULT)) {
 							if (type.equals(toSetType)) {
 								same++;
 							}
-							else if (!type.equals(toSetType) && !type.equals("default")){
+							else if (!type.equals(toSetType) && !type.equals(DEFAULT)){
 								diff++;
 							}
 						}
@@ -72,7 +73,7 @@ public class SegregationController extends CellController {
 				}
 				
 				// deal with default
-				else if (toSetType.equals("default")) {
+				else if (toSetType.equals(DEFAULT)) {
 					if (movers.size()!=0) {
 						String race = movers.remove(0);
 						toSet.setNextState(race);
