@@ -14,7 +14,7 @@ import javafx.scene.Group;
 import javafx.util.Duration;
 
 public class Simulator {
-	
+
     private final String CONWAYS = "life";
     private final String SPREADINGFIRE = "fire";
     private final String SEGREGATION = "segregation";
@@ -94,7 +94,7 @@ public class Simulator {
         if (simulationType.equals(CONWAYS)) control = new LifeCellController(dimensions, cellTypes);
         else if (simulationType.equals(SPREADINGFIRE)) control = new FireController(dimensions, cellTypes, parameters);
         else if (simulationType.equals(SEGREGATION)) control = new SegregationController(dimensions, cellTypes, parameters);
-        //else if (simulationType.equals(WATOR)) control = new WatorController(dimensions, parameters);
+        else if (simulationType.equals(WATOR)) control = new WatorController(dimensions, parameters);
         else throw new IllegalArgumentException();
     }
 
@@ -116,18 +116,33 @@ public class Simulator {
      */
     private void updateGridColors(Group root) {
         clearGrid(root);
+		currentGrid = new ArrayList<>();
         Color[][] newColors = control.getColors();
         for (int i = 0; i < dimensions[0]; i++) {
             for (int j = 0; j < dimensions[1]; j++) {
-                Rectangle currentCell = new Rectangle(GUI.XBAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight);
-                currentCell.setFill(newColors[i][j]);
-                currentCell.setStroke(Color.DARKGREY);
-                currentCell.setStrokeType(StrokeType.INSIDE);
+                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
                 currentGrid.add(currentCell);
                 root.getChildren().add(currentCell);
             }
         }
     }
+
+	/**
+	 * Creates a new cell with the given parameters
+	 * @param x x position
+	 * @param y y position
+	 * @param width width of cell
+	 * @param height height of cell
+	 * @param color color of cell
+	 * @return
+	 */
+    private Rectangle createNewCell(int x, int y, int width, int height, Color color) {
+    	Rectangle newCell = new Rectangle(x, y, width, height);
+		newCell.setFill(color);
+		newCell.setStroke(Color.DARKGREY);
+		newCell.setStrokeType(StrokeType.INSIDE);
+		return newCell;
+	}
 
     /**
      * Removes current cells from the GUI root
@@ -135,7 +150,7 @@ public class Simulator {
      */
     private void clearGrid(Group root) {
         for (Rectangle cell : currentGrid) root.getChildren().remove(cell);
-        currentGrid = new ArrayList<>();
+        currentGrid = null;
     }
 
     /**
