@@ -74,7 +74,7 @@ public class SegregationController extends CellController {
 				
 				// deal with default
 				else if (toSetType.equals(DEFAULT)) {
-					if (movers.size()!=0) {
+					if (!movers.isEmpty()) {
 						String race = movers.remove(0);
 						toSet.setNextState(race);
 						if (race.equals("X")) {

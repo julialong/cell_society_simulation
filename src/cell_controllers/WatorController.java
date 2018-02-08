@@ -96,7 +96,7 @@ public class WatorController extends CellController {
 
 	public void updateShark(WatorCell sharkCell) {
 		sharkCell.decrementAnimalHealth();
-		if (sharkCell.getAnimal().getHealth() == 0) {
+		if (sharkCell.getAnimal().isDead()) {
 			sharkCell.setToWater();
 		} else {
 			WatorCell moveHere = newSpot(sharkCell);
@@ -131,10 +131,10 @@ public class WatorController extends CellController {
 		Random rand = new Random();
 
 		if (animal.getAnimalType().equals(SHARK)) {
-			if (possibleFish.size() == 0 && possibleWater.size() == 0) {
+			if (possibleFish.isEmpty() && possibleWater.isEmpty()) {
 				return animal; // throw exception because no where to move. returning self for now.
 			}
-			if (possibleFish.size() != 0) {
+			if (!possibleFish.isEmpty()) {
 				
 				int index = rand.nextInt(possibleFish.size());
 				animal.getAnimal().replenishHealth();
