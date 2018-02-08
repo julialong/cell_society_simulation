@@ -90,7 +90,6 @@ public class WatorController extends CellController {
 	}
 
 	public void updateShark(WatorCell sharkCell) {
-		System.out.println(sharkCell.getAnimal().getHealth());
 		sharkCell.decrementAnimalHealth();
 		if (sharkCell.getAnimal().getHealth() == 0) {
 			sharkCell.setToWater();

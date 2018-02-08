@@ -6,10 +6,8 @@
     <name>Julia Long</name>
     <name>Jeffrey Li</name>
   </authors>
-  <dimensions>
-    <xsize>30</xsize>
-    <ysize>30</ysize>
-  </dimensions>
+  <dimensions><xsize>30</xsize>
+    <ysize>30</ysize></dimensions>
   <parameter_list>
     <parameters id="sharkrate">
       <value>0.1</value>
