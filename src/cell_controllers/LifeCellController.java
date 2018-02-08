@@ -8,6 +8,9 @@ import java.util.Map;
 import javafx.scene.paint.Color;
 
 public class LifeCellController extends CellController {
+	private final int MIN_NEIGHBOUR = 2;
+	private final int MAX_NEIGHBOUR = 3;
+	
 	public LifeCellController(int[] dimensions, Map<String, int[][]> map) {
 		super(dimensions);
 		int[][] cellsOn =  map.get("on");
@@ -30,7 +33,7 @@ public class LifeCellController extends CellController {
 				int numberOn = calcNumbersOn(stateNameList);
 
 				if (toSet.getState().equals("on")) {
-					if (numberOn < 2 || numberOn > 3) {
+					if (numberOn < MIN_NEIGHBOUR || numberOn > MAX_NEIGHBOUR) {
 						toSet.setNextStateDefault();
 						; // if cell is on and has either <2 or >3
 							// neighbors, then turn next state off
@@ -38,7 +41,7 @@ public class LifeCellController extends CellController {
 						toSet.setNextState("on");
 					}
 				} else {
-					if (numberOn == 3) {
+					if (numberOn == MAX_NEIGHBOUR) {
 						toSet.setNextState("on");
 						; // if cell is off, and 3 cells around are on // on,
 							// then turn next state on
@@ -68,16 +71,5 @@ public class LifeCellController extends CellController {
 		return numberOn;
 	}
 
-//	public static void main(String[] args) {
-//		ParserXML parser = new ParserXML("life.xml");
-//		LifeCellController lifeCellController = new LifeCellController(parser.getDimensions(), parser.getCellList());
-//		lifeCellController.printCells();
-//		lifeCellController.setNextStates();
-//		lifeCellController.updateCells();
-//		lifeCellController.printCells();
-//		lifeCellController.setNextStates();
-//		lifeCellController.updateCells();
-//		lifeCellController.printCells();
-//	}
 
 }
