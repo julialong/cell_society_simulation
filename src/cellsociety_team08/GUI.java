@@ -21,7 +21,8 @@ public class GUI {
     private Scene startScene;
     public static final int XSIZE = 600;
     public static final int YSIZE = 600;
-    public static final int XBAR = 200;
+    public static final int SIDE_BAR = 600;
+    public static final int BOTTOM_BAR = 200;
     public final int POPUP_BOX_WIDTH = 300;
     public final int POPUP_BOX_HEIGHT = 50;
 
@@ -66,7 +67,7 @@ public class GUI {
      */
     private void setStage(Stage stage) {
         stage.setTitle(NAME);
-        startScene = new Scene(root, XSIZE + XBAR, YSIZE);
+        startScene = new Scene(root, XSIZE + SIDE_BAR, YSIZE + BOTTOM_BAR);
         stage.setScene(startScene);
     }
 
@@ -76,6 +77,7 @@ public class GUI {
      */
     private void addUserBar(Stage stage) {
         addSettingsBar();
+        addBottomBar();
         addButtons(stage);
     }
 
@@ -91,9 +93,18 @@ public class GUI {
      * Adds bar to the left of the simulator
      */
     private void addSettingsBar() {
-        Rectangle settingsBar = new Rectangle(0, 0, XBAR, YSIZE);
+        Rectangle settingsBar = new Rectangle(0, 0, SIDE_BAR, YSIZE);
         settingsBar.setFill(Color.LIGHTGRAY);
         root.getChildren().add(settingsBar);
+    }
+
+    /**
+     * Adds bar to the bottom of the simulator
+     */
+    private void addBottomBar() {
+        Rectangle bottomBar = new Rectangle (0,YSIZE, XSIZE + SIDE_BAR, BOTTOM_BAR);
+        bottomBar.setFill(Color.LIGHTGRAY);
+        root.getChildren().add(bottomBar);
     }
 
     /**
@@ -217,6 +228,7 @@ public class GUI {
     private void openFileChooser(Stage stage) {
         configFile = fileChooser.showOpenDialog(stage);
         if (configFile != null) {
+            sim = new Simulator();
             sim.setFile(configFile);
         }
     }
