@@ -7,8 +7,8 @@
     <name>Jeffrey Li</name>
   </authors>
   <dimensions>
-    <xsize>20</xsize>
-    <ysize>20</ysize>
+    <xsize>30</xsize>
+    <ysize>30</ysize>
   </dimensions>
   <parameter_list>
     <parameters id="sharkrate">
