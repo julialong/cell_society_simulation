@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 public class SegregationController extends CellController {
 	private double threshold;
-	private final String DEFAULT = "default";
+	private static final String DEFAULT = "default";
 
 
 	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {

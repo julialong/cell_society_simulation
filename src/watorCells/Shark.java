@@ -2,20 +2,15 @@ package watorCells;
 
 public class Shark extends Animal {
 	private int health;
-	private final int SHARKHEALTH = 10;
-	private final int HEALTHGAIN = 5;
+	private static final int SHARKHEALTH = 10;
+	private static final int HEALTHGAIN = 5;
 
 	public Shark() {
 		health = SHARKHEALTH;
 	}
 	
-	@Override
-	public int getHealth() {
-		return health;
-	}
-	
 	public boolean isDead() {
-		return SHARKHEALTH == 0;
+		return health == 0;
 	}
 	
 	@Override
