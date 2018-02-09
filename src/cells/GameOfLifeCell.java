@@ -12,6 +12,12 @@ public class GameOfLifeCell extends Cell {
 	public GameOfLifeCell(String onOrOff) {
 		super(onOrOff);
 		currentState = onOrOff;
+		if (onOrOff == ON) {
+			setOn();
+		}
+		else {
+			setOff();
+		}
 	}
 
 	public void setNextState() {
