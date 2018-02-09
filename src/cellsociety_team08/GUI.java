@@ -35,7 +35,7 @@ public class GUI {
 
 
     private static final String DEFAULT_RESOURCE_PATH = "resources/";
-    private static final String START_FILE = "./data/wator.xml";
+    private static final String START_FILE = "./data/randomlife.xml";
 
 
     private ToggleButton playButton;
