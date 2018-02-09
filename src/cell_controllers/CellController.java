@@ -16,6 +16,7 @@ public abstract class CellController {
 	private static final int BOTTOMLEFT = 5;
 	private static final int BOTTOM = 6;
 	private static final int BOTTOMRIGHT = 7;
+	private static final int NUMBER_OF_NEIGHBOURS = 8;
 	
 	
 	
@@ -53,7 +54,7 @@ public abstract class CellController {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 
-				Cell[] tempArray = new Cell[8];
+				Cell[] tempArray = new Cell[NUMBER_OF_NEIGHBOURS];
 				tempArray[TOPLEFT] = retrieveCell(x - 1, y - 1);
 				tempArray[TOP] = retrieveCell(x - 1, y);
 				tempArray[TOPRIGHT] = retrieveCell(x - 1, y + 1);
