@@ -1,8 +1,7 @@
 package watorCells;
 
+import cells.Cell;
 import javafx.scene.paint.Color;
-
-import cellsociety_team08.Cell;
 
 public class WatorCell extends Cell{
 	private Animal animal;

@@ -1,6 +1,6 @@
 package cell_controllers;
 
-import cellsociety_team08.Cell;
+import cells.Cell;
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
@@ -8,6 +8,8 @@ public abstract class CellController {
 	protected Cell[][] cellGrid;
 	protected int xSize;
 	protected int ySize;
+
+
 	private static final int TOPLEFT = 0;
 	private static final int TOP = 1;
 	private static final int TOPRIGHT = 2;
@@ -17,8 +19,6 @@ public abstract class CellController {
 	private static final int BOTTOM = 6;
 	private static final int BOTTOMRIGHT = 7;
 	private static final int NUMBER_OF_NEIGHBOURS = 8;
-	
-	
 	
 
 	/**
@@ -32,7 +32,7 @@ public abstract class CellController {
 	public CellController(int[] dimensions) {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
-
+		
 		cellGrid = new Cell[xSize][ySize];
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {

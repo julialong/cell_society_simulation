@@ -32,8 +32,10 @@ public class GUI {
     public static final int BUTTON_X = 20;
     public static final int BUTTON_SPACING = 50;
 
+
     private static final String DEFAULT_RESOURCE_PATH = "resources/";
-    private static final String START_FILE = "./data/startfile.xml";
+    private static final String START_FILE = "./data/wator.xml";
+
 
     private ToggleButton playButton;
     private ToggleButton pauseButton;

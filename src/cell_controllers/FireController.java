@@ -2,7 +2,7 @@ package cell_controllers;
 
 import java.util.Map;
 
-import cellsociety_team08.Cell;
+import cells.Cell;
 import javafx.scene.paint.Color;
 
 public class FireController extends CellController {
