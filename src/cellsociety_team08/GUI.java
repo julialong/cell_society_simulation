@@ -1,6 +1,5 @@
 package cellsociety_team08;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -20,15 +19,23 @@ public class GUI {
 
     public static final String NAME = "Cell Society";
     private Scene startScene;
-    private Stage myStage;
     public static final int XSIZE = 600;
     public static final int YSIZE = 600;
-    public static final int XBAR = 200;
-    public final int POPUP_BOX_WIDTH = 300;
-    public final int POPUP_BOX_HEIGHT = 50;
+    public static final int HALF_X = XSIZE/2;
+    public static final int HALF_Y = YSIZE/2;
+    public static final int SIDE_BAR = 600;
+    public static final int BOTTOM_BAR = 200;
+    public static final int POPUP_BOX_WIDTH = 300;
+    public static final int POPUP_BOX_HEIGHT = 50;
+    public static final int ERROR_X_ADJUSTMENT = 50;
+    public static final int ERROR_Y_ADJUSTMENT = 25;
+    public static final int BUTTON_X = 20;
+    public static final int BUTTON_SPACING = 50;
 
-    private final String DEFAULT_RESOURCE_PATH = "resources/";
-    private final String START_FILE = "./data/startfile.xml";
+
+    private static final String DEFAULT_RESOURCE_PATH = "resources/";
+    private static final String START_FILE = "./data/randomlife.xml";
+
 
     private ToggleButton playButton;
     private ToggleButton pauseButton;
@@ -45,7 +52,7 @@ public class GUI {
     private File configFile;
 
     private Group root = new Group();
-    private Simulator sim;
+    private Simulator mySimulator;
 
     /**
      * Starts the GUI and initializes a blank simulation grid
@@ -54,14 +61,11 @@ public class GUI {
      */
     public void start(Stage stage) {
         setStage(stage);
-
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + language);
-        sim = new Simulator();
+        mySimulator = new Simulator();
 
-        addUserBars(stage);
-
+        addUserBar(stage);
         openStartFile();
-
         startSimulation(stage);
     }
 
@@ -71,9 +75,8 @@ public class GUI {
      * @param stage is the window currently showing the simulation
      */
     private void setStage(Stage stage) {
-        myStage = stage;
         stage.setTitle(NAME);
-        startScene = new Scene(root, XSIZE + XBAR, YSIZE);
+        startScene = new Scene(root, XSIZE + SIDE_BAR, YSIZE + BOTTOM_BAR);
         stage.setScene(startScene);
     }
 
@@ -81,8 +84,9 @@ public class GUI {
      * Adds setting bar and buttons
      * @param stage
      */
-    private void addUserBars(Stage stage) {
+    private void addUserBar(Stage stage) {
         addSettingsBar();
+        addBottomBar();
         addButtons(stage);
     }
 
@@ -91,16 +95,25 @@ public class GUI {
      */
     private void openStartFile() {
         File start = new File(START_FILE);
-        sim.setFile(start);
+        mySimulator.setFile(start);
     }
 
     /**
      * Adds bar to the left of the simulator
      */
     private void addSettingsBar() {
-        Rectangle settingsBar = new Rectangle(0, 0, XBAR, YSIZE);
+        Rectangle settingsBar = new Rectangle(0, 0, SIDE_BAR, YSIZE);
         settingsBar.setFill(Color.LIGHTGRAY);
         root.getChildren().add(settingsBar);
+    }
+
+    /**
+     * Adds bar to the bottom of the simulator
+     */
+    private void addBottomBar() {
+        Rectangle bottomBar = new Rectangle (0,YSIZE, XSIZE + SIDE_BAR, BOTTOM_BAR);
+        bottomBar.setFill(Color.LIGHTGRAY);
+        root.getChildren().add(bottomBar);
     }
 
     /**
@@ -122,8 +135,8 @@ public class GUI {
      */
     private void addPlayButton() {
         playButton = new ToggleButton(myResources.getString("Play"));
-        playButton.setLayoutX(20);
-        playButton.setLayoutY(50);
+        playButton.setLayoutX(BUTTON_X);
+        playButton.setLayoutY(BUTTON_SPACING);
         playButton.setToggleGroup(playStatus);
         root.getChildren().add(playButton);
         playButton.setOnAction((ActionEvent event) -> turnOn());
@@ -134,8 +147,8 @@ public class GUI {
      */
     private void addPauseButton() {
         pauseButton = new ToggleButton(myResources.getString("Pause"));
-        pauseButton.setLayoutX(20);
-        pauseButton.setLayoutY(playButton.getLayoutY() + 50);
+        pauseButton.setLayoutX(BUTTON_X);
+        pauseButton.setLayoutY(playButton.getLayoutY() + BUTTON_SPACING);
         pauseButton.setToggleGroup(playStatus);
         root.getChildren().add(pauseButton);
         pauseButton.setOnAction((ActionEvent event) -> turnOff());
@@ -146,10 +159,10 @@ public class GUI {
      */
     private void addStepButton() {
         stepButton = new Button(myResources.getString("Step"));
-        stepButton.setLayoutX(20);
-        stepButton.setLayoutY(pauseButton.getLayoutY() + 50);
+        stepButton.setLayoutX(BUTTON_X);
+        stepButton.setLayoutY(pauseButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(stepButton);
-        stepButton.setOnAction((ActionEvent event) -> sim.manualStep(root));
+        stepButton.setOnAction((ActionEvent event) -> mySimulator.manualStep(root));
     }
 
     /**
@@ -157,10 +170,10 @@ public class GUI {
      */
     private void addFasterButton() {
         fasterButton = new Button(myResources.getString("Faster"));
-        fasterButton.setLayoutX(20);
-        fasterButton.setLayoutY(stepButton.getLayoutY() + 50);
+        fasterButton.setLayoutX(BUTTON_X);
+        fasterButton.setLayoutY(stepButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(fasterButton);
-        fasterButton.setOnAction((ActionEvent event) -> sim.speedUp());
+        fasterButton.setOnAction((ActionEvent event) -> mySimulator.speedUp());
     }
 
     /**
@@ -168,10 +181,10 @@ public class GUI {
      */
     private void addSlowerButton() {
         slowerButton = new Button(myResources.getString("Slower"));
-        slowerButton.setLayoutX(20);
-        slowerButton.setLayoutY(fasterButton.getLayoutY() + 50);
+        slowerButton.setLayoutX(BUTTON_X);
+        slowerButton.setLayoutY(fasterButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(slowerButton);
-        slowerButton.setOnAction((ActionEvent event) -> sim.speedDown());
+        slowerButton.setOnAction((ActionEvent event) -> mySimulator.speedDown());
     }
 
     /**
@@ -181,8 +194,8 @@ public class GUI {
      */
     private void addFileButton(Stage stage) {
         fileButton = new Button(myResources.getString("UploadFile"));
-        fileButton.setLayoutX(20);
-        fileButton.setLayoutY(slowerButton.getLayoutY() + 50);
+        fileButton.setLayoutX(BUTTON_X);
+        fileButton.setLayoutY(slowerButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(fileButton);
         fileButton.setOnAction((ActionEvent event) -> changeFile(stage));
     }
@@ -191,7 +204,7 @@ public class GUI {
      * Selects the "play" button in the toggle group, and turns on the simulation
      */
     private void turnOn() {
-        sim.turnOn();
+        mySimulator.turnOn();
         playStatus.selectToggle(playButton);
     }
 
@@ -199,7 +212,7 @@ public class GUI {
      * Selects the "pause" button in the toggle group, and turns off the simulation
      */
     private void turnOff() {
-        sim.turnOff();
+        mySimulator.turnOff();
         playStatus.selectToggle(pauseButton);
     }
 
@@ -210,6 +223,7 @@ public class GUI {
      * @param stage is the window currently showing the simulation
      */
     private void changeFile(Stage stage) {
+        mySimulator.turnOff();
         openFileChooser(stage);
         startSimulation(stage);
     }
@@ -223,7 +237,8 @@ public class GUI {
     private void openFileChooser(Stage stage) {
         configFile = fileChooser.showOpenDialog(stage);
         if (configFile != null) {
-            sim.setFile(configFile);
+            mySimulator = new Simulator();
+            mySimulator.setFile(configFile);
         }
     }
 
@@ -233,12 +248,12 @@ public class GUI {
      */
     private void startSimulation(Stage stage){
         try {
-            sim.startSimulation(stage, root);
+            mySimulator.startSimulation(stage, root);
         }
         catch (Exception e) {
-            Rectangle errorBar = new Rectangle(XSIZE/2 - 50, YSIZE/2 - 25, POPUP_BOX_WIDTH, POPUP_BOX_HEIGHT);
+            Rectangle errorBar = new Rectangle(HALF_X - ERROR_X_ADJUSTMENT, HALF_Y - ERROR_Y_ADJUSTMENT, POPUP_BOX_WIDTH, POPUP_BOX_HEIGHT);
             errorBar.setFill(Color.DARKRED);
-            Text errorText = new Text(XSIZE/2, YSIZE/2, myResources.getString("Error"));
+            Text errorText = new Text(HALF_X, HALF_Y, myResources.getString("Error"));
             errorText.setFill(Color.WHITE);
             root.getChildren().add(errorBar);
             root.getChildren().add(errorText);

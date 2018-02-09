@@ -7,12 +7,12 @@
     <name>Jeffrey Li</name>
   </authors>
   <dimensions>
-    <xsize>20</xsize>
-    <ysize>20</ysize>
+    <xsize>50</xsize>
+    <ysize>50</ysize>
   </dimensions>
   <parameter_list>
     <parameters id="sharkrate">
-      <value>.3</value>
+      <value>.12</value>
     </parameters>
     <parameters id="fishrate">
       <value>.2</value>

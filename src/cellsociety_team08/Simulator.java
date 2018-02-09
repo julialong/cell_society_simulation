@@ -3,6 +3,7 @@ package cellsociety_team08;
 import java.io.File;
 import java.util.*;
 
+import cell_controllers.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
@@ -14,13 +15,15 @@ import javafx.util.Duration;
 
 public class Simulator {
 
-    private final String CONWAYS = "life";
-    private final String SPREADINGFIRE = "fire";
-    private final String SEGREGATION = "segregation";
-    private final String WATOR = "wator";
+
+    private static final String CONWAYS = "life";
+    private static final String SPREADINGFIRE = "fire";
+    private static final String SEGREGATION = "segregation";
+    private static final String WATOR = "wator";
 
     private static final int FRAMES_PER_SECOND = 40;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final int START_STEP = 5;
 
     private int[] dimensions;
     private Map<String, int[][]> cellTypes;
@@ -36,6 +39,8 @@ public class Simulator {
 
     private List<Rectangle> currentGrid = new ArrayList<>();
 
+    private Graph myGraph;
+
     private Timeline animation;
     private KeyFrame frame;
 
@@ -46,8 +51,9 @@ public class Simulator {
      * @param root  the JavaFX Group root in GUI
      */
     public void startSimulation(Stage stage, Group root) {
-        stepTime = 2;
+        stepTime = START_STEP;
         setupCellController();
+        myGraph = new Graph();
         setupGrid(root);
         stage.show();
         startAnimation(root);
@@ -59,7 +65,9 @@ public class Simulator {
      * @param root the JavaFX Group root in GUI
      */
     private void step(Group root) {
-        if (!simulationState) return;
+        if (!simulationState) {
+            return;
+        }
         updateCells(root);
     }
 
@@ -70,6 +78,7 @@ public class Simulator {
     private void updateCells(Group root) {
         control.setNextStates();
         control.updateCells();
+
         updateGridColors(root);
     }
 
@@ -83,7 +92,6 @@ public class Simulator {
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
-        animation.setDelay(Duration.seconds(stepTime));
         animation.play();
     }
 
@@ -91,10 +99,21 @@ public class Simulator {
      * Sets up the cell controller based on the simulation type from the XML file
      */
     private void setupCellController() {
-        if (simulationType.equals(CONWAYS)) control = new LifeCellController(dimensions, cellTypes);
-        else if (simulationType.equals(SPREADINGFIRE)) control = new FireController(dimensions, cellTypes, parameters);
-        else if (simulationType.equals(SEGREGATION)) control = new SegregationController(dimensions, cellTypes, parameters);
-        else throw new IllegalArgumentException();
+        if (simulationType.equals(CONWAYS)) {
+            control = new LifeCellController(dimensions, cellTypes, parameters);
+        }
+        else if (simulationType.equals(SPREADINGFIRE)) {
+            control = new FireController(dimensions, cellTypes, parameters);
+        }
+        else if (simulationType.equals(SEGREGATION)) {
+            control = new SegregationController(dimensions, parameters);
+        }
+        else if (simulationType.equals(WATOR)) {
+            control = new WatorController(dimensions, parameters);
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
     }
 
     /**
@@ -115,25 +134,47 @@ public class Simulator {
      */
     private void updateGridColors(Group root) {
         clearGrid(root);
+		currentGrid = new ArrayList<>();
         Color[][] newColors = control.getColors();
         for (int i = 0; i < dimensions[0]; i++) {
             for (int j = 0; j < dimensions[1]; j++) {
-                Rectangle currentCell = new Rectangle(GUI.XBAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight);
-                currentCell.setFill(newColors[i][j]);
-                currentCell.setStroke(Color.DARKGREY);
-                currentCell.setStrokeType(StrokeType.INSIDE);
+                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
                 currentGrid.add(currentCell);
                 root.getChildren().add(currentCell);
             }
         }
     }
 
+    public void updateGraph(Group root) {
+        //TODO: Update grid and add
+    }
+
+	/**
+	 * Creates a new cell with the given parameters
+	 * @param x x position
+	 * @param y y position
+	 * @param width width of cell
+	 * @param height height of cell
+	 * @param color color of cell
+	 * @return
+	 */
+    private Rectangle createNewCell(int x, int y, int width, int height, Color color) {
+    	Rectangle newCell = new Rectangle(x, y, width, height);
+		newCell.setFill(color);
+		newCell.setStroke(Color.DARKGREY);
+		newCell.setStrokeType(StrokeType.INSIDE);
+		return newCell;
+	}
+
     /**
      * Removes current cells from the GUI root
      * @param root the JavaFX Group root in GUI
      */
     private void clearGrid(Group root) {
-        for (Rectangle cell : currentGrid) root.getChildren().remove(cell);
+        for (Rectangle cell : currentGrid) {
+            root.getChildren().remove(cell);
+        }
+        currentGrid = null;
     }
 
     /**
@@ -175,7 +216,9 @@ public class Simulator {
      * Decreases the delay time for the simulation so it moves more quickly
      */
     public void speedUp() {
-        if (this.stepTime > 0) this.stepTime--;
+        if (this.stepTime > 0) {
+            this.stepTime--;
+        }
     }
 
     /**
