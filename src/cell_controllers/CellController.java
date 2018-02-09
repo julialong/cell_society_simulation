@@ -32,7 +32,7 @@ public abstract class CellController {
 	public CellController(int[] dimensions) {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
-
+		
 		cellGrid = new Cell[xSize][ySize];
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {

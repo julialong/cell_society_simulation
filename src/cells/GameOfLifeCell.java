@@ -4,8 +4,8 @@ import javafx.scene.paint.Color;
 
 public class GameOfLifeCell extends Cell {
 
-	private static final String ON = "default";
-	private static final String OFF = "off";
+	private static final String ON = "on";
+	private static final String OFF = "default";
 	private static final int MIN_NEIGHBOUR = 2;
 	private static final int MAX_NEIGHBOUR = 3;
 

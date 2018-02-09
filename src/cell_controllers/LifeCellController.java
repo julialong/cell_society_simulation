@@ -9,14 +9,20 @@ import cells.GameOfLifeCell;
 public class LifeCellController extends CellController {
 
 
-	private static final String ON = "default";
-	private static final String OFF = "off";
+	private static final String ON = "on";
+	private static final String OFF = "default";
 
 	
 	public LifeCellController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
 
 		super(dimensions);
-
+		
+		cellGrid = new Cell[xSize][ySize];
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				cellGrid[x][y] = new GameOfLifeCell(OFF);
+			}
+		}
 		double onrate = paramMap.get("onrate");
 
 		int[][] cellsOn = map.get(ON);
@@ -30,7 +36,6 @@ public class LifeCellController extends CellController {
 			for (int y = 0; y < ySize; y++) {
 				double rand = Math.random();
 				if (rand < onrate) {
-
 					cellGrid[x][y] = new GameOfLifeCell(ON);
 				}
 			}
@@ -47,5 +52,4 @@ public class LifeCellController extends CellController {
 			}
 		}
 	}
-
 }
