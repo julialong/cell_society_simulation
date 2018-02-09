@@ -7,3 +7,4 @@ sonar_analysis:
     - sonarqube
   only:
     - master
+

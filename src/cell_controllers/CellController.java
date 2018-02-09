@@ -1,6 +1,6 @@
 package cell_controllers;
 
-import cellsociety_team08.Cell;
+import cells.Cell;
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
@@ -8,6 +8,18 @@ public abstract class CellController {
 	protected Cell[][] cellGrid;
 	protected int xSize;
 	protected int ySize;
+
+
+	private static final int TOPLEFT = 0;
+	private static final int TOP = 1;
+	private static final int TOPRIGHT = 2;
+	private static final int LEFT = 3;
+	private static final int RIGHT = 4;
+	private static final int BOTTOMLEFT = 5;
+	private static final int BOTTOM = 6;
+	private static final int BOTTOMRIGHT = 7;
+	private static final int NUMBER_OF_NEIGHBOURS = 8;
+	
 
 	/**
 	 * 
@@ -20,7 +32,7 @@ public abstract class CellController {
 	public CellController(int[] dimensions) {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
-
+		
 		cellGrid = new Cell[xSize][ySize];
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
@@ -42,15 +54,15 @@ public abstract class CellController {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 
-				Cell[] tempArray = new Cell[8];
-				tempArray[0] = retrieveCell(x - 1, y - 1);
-				tempArray[1] = retrieveCell(x - 1, y);
-				tempArray[2] = retrieveCell(x - 1, y + 1);
-				tempArray[3] = retrieveCell(x, y - 1);
-				tempArray[4] = retrieveCell(x, y + 1);
-				tempArray[5] = retrieveCell(x + 1, y - 1);
-				tempArray[6] = retrieveCell(x + 1, y);
-				tempArray[7] = retrieveCell(x + 1, y + 1);
+				Cell[] tempArray = new Cell[NUMBER_OF_NEIGHBOURS];
+				tempArray[TOPLEFT] = retrieveCell(x - 1, y - 1);
+				tempArray[TOP] = retrieveCell(x - 1, y);
+				tempArray[TOPRIGHT] = retrieveCell(x - 1, y + 1);
+				tempArray[LEFT] = retrieveCell(x, y - 1);
+				tempArray[RIGHT] = retrieveCell(x, y + 1);
+				tempArray[BOTTOMLEFT] = retrieveCell(x + 1, y - 1);
+				tempArray[BOTTOM] = retrieveCell(x + 1, y);
+				tempArray[BOTTOMRIGHT] = retrieveCell(x + 1, y + 1);
 				cellGrid[x][y].addNeighbors(tempArray);
 			}
 		}
@@ -94,13 +106,4 @@ public abstract class CellController {
 		return colors;
 	}
 
-	public void printCells() {
-		for (int x = 0; x < cellGrid.length; x++) {
-			System.out.println("");
-			for (int y = 0; y < cellGrid[x].length; y++) {
-				System.out.print(cellGrid[x][y].getState() + " ");
-			}
-		}
-		System.out.println("");
-	}
 }

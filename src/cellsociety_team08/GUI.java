@@ -22,13 +22,21 @@ public class GUI {
     private Scene startScene;
     public static final int XSIZE = 600;
     public static final int YSIZE = 600;
+    public static final int HALF_X = XSIZE/2;
+    public static final int HALF_Y = YSIZE/2;
     public static final int SIDE_BAR = 600;
     public static final int BOTTOM_BAR = 200;
-    public final int POPUP_BOX_WIDTH = 300;
-    public final int POPUP_BOX_HEIGHT = 50;
+    public static final int POPUP_BOX_WIDTH = 300;
+    public static final int POPUP_BOX_HEIGHT = 50;
+    public static final int ERROR_X_ADJUSTMENT = 50;
+    public static final int ERROR_Y_ADJUSTMENT = 25;
+    public static final int BUTTON_X = 20;
+    public static final int BUTTON_SPACING = 50;
 
-    private final String DEFAULT_RESOURCE_PATH = "resources/";
-    private final String START_FILE = "./data/startfile.xml";
+
+    private static final String DEFAULT_RESOURCE_PATH = "resources/";
+    private static final String START_FILE = "./data/wator.xml";
+
 
     private ToggleButton playButton;
     private ToggleButton pauseButton;
@@ -128,8 +136,8 @@ public class GUI {
      */
     private void addPlayButton() {
         playButton = new ToggleButton(myResources.getString("Play"));
-        playButton.setLayoutX(20);
-        playButton.setLayoutY(50);
+        playButton.setLayoutX(BUTTON_X);
+        playButton.setLayoutY(BUTTON_SPACING);
         playButton.setToggleGroup(playStatus);
         root.getChildren().add(playButton);
         playButton.setOnAction((ActionEvent event) -> turnOn());
@@ -140,8 +148,8 @@ public class GUI {
      */
     private void addPauseButton() {
         pauseButton = new ToggleButton(myResources.getString("Pause"));
-        pauseButton.setLayoutX(20);
-        pauseButton.setLayoutY(playButton.getLayoutY() + 50);
+        pauseButton.setLayoutX(BUTTON_X);
+        pauseButton.setLayoutY(playButton.getLayoutY() + BUTTON_SPACING);
         pauseButton.setToggleGroup(playStatus);
         root.getChildren().add(pauseButton);
         pauseButton.setOnAction((ActionEvent event) -> turnOff());
@@ -152,8 +160,8 @@ public class GUI {
      */
     private void addStepButton() {
         stepButton = new Button(myResources.getString("Step"));
-        stepButton.setLayoutX(20);
-        stepButton.setLayoutY(pauseButton.getLayoutY() + 50);
+        stepButton.setLayoutX(BUTTON_X);
+        stepButton.setLayoutY(pauseButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(stepButton);
         stepButton.setOnAction((ActionEvent event) -> mySimulator.manualStep(root));
     }
@@ -163,8 +171,8 @@ public class GUI {
      */
     private void addFasterButton() {
         fasterButton = new Button(myResources.getString("Faster"));
-        fasterButton.setLayoutX(20);
-        fasterButton.setLayoutY(stepButton.getLayoutY() + 50);
+        fasterButton.setLayoutX(BUTTON_X);
+        fasterButton.setLayoutY(stepButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(fasterButton);
         fasterButton.setOnAction((ActionEvent event) -> mySimulator.speedUp());
     }
@@ -174,8 +182,8 @@ public class GUI {
      */
     private void addSlowerButton() {
         slowerButton = new Button(myResources.getString("Slower"));
-        slowerButton.setLayoutX(20);
-        slowerButton.setLayoutY(fasterButton.getLayoutY() + 50);
+        slowerButton.setLayoutX(BUTTON_X);
+        slowerButton.setLayoutY(fasterButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(slowerButton);
         slowerButton.setOnAction((ActionEvent event) -> mySimulator.speedDown());
     }
@@ -187,8 +195,8 @@ public class GUI {
      */
     private void addFileButton(Stage stage) {
         fileButton = new Button(myResources.getString("UploadFile"));
-        fileButton.setLayoutX(20);
-        fileButton.setLayoutY(slowerButton.getLayoutY() + 50);
+        fileButton.setLayoutX(BUTTON_X);
+        fileButton.setLayoutY(slowerButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(fileButton);
         fileButton.setOnAction((ActionEvent event) -> changeFile(stage));
     }
@@ -251,9 +259,9 @@ public class GUI {
             mySimulator.startSimulation(stage, root);
         }
         catch (Exception e) {
-            Rectangle errorBar = new Rectangle(XSIZE/2 - 50, YSIZE/2 - 25, POPUP_BOX_WIDTH, POPUP_BOX_HEIGHT);
+            Rectangle errorBar = new Rectangle(HALF_X - ERROR_X_ADJUSTMENT, HALF_Y - ERROR_Y_ADJUSTMENT, POPUP_BOX_WIDTH, POPUP_BOX_HEIGHT);
             errorBar.setFill(Color.DARKRED);
-            Text errorText = new Text(XSIZE/2, YSIZE/2, myResources.getString("Error"));
+            Text errorText = new Text(HALF_X, HALF_Y, myResources.getString("Error"));
             errorText.setFill(Color.WHITE);
             root.getChildren().add(errorBar);
             root.getChildren().add(errorText);

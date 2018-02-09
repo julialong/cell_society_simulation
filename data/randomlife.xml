@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<life>
+  <title>Conway&apos;s Game of Life</title>
+  <authors>
+    <name>Edward Zhuang</name>
+    <name>Julia Long</name>
+    <name>Jeffrey Li</name>
+  </authors>
+  <dimensions>
+    <xsize>25</xsize>
+    <ysize>25</ysize>
+  </dimensions>
+  <parameter_list>
+  <parameters id="onrate">
+    <value>.2</value>
+  </parameters>
+  </parameter_list>
+  <cell_on_list>
+    <type id="on">
+    </type>
+  </cell_on_list>
+</life>

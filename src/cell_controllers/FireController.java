@@ -2,12 +2,12 @@ package cell_controllers;
 
 import java.util.Map;
 
-import cellsociety_team08.Cell;
+import cells.Cell;
 import javafx.scene.paint.Color;
 
 public class FireController extends CellController {
 
-	double catchProbability;
+	private double catchProbability;
 
 
 	public FireController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
