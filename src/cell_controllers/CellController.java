@@ -8,6 +8,17 @@ public abstract class CellController {
 	protected Cell[][] cellGrid;
 	protected int xSize;
 	protected int ySize;
+	private final int TOPLEFT = 0;
+	private final int TOP = 1;
+	private final int TOPRIGHT = 2;
+	private final int LEFT = 3;
+	private final int RIGHT = 4;
+	private final int BOTTOMLEFT = 5;
+	private final int BOTTOM = 6;
+	private final int BOTTOMRIGHT = 7;
+	
+	
+	
 
 	/**
 	 * 
@@ -43,14 +54,14 @@ public abstract class CellController {
 			for (int y = 0; y < ySize; y++) {
 
 				Cell[] tempArray = new Cell[8];
-				tempArray[0] = retrieveCell(x - 1, y - 1);
-				tempArray[1] = retrieveCell(x - 1, y);
-				tempArray[2] = retrieveCell(x - 1, y + 1);
-				tempArray[3] = retrieveCell(x, y - 1);
-				tempArray[4] = retrieveCell(x, y + 1);
-				tempArray[5] = retrieveCell(x + 1, y - 1);
-				tempArray[6] = retrieveCell(x + 1, y);
-				tempArray[7] = retrieveCell(x + 1, y + 1);
+				tempArray[TOPLEFT] = retrieveCell(x - 1, y - 1);
+				tempArray[TOP] = retrieveCell(x - 1, y);
+				tempArray[TOPRIGHT] = retrieveCell(x - 1, y + 1);
+				tempArray[LEFT] = retrieveCell(x, y - 1);
+				tempArray[RIGHT] = retrieveCell(x, y + 1);
+				tempArray[BOTTOMLEFT] = retrieveCell(x + 1, y - 1);
+				tempArray[BOTTOM] = retrieveCell(x + 1, y);
+				tempArray[BOTTOMRIGHT] = retrieveCell(x + 1, y + 1);
 				cellGrid[x][y].addNeighbors(tempArray);
 			}
 		}

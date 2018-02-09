@@ -15,202 +15,208 @@ import javafx.util.Duration;
 
 public class Simulator {
 
-	private final String CONWAYS = "life";
-	private final String SPREADINGFIRE = "fire";
-	private final String SEGREGATION = "segregation";
-	private final String WATOR = "wator";
 
-	private static final int FRAMES_PER_SECOND = 40;
-	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final String CONWAYS = "life";
+    private static final String SPREADINGFIRE = "fire";
+    private static final String SEGREGATION = "segregation";
+    private static final String WATOR = "wator";
 
-	private int[] dimensions;
-	private Map<String, int[][]> cellTypes;
-	private String simulationType;
-	private Map<String, Double> parameters;
+    private static final int FRAMES_PER_SECOND = 40;
+    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final int START_STEP = 5;
 
-	private int gridWidth;
-	private int gridHeight;
-	private CellController control;
+    private int[] dimensions;
+    private Map<String, int[][]> cellTypes;
+    private String simulationType;
+    private Map<String, Double> parameters;
 
-	private Boolean simulationState = false;
-	private int stepTime;
+    private int gridWidth;
+    private int gridHeight;
+    private CellController control;
 
-	private List<Rectangle> currentGrid = new ArrayList<>();
+    private Boolean simulationState = false;
+    private int stepTime;
 
-	private Timeline animation;
-	private KeyFrame frame;
+    private List<Rectangle> currentGrid = new ArrayList<>();
 
-	/**
-	 * Sets up the beginning configuration for the simulation
-	 *
-	 * @param stage
-	 *            the JavaFX stage in GUI
-	 * @param root
-	 *            the JavaFX Group root in GUI
-	 */
-	public void startSimulation(Stage stage, Group root) {
-		stepTime = 5;
-		setupCellController();
-		setupGrid(root);
-		stage.show();
-		startAnimation(root);
-	}
+    private Timeline animation;
+    private KeyFrame frame;
 
-	/**
-	 * Steps through the simulation
-	 *
-	 * @param root
-	 *            the JavaFX Group root in GUI
-	 */
-	private void step(Group root) {
-		if (!simulationState)
-			return;
-		updateCells(root);
-	}
+    /**
+     * Sets up the beginning configuration for the simulation
+     *
+     * @param stage the JavaFX stage in GUI
+     * @param root  the JavaFX Group root in GUI
+     */
+    public void startSimulation(Stage stage, Group root) {
+        stepTime = START_STEP;
+        setupCellController();
+        setupGrid(root);
+        stage.show();
+        startAnimation(root);
+    }
 
-	/**
-	 * Updates cells to the next state and fills in the grid
-	 * 
-	 * @param root
-	 *            the JavaFX Group root in GUI
-	 */
-	private void updateCells(Group root) {
-		control.setNextStates();
-		control.updateCells();
-		updateGridColors(root);
-	}
+    /**
+     * Steps through the simulation
+     *
+     * @param root the JavaFX Group root in GUI
+     */
+    private void step(Group root) {
+        if (!simulationState) {
+            return;
+        }
+        updateCells(root);
+    }
 
-	/**
-	 * Sets up the simulation
-	 *
-	 * @param root
-	 *            the JavaFX Group root in GUI
-	 */
-	private void startAnimation(Group root) {
-		frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(root));
-		animation = new Timeline();
-		animation.setCycleCount(Timeline.INDEFINITE);
-		animation.getKeyFrames().add(frame);
-		animation.setDelay(Duration.seconds(stepTime));
-		animation.play();
-	}
+    /**
+     * Updates cells to the next state and fills in the grid
+     * @param root the JavaFX Group root in GUI
+     */
+    private void updateCells(Group root) {
+        control.setNextStates();
+        control.updateCells();
+        updateGridColors(root);
+    }
 
-	/**
-	 * Sets up the cell controller based on the simulation type from the XML file
-	 */
-	private void setupCellController() {
-		if (simulationType.equals(CONWAYS))
-			control = new LifeCellController(dimensions, cellTypes, parameters);
-		else if (simulationType.equals(SPREADINGFIRE))
-			control = new FireController(dimensions, cellTypes, parameters);
-		else if (simulationType.equals(SEGREGATION))
-			control = new SegregationController(dimensions, parameters);
-		else if (simulationType.equals(WATOR))
-			control = new WatorController(dimensions, parameters);
-		else
-			throw new IllegalArgumentException();
-	}
+    /**
+     * Sets up the simulation
+     *
+     * @param root the JavaFX Group root in GUI
+     */
+    private void startAnimation(Group root) {
+        frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(root));
+        animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        animation.play();
+    }
 
-	/**
-	 * Sets up the grid based on the number of cells so that the size of the grid
-	 * itself will be constant
-	 *
-	 * @param root
-	 *            the JavaFX Group root in GUI
-	 */
-	private void setupGrid(Group root) {
-		gridWidth = GUI.XSIZE / dimensions[0];
-		gridHeight = GUI.YSIZE / dimensions[1];
-		updateGridColors(root);
-	}
+    /**
+     * Sets up the cell controller based on the simulation type from the XML file
+     */
+    private void setupCellController() {
+        if (simulationType.equals(CONWAYS)) {
+            control = new LifeCellController(dimensions, cellTypes);
+        }
+        else if (simulationType.equals(SPREADINGFIRE)) {
+            control = new FireController(dimensions, cellTypes, parameters);
+        }
+        else if (simulationType.equals(SEGREGATION)) {
+            control = new SegregationController(dimensions, cellTypes, parameters);
+        }
+        else if (simulationType.equals(WATOR)) {
+            control = new WatorController(dimensions, parameters);
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
+    }
 
-	/**
-	 * Gets the current cell colors from the cell controller and updates the
-	 * displayed grid
-	 * 
-	 * @param root
-	 *            the JavaFX Group root in GUI
-	 */
-	private void updateGridColors(Group root) {
-		clearGrid(root);
-		Color[][] newColors = control.getColors();
-		for (int i = 0; i < dimensions[0]; i++) {
-			for (int j = 0; j < dimensions[1]; j++) {
-				Rectangle currentCell = new Rectangle(GUI.XBAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight);
-				currentCell.setFill(newColors[i][j]);
-				currentCell.setStroke(Color.DARKGREY);
-				currentCell.setStrokeType(StrokeType.INSIDE);
-				currentGrid.add(currentCell);
-				root.getChildren().add(currentCell);
-			}
-		}
-	}
+    /**
+     * Sets up the grid based on the number of cells so that the size of the grid itself will
+     * be constant
+     *
+     * @param root the JavaFX Group root in GUI
+     */
+    private void setupGrid(Group root) {
+        gridWidth = GUI.XSIZE / dimensions[0];
+        gridHeight = GUI.YSIZE / dimensions[1];
+        updateGridColors(root);
+    }
 
-	/**
-	 * Removes current cells from the GUI root
-	 * 
-	 * @param root
-	 *            the JavaFX Group root in GUI
-	 */
-	private void clearGrid(Group root) {
-
-		for (Rectangle cell : currentGrid)
-			root.getChildren().remove(cell);
-
+    /**
+     * Gets the current cell colors from the cell controller and updates the displayed grid
+     * @param root the JavaFX Group root in GUI
+     */
+    private void updateGridColors(Group root) {
+        clearGrid(root);
 		currentGrid = new ArrayList<>();
-	}
+        Color[][] newColors = control.getColors();
+        for (int i = 0; i < dimensions[0]; i++) {
+            for (int j = 0; j < dimensions[1]; j++) {
+                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
+                currentGrid.add(currentCell);
+                root.getChildren().add(currentCell);
+            }
+        }
+    }
 
 	/**
-	 * Steps the simulation manually
-	 * 
-	 * @param root
-	 *            the JavaFX Group root in GUI
+	 * Creates a new cell with the given parameters
+	 * @param x x position
+	 * @param y y position
+	 * @param width width of cell
+	 * @param height height of cell
+	 * @param color color of cell
+	 * @return
 	 */
-	public void manualStep(Group root) {
-		this.updateCells(root);
+    private Rectangle createNewCell(int x, int y, int width, int height, Color color) {
+    	Rectangle newCell = new Rectangle(x, y, width, height);
+		newCell.setFill(color);
+		newCell.setStroke(Color.DARKGREY);
+		newCell.setStrokeType(StrokeType.INSIDE);
+		return newCell;
 	}
 
-	/**
-	 * Calls the XML parser to read the file from the GUI to get information for the
-	 * simulaton including simulation type, dimensions of grid, and types of cells
-	 * 
-	 * @param file
-	 *            is the configuration file to be read
-	 */
-	public void setFile(File file) {
-		ParserXML parser = new ParserXML(file);
-		simulationType = parser.getSimulationType();
-		dimensions = parser.getDimensions();
-		cellTypes = parser.getAllCells();
-		parameters = parser.getParameters();
-	}
+    /**
+     * Removes current cells from the GUI root
+     * @param root the JavaFX Group root in GUI
+     */
+    private void clearGrid(Group root) {
+        for (Rectangle cell : currentGrid) {
+            root.getChildren().remove(cell);
+        }
+        currentGrid = null;
+    }
 
-	/**
-	 * Turns on the simulation so that it changes with each step
-	 */
-	public void turnOn() {
-		this.simulationState = true;
-	}
+    /**
+     * Steps the simulation manually
+     * @param root the JavaFX Group root in GUI
+     */
+    public void manualStep(Group root) {
+        this.updateCells(root);
+    }
 
-	/**
-	 * Turns off the simulation so that it does not change with each step
-	 */
-	public void turnOff() {
-		this.simulationState = false;
-	}
+    /**
+     * Calls the XML parser to read the file from the GUI to get information for the simulaton
+     * including simulation type, dimensions of grid, and types of cells
+     * @param file is the configuration file to be read
+     */
+    public void setFile(File file) {
+        ParserXML parser = new ParserXML(file);
+        simulationType = parser.getSimulationType();
+        dimensions = parser.getDimensions();
+        cellTypes = parser.getAllCells();
+        parameters = parser.getParameters();
+    }
 
-	/**
-	 * Decreases the delay time for the simulation so it moves more quickly
-	 */
-	public void speedUp() {
-		if (this.stepTime > 0)
-			this.stepTime--;
-	}
+    /**
+     * Turns on the simulation so that it changes with each step
+     */
+    public void turnOn() {
+        this.simulationState = true;
+    }
 
-	/**
-	 * Increases the delay time for the simulation so it moves more slowly
-	 */
-	public void speedDown() {
-		this.stepTime++;
-	}
+    /**
+     * Turns off the simulation so that it does not change with each step
+     */
+    public void turnOff() {
+        this.simulationState = false;
+    }
+
+    /**
+     * Decreases the delay time for the simulation so it moves more quickly
+     */
+    public void speedUp() {
+        if (this.stepTime > 0) {
+            this.stepTime--;
+        }
+    }
+
+    /**
+     * Increases the delay time for the simulation so it moves more slowly
+     */
+    public void speedDown() {
+        this.stepTime++;
+    }
 }
