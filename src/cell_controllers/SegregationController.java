@@ -84,7 +84,7 @@ public class SegregationController extends CellController {
 					double diff = 0;
 					String[] neighbours = toSet.getNeighborStateNames();
 					for (String type:neighbours) {
-
+						if (type != null) {
 						if (!type.equals(DEFAULT)) {
 
 							if (type.equals(toSetType)) {
@@ -93,6 +93,7 @@ public class SegregationController extends CellController {
 							else if (!type.equals(toSetType) && !type.equals(DEFAULT)){
 								diff++;
 							}
+						}
 						}
 					}
 					
