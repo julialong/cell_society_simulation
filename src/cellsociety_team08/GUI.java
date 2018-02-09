@@ -201,6 +201,18 @@ public class GUI {
         fileButton.setOnAction((ActionEvent event) -> changeFile(stage));
     }
 
+    private void addXMLWriterButton() {
+
+    }
+
+    private void addSlider() {
+        String[] cellTypes = mySimulator.getCellTypes();
+        for (String cell : cellTypes) {
+            Slider tempSlider = new Slider(0, mySimulator.getMaxCells(), 0);
+        }
+    }
+
+
     /**
      * Selects the "play" button in the toggle group, and turns on the simulation
      */
@@ -240,13 +252,6 @@ public class GUI {
         if (configFile != null) {
             mySimulator = new Simulator();
             mySimulator.setFile(configFile);
-        }
-    }
-
-    private void addSlider() {
-        String[] cellTypes = mySimulator.getCellTypes();
-        for (String cell : cellTypes) {
-            Slider tempSlider = new Slider(0, mySimulator.getMaxCells(), 0);
         }
     }
 

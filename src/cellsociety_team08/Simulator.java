@@ -241,4 +241,8 @@ public class Simulator {
     public int getMaxCells() {
         return dimensions[0]*dimensions[1];
     }
+
+    public void toXML() {
+        // TODO: get map from Jeffrey
+    }
 }
