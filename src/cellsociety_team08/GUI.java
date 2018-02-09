@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
@@ -231,6 +232,13 @@ public class GUI {
         if (configFile != null) {
             mySimulator = new Simulator();
             mySimulator.setFile(configFile);
+        }
+    }
+
+    private void addSlider() {
+        String[] cellTypes = mySimulator.getCellTypes();
+        for (String cell : cellTypes) {
+            Slider tempSlider = new Slider(0, mySimulator.getMaxCells(), 0);
         }
     }
 

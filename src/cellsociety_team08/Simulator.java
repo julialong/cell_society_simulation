@@ -209,4 +209,18 @@ public class Simulator {
     public void speedDown() {
         this.stepTime++;
     }
+
+    public String[] getCellTypes() {
+        String[] answer = new String[cellTypes.keySet().size()];
+        int i = 0;
+        for (String type : cellTypes.keySet()){
+            answer[i] = type;
+            i++;
+        }
+        return answer;
+    }
+
+    public int getMaxCells() {
+        return dimensions[0]*dimensions[1];
+    }
 }
