@@ -227,4 +227,23 @@ public class Simulator {
     public void speedDown() {
         this.stepTime++;
     }
+    
+    
+    
+    public static void main(String argv[]) {
+    	File start = new File("./data/wator.xml");
+    	ParserXML parser = new ParserXML(start);
+        String simulationType1 = parser.getSimulationType();
+        int[] dimensions1 = parser.getDimensions();
+        Map<String, int[][]> cellTypes1 = parser.getAllCells();
+        Map<String, Double>  parameters1 = parser.getParameters();
+    	
+    	WriterXML writer = new WriterXML("tester", simulationType1, parameters1, dimensions1[0], dimensions1[1]);
+    	writer.convert();
+    }
+    
+    
+    
+    
+    
 }
