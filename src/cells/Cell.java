@@ -1,10 +1,10 @@
-package cellsociety_team08;
+package cells;
 
 import javafx.scene.paint.Color;
 
 public class Cell {
-	private String currentState;
-	private String nextState;
+	protected String currentState;
+	protected String nextState;
 	protected Color colour;
 	private final int NUMBER_OF_NEIGHBOURS = 8;
 	
@@ -40,10 +40,6 @@ public class Cell {
 	
 	public String getState() {
 		return currentState;
-	}
-	
-	public String getNextState() {
-		return nextState;
 	}
 	
 	public Color getColor() {

@@ -96,13 +96,13 @@ public class Simulator {
      */
     private void setupCellController() {
         if (simulationType.equals(CONWAYS)) {
-            control = new LifeCellController(dimensions, cellTypes);
+            control = new LifeCellController(dimensions, cellTypes, parameters);
         }
         else if (simulationType.equals(SPREADINGFIRE)) {
             control = new FireController(dimensions, cellTypes, parameters);
         }
         else if (simulationType.equals(SEGREGATION)) {
-            control = new SegregationController(dimensions, cellTypes, parameters);
+            control = new SegregationController(dimensions, parameters);
         }
         else if (simulationType.equals(WATOR)) {
             control = new WatorController(dimensions, parameters);

@@ -3,7 +3,7 @@ package cell_controllers;
 import java.util.ArrayList;
 import java.util.Map;
 
-import cellsociety_team08.Cell;
+import cells.Cell;
 import javafx.scene.paint.Color;
 import watorCells.Fish;
 import watorCells.Shark;

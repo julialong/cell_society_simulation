@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
-import cellsociety_team08.Cell;
+import cells.Cell;
 import javafx.scene.paint.Color;
 import watorCells.Animal;
 import watorCells.Fish;

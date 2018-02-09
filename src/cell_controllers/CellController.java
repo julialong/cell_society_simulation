@@ -1,6 +1,6 @@
 package cell_controllers;
 
-import cellsociety_team08.Cell;
+import cells.Cell;
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
@@ -16,9 +16,6 @@ public abstract class CellController {
 	private final int BOTTOMLEFT = 5;
 	private final int BOTTOM = 6;
 	private final int BOTTOMRIGHT = 7;
-	
-	
-	
 
 	/**
 	 * 

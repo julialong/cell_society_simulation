@@ -7,8 +7,8 @@
     <name>Jeffrey Li</name>
   </authors>
   <dimensions>
-    <xsize>50</xsize>
-    <ysize>50</ysize>
+    <xsize>25</xsize>
+    <ysize>25</ysize>
   </dimensions>
   <parameter_list>
   <parameters id="onrate">
