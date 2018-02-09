@@ -12,7 +12,7 @@ import watorCells.WatorCell;
 
 public class SegregationController extends CellController {
 	private double threshold;
-	private final String DEFAULT = "default";
+	private static final String DEFAULT = "default";
 
 
 	public SegregationController(int[] dimensions, Map<String, Double> paramMap) {
@@ -114,7 +114,7 @@ public class SegregationController extends CellController {
 				
 				// deal with default
 				else if (toSetType.equals(DEFAULT)) {
-					if (movers.size()!=0) {
+					if (!movers.isEmpty()) {
 						String race = movers.remove(0);
 						toSet.setNextState(race);
 						if (race.equals("X")) {

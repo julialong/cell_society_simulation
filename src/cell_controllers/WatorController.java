@@ -14,16 +14,16 @@ import watorCells.WatorCell;
 
 public class WatorController extends CellController {
 	
-	private final String SHARK = "shark";
-	private final String FISH = "fish";
-	private final String WATER = "water";
-	private final String FISHRATE = "fishrate";
-	private final String SHARKRATE = "sharkrate";
-	private final int NUMBER_OF_NEIGHBOURS = 4;
-	private final int LEFT = 0;
-	private final int BOTTOM = 1;
-	private final int TOP = 2;
-	private final int RIGHT = 3;
+	private static final String SHARK = "shark";
+	private static final String FISH = "fish";
+	private static final String WATER = "water";
+	private static final String FISHRATE = "fishrate";
+	private static final String SHARKRATE = "sharkrate";
+	private static final int NUMBER_OF_NEIGHBOURS = 4;
+	private static final int LEFT = 0;
+	private static final int BOTTOM = 1;
+	private static final int TOP = 2;
+	private static final int RIGHT = 3;
 	
 
 	public WatorController(int[] dimensions, Map<String, Double> paramMap) {
@@ -97,7 +97,7 @@ public class WatorController extends CellController {
 	public void updateShark(WatorCell sharkCell) {
 
 		sharkCell.decrementAnimalHealth();
-		if (sharkCell.getAnimal().getHealth() == 0) {
+		if (sharkCell.getAnimal().isDead()) {
 			sharkCell.setToWater();
 		} else {
 			WatorCell moveHere = newSpot(sharkCell);
@@ -118,7 +118,7 @@ public class WatorController extends CellController {
 		ArrayList<WatorCell> possibleFish = new ArrayList<WatorCell>();
 		ArrayList<WatorCell> possibleWater = new ArrayList<WatorCell>();
 
-		WatorCell[] neighbours = (WatorCell[]) animal.neighbors;
+		WatorCell[] neighbours = (WatorCell[]) animal.getNeighbors();
 		for (WatorCell wc : neighbours) {
 			if (wc!= null) {
 				if (wc.getAnimalType().equals(FISH)) {
@@ -132,10 +132,10 @@ public class WatorController extends CellController {
 		Random rand = new Random();
 
 		if (animal.getAnimalType().equals(SHARK)) {
-			if (possibleFish.size() == 0 && possibleWater.size() == 0) {
+			if (possibleFish.isEmpty() && possibleWater.isEmpty()) {
 				return animal; // throw exception because no where to move. returning self for now.
 			}
-			if (possibleFish.size() != 0) {
+			if (!possibleFish.isEmpty()) {
 				
 				int index = rand.nextInt(possibleFish.size());
 				animal.getAnimal().replenishHealth();

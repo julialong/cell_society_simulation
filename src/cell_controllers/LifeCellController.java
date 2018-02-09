@@ -1,16 +1,17 @@
 package cell_controllers;
 
-import java.io.File;
 import java.util.Map;
 
 import cells.Cell;
 import cells.GameOfLifeCell;
-import javafx.scene.paint.Color;
+
 
 public class LifeCellController extends CellController {
 
+
 	private static final String ON = "default";
 	private static final String OFF = "off";
+
 	
 	public LifeCellController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
 

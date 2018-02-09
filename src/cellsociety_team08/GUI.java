@@ -52,7 +52,7 @@ public class GUI {
     private File configFile;
 
     private Group root = new Group();
-    private Simulator sim;
+    private Simulator mySimulator;
 
     /**
      * Starts the GUI and initializes a blank simulation grid
@@ -62,7 +62,8 @@ public class GUI {
     public void start(Stage stage) {
         setStage(stage);
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + language);
-        sim = new Simulator();
+        mySimulator = new Simulator();
+
         addUserBar(stage);
         openStartFile();
         startSimulation(stage);
@@ -94,7 +95,7 @@ public class GUI {
      */
     private void openStartFile() {
         File start = new File(START_FILE);
-        sim.setFile(start);
+        mySimulator.setFile(start);
     }
 
     /**
@@ -161,7 +162,7 @@ public class GUI {
         stepButton.setLayoutX(BUTTON_X);
         stepButton.setLayoutY(pauseButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(stepButton);
-        stepButton.setOnAction((ActionEvent event) -> sim.manualStep(root));
+        stepButton.setOnAction((ActionEvent event) -> mySimulator.manualStep(root));
     }
 
     /**
@@ -172,7 +173,7 @@ public class GUI {
         fasterButton.setLayoutX(BUTTON_X);
         fasterButton.setLayoutY(stepButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(fasterButton);
-        fasterButton.setOnAction((ActionEvent event) -> sim.speedUp());
+        fasterButton.setOnAction((ActionEvent event) -> mySimulator.speedUp());
     }
 
     /**
@@ -183,7 +184,7 @@ public class GUI {
         slowerButton.setLayoutX(BUTTON_X);
         slowerButton.setLayoutY(fasterButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(slowerButton);
-        slowerButton.setOnAction((ActionEvent event) -> sim.speedDown());
+        slowerButton.setOnAction((ActionEvent event) -> mySimulator.speedDown());
     }
 
     /**
@@ -203,7 +204,7 @@ public class GUI {
      * Selects the "play" button in the toggle group, and turns on the simulation
      */
     private void turnOn() {
-        sim.turnOn();
+        mySimulator.turnOn();
         playStatus.selectToggle(playButton);
     }
 
@@ -211,7 +212,7 @@ public class GUI {
      * Selects the "pause" button in the toggle group, and turns off the simulation
      */
     private void turnOff() {
-        sim.turnOff();
+        mySimulator.turnOff();
         playStatus.selectToggle(pauseButton);
     }
 
@@ -222,7 +223,7 @@ public class GUI {
      * @param stage is the window currently showing the simulation
      */
     private void changeFile(Stage stage) {
-        sim.turnOff();
+        mySimulator.turnOff();
         openFileChooser(stage);
         startSimulation(stage);
     }
@@ -236,8 +237,8 @@ public class GUI {
     private void openFileChooser(Stage stage) {
         configFile = fileChooser.showOpenDialog(stage);
         if (configFile != null) {
-            sim = new Simulator();
-            sim.setFile(configFile);
+            mySimulator = new Simulator();
+            mySimulator.setFile(configFile);
         }
     }
 
@@ -247,7 +248,7 @@ public class GUI {
      */
     private void startSimulation(Stage stage){
         try {
-            sim.startSimulation(stage, root);
+            mySimulator.startSimulation(stage, root);
         }
         catch (Exception e) {
             Rectangle errorBar = new Rectangle(HALF_X - ERROR_X_ADJUSTMENT, HALF_Y - ERROR_Y_ADJUSTMENT, POPUP_BOX_WIDTH, POPUP_BOX_HEIGHT);
