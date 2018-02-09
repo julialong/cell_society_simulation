@@ -38,6 +38,8 @@ public class Simulator {
 
     private List<Rectangle> currentGrid = new ArrayList<>();
 
+    private Graph myGraph;
+
     private Timeline animation;
     private KeyFrame frame;
 
@@ -50,6 +52,7 @@ public class Simulator {
     public void startSimulation(Stage stage, Group root) {
         stepTime = START_STEP;
         setupCellController();
+        myGraph = new Graph();
         setupGrid(root);
         stage.show();
         startAnimation(root);
@@ -74,6 +77,7 @@ public class Simulator {
     private void updateCells(Group root) {
         control.setNextStates();
         control.updateCells();
+
         updateGridColors(root);
     }
 
@@ -138,6 +142,10 @@ public class Simulator {
                 root.getChildren().add(currentCell);
             }
         }
+    }
+
+    public void updateGraph(Group root) {
+        //TODO: Update grid and add
     }
 
 	/**
