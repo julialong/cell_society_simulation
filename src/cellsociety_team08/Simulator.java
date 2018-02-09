@@ -227,4 +227,10 @@ public class Simulator {
     public void speedDown() {
         this.stepTime++;
     }
+    
+    
+    
+    
+    
+    
 }
