@@ -6,6 +6,7 @@ import cells.Cell;
 import cells.GameOfLifeCell;
 
 
+
 public class LifeCellController extends CellController {
 
 
@@ -16,8 +17,7 @@ public class LifeCellController extends CellController {
 	public LifeCellController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
 
 		super(dimensions);
-		
-		cellGrid = new Cell[xSize][ySize];
+	
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				cellGrid[x][y] = new GameOfLifeCell(OFF);

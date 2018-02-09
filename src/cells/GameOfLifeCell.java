@@ -40,7 +40,7 @@ public class GameOfLifeCell extends Cell {
 	}
 	
 	private void setOn() {
-		colour = Color.WHITE;
+		colour = Color.GREENYELLOW;
 		nextState = ON;
 	}
 	
