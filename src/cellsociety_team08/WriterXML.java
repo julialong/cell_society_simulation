@@ -41,6 +41,20 @@ public class WriterXML {
 		baseXML = doc.createElement(simType);
 		doc.appendChild(baseXML);
 		
+		Element authors = doc.createElement("authors");
+		Element name1 = doc.createElement("name");
+		name1.appendChild(doc.createTextNode("Edward Zhuang"));
+		Element name2 = doc.createElement("name");
+		name2.appendChild(doc.createTextNode("Julia Long"));
+		Element name3 = doc.createElement("name");
+		name3.appendChild(doc.createTextNode("Jeffrey Li"));
+		
+		authors.appendChild(name1);
+		authors.appendChild(name2);
+		authors.appendChild(name3);
+		
+		baseXML.appendChild(authors);
+		
 		addDimensions(x, y);
 		addParams(map);
 		
@@ -51,6 +65,7 @@ public class WriterXML {
 	 * adds cells
 	 */
 	public void addCells() {
+		Element cellsList = doc.createElement("cell_on_list");
 		
 	}
 	/**

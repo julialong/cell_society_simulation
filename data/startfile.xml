@@ -11,10 +11,12 @@
     <ysize>20</ysize>
   </dimensions>
   <parameter_list>
+    <parameters id="onrate">
+      <value>.0</value>
+    </parameters>
   </parameter_list>
   <cell_on_list>
     <type id="on">
     </type>
   </cell_on_list>
 </life>
-
