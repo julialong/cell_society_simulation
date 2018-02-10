@@ -90,8 +90,6 @@ public abstract class CellController {
 			}
 		}
 		
-
-		
 		cellGrid = cellGrid2;
 		
 		xSize = dimensions;
