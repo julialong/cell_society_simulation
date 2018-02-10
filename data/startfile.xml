@@ -15,7 +15,7 @@
       <value>.0</value>
     </parameters>
   </parameter_list>
-  <cell_on_list>
+  <cell_on_list isOn="true">
     <type id="on">
     </type>
   </cell_on_list>

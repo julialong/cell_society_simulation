@@ -1,5 +1,7 @@
 package cellsociety_team08;
 
+import java.util.Random;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 

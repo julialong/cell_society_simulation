@@ -11,8 +11,7 @@ public class Shark extends Animal {
 	
 	public boolean isDead() {
 		return health == 0;
-	}
-	
+	} 	
 	@Override
 	public String getType() {
 		return "shark";
