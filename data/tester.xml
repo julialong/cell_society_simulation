@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE wator SYSTEM "roles.dtd">
+<wator>
+    <dimensions>
+        <xsize>20</xsize>
+        <ysize>20</ysize>
+    </dimensions>
+    <parameter_list>
+        <parameters id="sharkrate">
+            <value>0.3</value>
+        </parameters>
+        <parameters id="fishrate">
+            <value>0.2</value>
+        </parameters>
+    </parameter_list>
+</wator>
