@@ -51,7 +51,6 @@ public class Graph {
             series.get(cellType).setName(cellType);
         }
         numCells.get(cellType).add(number);
-        System.out.println("G: " + cellType + " " + number);
         series.get(cellType).getData().add(new XYChart.Data(step, number));
     }
 

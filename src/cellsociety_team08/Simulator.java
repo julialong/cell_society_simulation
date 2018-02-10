@@ -153,7 +153,6 @@ public class Simulator {
         Map<String, Map<Color, Integer>> data = control.getData();
         for (String thisType : data.keySet()) {
             for (Color thisColor : data.get(thisType).keySet()) {
-                System.out.println(data.get(thisType).get(thisColor));
                 myGraph.addPoint(thisType, stepNum, data.get(thisType).get(thisColor), thisColor);
             }
         }
