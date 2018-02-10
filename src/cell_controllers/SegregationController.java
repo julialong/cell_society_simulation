@@ -24,17 +24,6 @@ public class SegregationController extends CellController {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				cellGrid[x][y] = generateCell();
-				
-//				double rand = Math.random();
-//				if (rand < xrate) {
-//					Cell tempCell = new Cell("X");
-//					tempCell.setState(Color.RED);
-//					cellGrid[x][y] = tempCell;
-//				} else if (rand < xrate + orate) {
-//					Cell tempCell = new Cell("O");
-//					tempCell.setState(Color.BLUE);
-//					cellGrid[x][y] = tempCell;
-//				}
 			}
 		}
 		initializeNeighbors();

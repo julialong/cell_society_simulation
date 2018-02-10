@@ -15,10 +15,10 @@
       <value>.75</value>
     </parameters>
     <parameters id="xrate">
-      <value>.2</value>
+      <value>0.4</value>
     </parameters>
     <parameters id="orate">
-      <value>.2</value>
+      <value>0.4</value>
     </parameters>
 
   </parameter_list>
