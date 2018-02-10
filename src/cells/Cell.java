@@ -1,5 +1,7 @@
 package cells;
 
+import java.util.Arrays;
+
 import javafx.scene.paint.Color;
 
 public class Cell {
@@ -63,6 +65,7 @@ public class Cell {
 	// 3 x 4
 	// 5 6 7
 	public void addNeighbors(Cell[] neighbors) {
+		
 		this.neighbors = neighbors;
 	}
 }
