@@ -36,6 +36,7 @@ public class Simulator {
 
     private Boolean simulationState = false;
     private int stepTime;
+    private int stepNum = 0;
 
     private List<Rectangle> currentGrid = new ArrayList<>();
 
@@ -57,6 +58,7 @@ public class Simulator {
         setupGrid(root);
         stage.show();
         startAnimation(root);
+        stepNum = 0;
     }
 
     /**
@@ -76,9 +78,11 @@ public class Simulator {
      * @param root the JavaFX Group root in GUI
      */
     private void updateCells(Group root) {
+        stepNum++;
+        System.out.println("S:" + stepNum);
         control.setNextStates();
         control.updateCells();
-
+        updateGraph(root);
         updateGridColors(root);
     }
 
@@ -146,7 +150,14 @@ public class Simulator {
     }
 
     public void updateGraph(Group root) {
-        //TODO: Update grid and add
+        Map<String, Map<Color, Integer>> data = control.getData();
+        for (String thisType : data.keySet()) {
+            for (Color thisColor : data.get(thisType).keySet()) {
+                System.out.println(data.get(thisType).get(thisColor));
+                myGraph.addPoint(thisType, stepNum, data.get(thisType).get(thisColor), thisColor);
+            }
+        }
+        myGraph.updateGraph(root);
     }
 
 	/**
@@ -242,7 +253,7 @@ public class Simulator {
         return dimensions[0]*dimensions[1];
     }
 
-    public void toXML() {
+    public void toXML(String filename) {
         // TODO: get map from Jeffrey
     }
 }

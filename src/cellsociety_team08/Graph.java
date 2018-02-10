@@ -1,7 +1,6 @@
 package cellsociety_team08;
 
 import javafx.scene.Group;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -25,9 +24,9 @@ public class Graph {
     private Map<String, ArrayList<Integer>> numCells;
     private Map<String, XYChart.Series> series;
 
-    private CategoryAxis xAxis;
+    private NumberAxis xAxis;
     private NumberAxis yAxis;
-    private LineChart<CategoryAxis, NumberAxis> lineChart;
+    private LineChart<NumberAxis, NumberAxis> lineChart;
     private VBox vbox;
 
 
@@ -37,7 +36,8 @@ public class Graph {
         steps = new HashMap<>();
         numCells = new HashMap<>();
         series = new HashMap<>();
-        xAxis = new CategoryAxis();
+
+        xAxis = new NumberAxis();
         yAxis = new NumberAxis();
         lineChart = new LineChart(xAxis, yAxis);
     }
@@ -51,8 +51,13 @@ public class Graph {
             series.get(cellType).setName(cellType);
         }
         numCells.get(cellType).add(number);
+        System.out.println("G: " + cellType + " " + number);
         series.get(cellType).getData().add(new XYChart.Data(step, number));
+    }
 
+    public void updateSeries(String cellType, int step) {
+        series.get(cellType).getData().clear();
+        int[] vals = new int[step];
     }
 
     public void updateGraph(Group root) {
@@ -61,6 +66,10 @@ public class Graph {
             lineChart.getData().add(series.get(type));
         }
         vbox.getChildren().add(lineChart);
+        vbox.setLayoutX(600);
+        vbox.setLayoutY(600);
+        vbox.setMaxHeight(150);
+        vbox.setMaxWidth(600);
         root.getChildren().add(vbox);
     }
 }
