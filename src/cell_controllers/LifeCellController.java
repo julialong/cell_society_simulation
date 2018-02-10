@@ -2,7 +2,6 @@ package cell_controllers;
 
 import java.util.Map;
 
-import cells.Cell;
 import cells.GameOfLifeCell;
 
 
