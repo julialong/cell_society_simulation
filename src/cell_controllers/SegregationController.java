@@ -37,37 +37,8 @@ public class SegregationController extends CellController {
 				}
 			}
 		}
-		
-		
-//		for (int x = 0; x < cellsX.length; x++) {
-//			int xCoord = cellsX[x][0];
-//			int yCoord = cellsX[x][1];
-//			cellGrid[xCoord][yCoord] = new Cell("X");
-//			cellGrid[xCoord][yCoord].setState(Color.RED);
-//		}
-//		for (int o = 0; o < cellsO.length; o++) {
-//			int xCoord = cellsO[o][0];
-//			int yCoord = cellsO[o][1];
-//			cellGrid[xCoord][yCoord] = new Cell("O");
-//			cellGrid[xCoord][yCoord].setState(Color.BLUE);
-//		}
 		initializeNeighbors();
 	}
-	
-//	public Cell randomTypeGenerator(double xrate, double orate) {
-//		double rand = Math.random();
-//		if (rand < xrate) {
-//			Cell tempCell = new Cell("X");
-//			tempCell.setState(Color.RED);
-//			return tempCell;
-//		} else if (rand < xrate + orate) {
-//			Cell tempCell = new Cell("O");
-//			tempCell.setState(Color.BLUE);
-//			return tempCell;
-//		}
-////		} else
-////			return new WatorCell("water", new Water());
-//	}
 
 	@Override
 	public void setNextStates() {
@@ -84,7 +55,7 @@ public class SegregationController extends CellController {
 					double diff = 0;
 					String[] neighbours = toSet.getNeighborStateNames();
 					for (String type:neighbours) {
-						if (type != null) {
+
 						if (!type.equals(DEFAULT)) {
 
 							if (type.equals(toSetType)) {
@@ -93,7 +64,6 @@ public class SegregationController extends CellController {
 							else if (!type.equals(toSetType) && !type.equals(DEFAULT)){
 								diff++;
 							}
-						}
 						}
 					}
 					
