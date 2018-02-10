@@ -2,6 +2,7 @@ package cell_controllers;
 
 import java.util.Map;
 
+import cells.Cell;
 import cells.GameOfLifeCell;
 
 
@@ -42,29 +43,9 @@ public class LifeCellController extends CellController {
 		initializeNeighbors();
 	}
 	
-	public void enlarge(int dimensions) {
-		Cell[][] cellGrid2 = new Cell[dimensions][dimensions];
-		for (int i = 0; i < dimensions; i++) {
-			for (int j = 0; j < dimensions; j++) {			
-				if (i < xSize && j < ySize) {
-				cellGrid2[i][j] = cellGrid[i][j];	
-				}
-				else {
-					cellGrid2[i][j] = new GameOfLifeCell(OFF);
-				}
-			}
-		}
-		
-
-		
-		cellGrid = cellGrid2;
-		
-		xSize = dimensions;
-		ySize = dimensions;
-		
-		
-		
-		initializeNeighbors();
+	public Cell getDefaultCell() {
+		Cell temp = new GameOfLifeCell(OFF);
+		return temp;
 	}
 	
 
