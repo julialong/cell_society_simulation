@@ -15,7 +15,7 @@
       <value>.69</value>
     </parameters>
   </parameter_list>
-  <cell_on_list>
+  <cell_on_list isOn="true">
     <type id="burning">
       <cell>
         <ycoord>2</ycoord>

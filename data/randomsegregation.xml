@@ -1,23 +1,27 @@
 <?xml version="1.0" ?>
-<wator>
-  <title>Wa-Tor Simulation</title>
+<segregation>
+  <title>Model of Segregation</title>
   <authors>
     <name>Edward Zhuang</name>
     <name>Julia Long</name>
     <name>Jeffrey Li</name>
   </authors>
   <dimensions>
-    <xsize>30</xsize>
-    <ysize>30</ysize>
+    <xsize>20</xsize>
+    <ysize>20</ysize>
   </dimensions>
   <parameter_list>
-    <parameters id="sharkrate">
-      <value>.12</value>
+    <parameters id="threshold">
+      <value>.75</value>
     </parameters>
-    <parameters id="fishrate">
+    <parameters id="xrate">
       <value>.2</value>
     </parameters>
+    <parameters id="orate">
+      <value>.2</value>
+    </parameters>
+
   </parameter_list>
   <cell_on_list isOn="false">
   </cell_on_list>
-</wator>
+</segregation>

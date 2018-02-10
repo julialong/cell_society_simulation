@@ -12,7 +12,7 @@
   </dimensions>
   <parameter_list>
   </parameter_list>
-  <cell_on_list>
+  <cell_on_list isOn="true">
     <type id="on">
       <cell>
         <ycoord>2</ycoord>
