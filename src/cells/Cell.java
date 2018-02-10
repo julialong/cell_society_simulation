@@ -9,7 +9,7 @@ public class Cell {
 	protected String nextState;
 	protected Color colour;
 	private static final int NUMBER_OF_NEIGHBOURS = 8;
-	private Cell[] neighbors;
+	protected Cell[] neighbors;
 
 	// array of neighbor cells with specific order
 	// 0 1 2
