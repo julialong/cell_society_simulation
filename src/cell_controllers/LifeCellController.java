@@ -44,12 +44,11 @@ public class LifeCellController extends CellController {
 	}
 	
 	public Cell getDefaultCell() {
-		Cell temp = new GameOfLifeCell(OFF);
-		return temp;
+		return new GameOfLifeCell(OFF);
+		
 	}
 	
 
-	// for each cell, check how many neighbors are on
 	public void setNextStates() {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {

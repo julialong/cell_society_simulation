@@ -8,7 +8,9 @@ import javafx.scene.paint.Color;
 public class FireController extends CellController {
 
 	private double catchProbability;
-
+	private static final String TREE = "tree";
+	private static final String FIRE = "fire";
+	private static final String DEFAULT = "default";
 
 	public FireController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap) {
 		super(dimensions);
@@ -17,7 +19,7 @@ public class FireController extends CellController {
 		catchProbability = paramMap.get("probability");
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				Cell tempCell = new Cell("tree");
+				Cell tempCell = new Cell(TREE);
 				cellGrid[x][y] = tempCell;
 				tempCell.setState(Color.GREEN);
 			}
@@ -26,7 +28,7 @@ public class FireController extends CellController {
 		for (int x = 0; x < cellsOnFire.length; x++) {
 			int xCoord = cellsOnFire[x][0];
 			int yCoord = cellsOnFire[x][1];
-			cellGrid[xCoord][yCoord] = new Cell("fire");
+			cellGrid[xCoord][yCoord] = new Cell(FIRE);
 			cellGrid[xCoord][yCoord].setState(Color.RED);
 		}
 		initializeNeighbors();
@@ -40,20 +42,20 @@ public class FireController extends CellController {
 				Cell toSet = retrieveCell(x, y);
 				String toSetType = toSet.getState();
 
-				if (toSetType.equals("default")) {
+				if (toSetType.equals(DEFAULT)) {
 					toSet.setNextStateDefault();
 				}
 
-				else if (toSetType.equals("fire")) {
+				else if (toSetType.equals(FIRE)) {
 					toSet.setNextStateDefault();
 				}
 
-				else if (toSetType.equals("tree")) {
+				else if (toSetType.equals(TREE)) {
 					if (fireBeside(toSet) && catchResult()) {
-						toSet.setNextState("fire");
+						toSet.setNextState(FIRE);
 						toSet.setState(Color.ORANGERED);
 					} else {
-						toSet.setNextState("tree");
+						toSet.setNextState(TREE);
 					}
 				}
 			}
@@ -67,12 +69,19 @@ public class FireController extends CellController {
 	private boolean fireBeside(Cell cell) {
 		for (String state : cell.getNeighborStateNames()) {
 			if (state != null) {
-			if (state.equals("fire")) {
+			if (state.equals(FIRE)) {
 				return true;
 			}
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public Cell getDefaultCell() {
+		Cell temp = new Cell(TREE);
+		temp.setState(Color.GREEN);
+		return temp;
 	}
 
 }
