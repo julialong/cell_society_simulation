@@ -58,7 +58,16 @@ public class Simulator {
         stage.show();
         startAnimation(root);
     }
-
+    public int getDimensions() {
+    	return dimensions[0];
+    }
+    
+    public void resize(int dimensions1, Group root) {
+    	control.resize(dimensions1);
+    	dimensions[0] = dimensions1;
+    	dimensions[1] = dimensions1;
+    	setupGrid(root);
+    }
     /**
      * Steps through the simulation
      *

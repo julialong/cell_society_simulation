@@ -1,7 +1,11 @@
 package cell_controllers;
 
+
+import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.Map;
+
 
 import cells.Cell;
 
@@ -48,6 +52,34 @@ public abstract class CellController {
 		}
 	}
 
+	// changes the size of cell grid
+	
+	public void resize(int dimensions) {
+		if (dimensions < xSize) truncate(dimensions);
+		if (dimensions > xSize) enlarge(dimensions);
+	} 
+	
+	// changes the size of the cell grid, used if desired dimensions are smaller than current
+	
+	public void truncate(int dimensions){
+		Cell[][] cellGrid2 = new Cell[dimensions][dimensions];
+		for (int i = 0; i < dimensions; i++) {
+			for (int j = 0; j < dimensions; j++) {				
+				cellGrid2[i][j] = cellGrid[i][j];
+				
+			}
+		}
+		cellGrid = cellGrid2;
+		
+		xSize = dimensions;
+		ySize = dimensions;
+	}
+	
+	public void enlarge(int dimensions) {
+		
+	}
+	
+	
 	/**
 	 * Goes through the cellGrid, and sets up the neighbors of all the cells. Cells
 	 * have neighbors around them stored in an array, with this configuration: 0 1 2
@@ -56,8 +88,9 @@ public abstract class CellController {
 	public void initializeNeighbors() {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-
+				
 				Cell[] tempArray = new Cell[NUMBER_OF_NEIGHBOURS];
+				
 				tempArray[TOPLEFT] = retrieveCell(x - 1, y - 1);
 				tempArray[TOP] = retrieveCell(x - 1, y);
 				tempArray[TOPRIGHT] = retrieveCell(x - 1, y + 1);
@@ -66,8 +99,12 @@ public abstract class CellController {
 				tempArray[BOTTOMLEFT] = retrieveCell(x + 1, y - 1);
 				tempArray[BOTTOM] = retrieveCell(x + 1, y);
 				tempArray[BOTTOMRIGHT] = retrieveCell(x + 1, y + 1);
-				cellGrid[x][y].addNeighbors(tempArray);
+				
+				
+				retrieveCell(x,y).addNeighbors(tempArray);
+
 			}
+			
 		}
 	}
 
