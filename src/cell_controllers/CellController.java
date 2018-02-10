@@ -1,6 +1,10 @@
 package cell_controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cells.Cell;
+
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
@@ -8,7 +12,7 @@ public abstract class CellController {
 	protected Cell[][] cellGrid;
 	protected int xSize;
 	protected int ySize;
-
+	private Map<String, Map<Color,Integer>> data;
 
 	private static final int TOPLEFT = 0;
 	private static final int TOP = 1;
@@ -19,7 +23,6 @@ public abstract class CellController {
 	private static final int BOTTOM = 6;
 	private static final int BOTTOMRIGHT = 7;
 	private static final int NUMBER_OF_NEIGHBOURS = 8;
-	
 
 	/**
 	 * 
@@ -32,7 +35,9 @@ public abstract class CellController {
 	public CellController(int[] dimensions) {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
-		
+
+		data = new HashMap<String, Map<Color,Integer>>();
+
 		cellGrid = new Cell[xSize][ySize];
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
@@ -45,10 +50,8 @@ public abstract class CellController {
 
 	/**
 	 * Goes through the cellGrid, and sets up the neighbors of all the cells. Cells
-	 * have neighbors around them stored in an array, with this configuration:
-	 *  0 1 2
-	 *  3 x 4 
-	 * 	5 6 7
+	 * have neighbors around them stored in an array, with this configuration: 0 1 2
+	 * 3 x 4 5 6 7
 	 */
 	public void initializeNeighbors() {
 		for (int x = 0; x < xSize; x++) {
@@ -84,6 +87,28 @@ public abstract class CellController {
 		if (y < 0 || y >= cellGrid[x].length)
 			return null;
 		return cellGrid[x][y];
+	}
+
+	public Map getData() {
+		updataData();
+		return data;
+	}
+
+	private void updataData() {
+		Color colour;
+		String type;
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				Cell toGet = retrieveCell(x,y);
+				colour = toGet.getColor();
+				type = toGet.getState();
+				if (!data.containsKey(type)) {
+					data.put(type, new HashMap<Color, Integer>());
+					data.get(type).put(colour, 0);
+				}
+				data.get(type).put(colour, data.get(type).get(colour)+1);
+			}
+		}
 	}
 
 	public abstract void setNextStates();
