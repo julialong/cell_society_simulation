@@ -14,6 +14,11 @@ public class Main extends Application{
         gui.start(primaryStage);
     }
 
+    public void createNewStage() {
+        GUI newgui = new GUI();
+        newgui.start(new Stage());
+    }
+
     /**
      * Open the program and start the simulation
      *

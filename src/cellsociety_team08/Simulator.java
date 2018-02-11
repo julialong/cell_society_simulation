@@ -37,6 +37,7 @@ public class Simulator {
 
     private Boolean simulationState = false;
     private int stepTime;
+    private int stepNum = 0;
 
     private List<Rectangle> currentGrid = new ArrayList<>();
 
@@ -55,18 +56,29 @@ public class Simulator {
         stepTime = START_STEP;
         setupCellController();
         myGraph = new Graph();
+        myGraph.updateGraph(root);
         setupGrid(root);
         stage.show();
         startAnimation(root);
+        stepNum = 0;
     }
+
+    /**
+     * @return current dimensions of the grid
+     */
     public int getDimensions() {
     	return dimensions[0];
     }
-    
-    public void resize(int dimensions1, Group root) {
-    	control.resize(dimensions1);
-    	dimensions[0] = dimensions1;
-    	dimensions[1] = dimensions1;
+
+    /**
+     *
+     * @param newDimensions is the new dimension of the gris
+     * @param root is the JavaFX Group
+     */
+    public void resize(int newDimensions, Group root) {
+    	control.resize(newDimensions);
+    	dimensions[0] = newDimensions;
+    	dimensions[1] = newDimensions;
     	setupGrid(root);
     }
     /**
@@ -86,9 +98,10 @@ public class Simulator {
      * @param root the JavaFX Group root in GUI
      */
     private void updateCells(Group root) {
+        stepNum++;
         control.setNextStates();
         control.updateCells();
-
+        updateGraph(root);
         updateGridColors(root);
     }
 
@@ -151,15 +164,25 @@ public class Simulator {
         Color[][] newColors = control.getColors();
         for (int i = 0; i < dimensions[0]; i++) {
             for (int j = 0; j < dimensions[1]; j++) {
-                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
+                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, GUI.TOP_BAR + j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
                 currentGrid.add(currentCell);
                 root.getChildren().add(currentCell);
             }
         }
     }
 
+    /**
+     * Updates the graph with the correct colors
+     * @param root the JavaFX Group root in GUI
+     */
     public void updateGraph(Group root) {
-        //TODO: Update grid and add
+        Map<String, Map<Color, Integer>> data = control.getData();
+        for (String thisType : data.keySet()) {
+            for (Color thisColor : data.get(thisType).keySet()) {
+                myGraph.addPoint(thisType, stepNum, data.get(thisType).get(thisColor), thisColor);
+            }
+        }
+        myGraph.updateGraph(root);
     }
 
 	/**
@@ -240,18 +263,35 @@ public class Simulator {
     public void speedDown() {
         this.stepTime++;
     }
-    
-    
-    
-//	public static void main(String[] args) {
-//		
-//		Simulator yuh = new Simulator();
-//		File start = new File("./data/life.xml");
-//		yuh.setFile(start);
-//		
-//		WriterXML tester = new WriterXML("lifetest", "life", yuh.parameters, yuh.cellTypes, yuh.dimensions[0], yuh.dimensions[1]);
-//		tester.convert();
-//	}
-//    
-    
+
+    /**
+     * @return array with cell type strings
+     */
+    public String[] getCellTypes() {
+        String[] answer = new String[cellTypes.keySet().size()];
+        int i = 0;
+        for (String type : cellTypes.keySet()){
+            answer[i] = type;
+            i++;
+        }
+        return answer;
+    }
+
+    /**
+     * @return the maximum number of cells in the grid
+     */
+    public int getMaxCells() {
+        return dimensions[0]*dimensions[1];
+    }
+
+    /**
+     * Creates a new file with the current configuration
+     * @param filename the filename given by the user
+     */
+    public void toXML(String filename) {
+        System.out.println(filename);
+        //TODO: Change empty map to map from Jeffrey OR we can change this method to be called in CellController
+        new WriterXML(filename, simulationType, new HashMap<>(), dimensions[0], dimensions[1]);
+    }
+
 }
