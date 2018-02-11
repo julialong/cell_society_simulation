@@ -56,6 +56,7 @@ public class ParserXML {
 		NodeList checkRandom = doc.getElementsByTagName("cell_on_list");
 		Node isRandom = checkRandom.item(0);
 		Element rElement = (Element) isRandom;
+		System.out.println("isRandom() is returning " + !Boolean.parseBoolean(rElement.getAttribute("isOn")));
 		return (!Boolean.parseBoolean(rElement.getAttribute("isOn")));
 	}
 	
@@ -77,7 +78,7 @@ public class ParserXML {
 
 			for (int x = 0; x < childNodes.getLength(); x++) {
 				Node cellNode = childNodes.item(x);
-				Element cElement = (Element) cellNode;
+//				Element cElement = (Element) cellNode;
 
 				tempArray[x] = getCellInfo(cellNode);
 			}

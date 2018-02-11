@@ -30,6 +30,7 @@ public class Simulator {
     private Map<String, int[][]> cellTypes;
     private String simulationType;
     private Map<String, Double> parameters;
+    private Boolean isRandom;
 
     private int gridWidth;
     private int gridHeight;
@@ -122,20 +123,22 @@ public class Simulator {
      * Sets up the cell controller based on the simulation type from the XML file
      */
     private void setupCellController() {
+    		
         if (simulationType.equals(CONWAYS)) {
-            control = new LifeCellController(dimensions, cellTypes, parameters);
+
+            control = new LifeCellController(dimensions, cellTypes, parameters, isRandom);
         }
         else if (simulationType.equals(SPREADINGFIRE)) {
-            control = new FireController(dimensions, cellTypes, parameters);
+            control = new FireController(dimensions, cellTypes, parameters, isRandom);
         }
         else if (simulationType.equals(SEGREGATION)) {
-            control = new SegregationController(dimensions, parameters);
+            control = new SegregationController(dimensions, cellTypes, parameters, isRandom);
         }
         else if (simulationType.equals(WATOR)) {
-            control = new WatorController(dimensions, parameters);
+            control = new WatorController(dimensions, cellTypes, parameters, isRandom);
         }
         else if(simulationType.equals(RPS)) {
-            control = new RPSController(dimensions, parameters);
+            control = new RPSController(dimensions, cellTypes, parameters, isRandom);
         }
         else {
             throw new IllegalArgumentException();
@@ -232,6 +235,7 @@ public class Simulator {
         dimensions = parser.getDimensions();
         cellTypes = parser.getAllCells();
         parameters = parser.getParameters();
+        isRandom = parser.isRandom();
     }
 
     /**
@@ -291,7 +295,7 @@ public class Simulator {
     public void toXML(String filename) {
         System.out.println(filename);
         //TODO: Change empty map to map from Jeffrey OR we can change this method to be called in CellController
-        new WriterXML(filename, simulationType, new HashMap<>(), dimensions[0], dimensions[1]);
+        new WriterXML(filename, simulationType, parameters, cellTypes, dimensions[0], dimensions[1]);
     }
 
 }

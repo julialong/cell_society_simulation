@@ -13,21 +13,51 @@ public class SegregationController extends CellController {
 	private double orate;
 
 
-	public SegregationController(int[] dimensions, Map<String, Double> paramMap) {
+	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap, 
+			boolean random) {
 		
-		super(dimensions);
+		super(dimensions, random);
 		xrate = paramMap.get("xrate");
 		orate = paramMap.get("orate");
 
 		threshold = paramMap.get("threshold");
-		
+		if (isRandom) {
+			setUpRandom(paramMap);
+		} else {
+			setUpSpecific(map);
+		}
+		initializeNeighbors();
+	}
+	
+	@Override
+	public void setUpSpecific(Map<String, int[][]> map) {
+		int[][] cellsX = map.get("X");
+		for (int z = 0; z < cellsX.length; z++) {
+			int xCoord = cellsX[z][0];
+			int yCoord = cellsX[z][1];
+			cellGrid[xCoord][yCoord] = new Cell("X");
+			cellGrid[xCoord][yCoord].setState(Color.RED);
+		}
+		int[][] cellsO = map.get("O");
+		for (int z = 0; z < cellsO.length; z++) {
+			int xCoord = cellsO[z][0];
+			int yCoord = cellsO[z][1];
+			cellGrid[xCoord][yCoord] = new Cell("O");
+			cellGrid[xCoord][yCoord].setState(Color.BLUE);
+		}
+	}
+
+	@Override
+	public void setUpRandom(Map<String, Double> paramMap) {
+		// TODO Auto-generated method stub
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				cellGrid[x][y] = generateCell();
 			}
 		}
-		initializeNeighbors();
 	}
+	
+
 	
 	private Cell generateCell() {
 		Cell tempCell;
@@ -109,4 +139,6 @@ public class SegregationController extends CellController {
 	public Cell getDefaultCell() {
 		return generateCell();
 	}
+
+
 }

@@ -37,8 +37,9 @@ public class WatorCell extends Cell{
 		}
 	}
 	
-	public void setNewAnimal(Animal newAnimal) {
+	public void setNewAnimal(Animal newAnimal, String newState) {
 		animal = newAnimal;
+		currentState = newState;
 		updateColor();
 	}
 
