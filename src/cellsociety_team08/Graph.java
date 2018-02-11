@@ -38,8 +38,9 @@ public class Graph {
         series = new HashMap<>();
 
         xAxis = new NumberAxis();
+        xAxis.setLabel("Step");
         yAxis = new NumberAxis();
-        lineChart = new LineChart(xAxis, yAxis);
+        yAxis.setLabel("Number of cells");
     }
 
     public void addPoint(String cellType, int step, Integer number, Color color) {
@@ -54,20 +55,16 @@ public class Graph {
         series.get(cellType).getData().add(new XYChart.Data(step, number));
     }
 
-    public void updateSeries(String cellType, int step) {
-        series.get(cellType).getData().clear();
-        int[] vals = new int[step];
-    }
-
     public void updateGraph(Group root) {
         vbox = new VBox();
+        lineChart = new LineChart(xAxis,yAxis);
         for (String type : series.keySet()) {
             lineChart.getData().add(series.get(type));
         }
         vbox.getChildren().add(lineChart);
-        vbox.setLayoutX(600);
-        vbox.setLayoutY(600);
-        vbox.setMaxHeight(150);
+        vbox.setLayoutX(GUI.BUTTON_X);
+        vbox.setLayoutY(500);
+        vbox.setMaxHeight(200);
         vbox.setMaxWidth(600);
         root.getChildren().add(vbox);
     }

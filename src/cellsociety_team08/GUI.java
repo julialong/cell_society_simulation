@@ -9,6 +9,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -25,6 +26,8 @@ public class GUI {
     public static final int HALF_X = XSIZE/2;
     public static final int HALF_Y = YSIZE/2;
     public static final int SIDE_BAR = 600;
+    public static final int TOP_BAR = 50;
+    public static final int RIGHT_SIDE_BAR = 50;
     public static final int BOTTOM_BAR = 200;
     public static final int POPUP_BOX_WIDTH = 300;
     public static final int POPUP_BOX_HEIGHT = 50;
@@ -51,6 +54,7 @@ public class GUI {
     
     private ResourceBundle myResources;
     private String language = "English";
+    private int adjust;
 
     private FileChooser fileChooser = new FileChooser();
     private File configFile;
@@ -82,7 +86,7 @@ public class GUI {
      */
     private void setStage(Stage stage) {
         stage.setTitle(NAME);
-        startScene = new Scene(root, XSIZE + SIDE_BAR, YSIZE + BOTTOM_BAR);
+        startScene = new Scene(root, XSIZE + SIDE_BAR + RIGHT_SIDE_BAR, YSIZE + BOTTOM_BAR);
         stage.setScene(startScene);
     }
 
@@ -93,6 +97,9 @@ public class GUI {
     private void addUserBar(Stage stage) {
         addSettingsBar();
         addBottomBar();
+        addTopBar();
+        addRightBar();
+        addTitle();
         addButtons(stage);
     }
 
@@ -117,9 +124,21 @@ public class GUI {
      * Adds bar to the bottom of the simulator
      */
     private void addBottomBar() {
-        Rectangle bottomBar = new Rectangle (0,YSIZE, XSIZE + SIDE_BAR, BOTTOM_BAR);
+        Rectangle bottomBar = new Rectangle (0,YSIZE, XSIZE + SIDE_BAR + RIGHT_SIDE_BAR, BOTTOM_BAR);
         bottomBar.setFill(Color.LIGHTGRAY);
         root.getChildren().add(bottomBar);
+    }
+
+    private void addTopBar() {
+        Rectangle topBar = new Rectangle(0, 0, XSIZE + SIDE_BAR, TOP_BAR);
+        topBar.setFill(Color.LIGHTGRAY);
+        root.getChildren().add(topBar);
+    }
+
+    private void addRightBar() {
+        Rectangle rightBar = new Rectangle(SIDE_BAR + XSIZE, 0, RIGHT_SIDE_BAR, YSIZE);
+        rightBar.setFill(Color.LIGHTGRAY);
+        root.getChildren().add(rightBar);
     }
 
     /**
@@ -128,37 +147,39 @@ public class GUI {
      * @param stage
      */
     private void addButtons(Stage stage) {
+        addFileButton(stage);
         addPlayButton();
         addPauseButton();
         addStepButton();
         addFasterButton();
         addSlowerButton();
-        addFileButton(stage);
-        
-        
     }
     private void addDimensionSlider() {
+
+        Text sliderText = new Text(BUTTON_X, fasterButton.getLayoutY() + 10 + BUTTON_SPACING, "Change dimensions");
+        root.getChildren().add(sliderText);
+
+
+        slider = new Slider(); // take in the current dimension
+        slider.setMin(10);
+        slider.setMax(70);
+        slider.setValue(mySimulator.getDimensions());
+        slider.setMajorTickUnit(20);
+
+        slider.setLayoutX(BUTTON_X);
+        slider.setLayoutY(fasterButton.getLayoutY() + 20 + BUTTON_SPACING);
     	  
-    	  slider = new Slider(); // take in the current dimension
-    	  slider.setMin(10);
-    	  slider.setMax(70);
-    	  slider.setValue(mySimulator.getDimensions());
-    	  slider.setMajorTickUnit(20);
-    	  
-    	  slider.setLayoutX(BUTTON_X);
-    	  slider.setLayoutY(400);
-    	  
-    	  slider.setShowTickMarks(true);
-          slider.setShowTickLabels(true);
-          slider.setMinWidth(300);
-          slider.setSnapToTicks(true);
-    	  root.getChildren().add(slider);
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+        slider.setMinWidth(300);
+        slider.setSnapToTicks(true);
+        root.getChildren().add(slider);
     	  
     	 // make button
     	
     	  sliderButton = new Button("Set");
-    	  sliderButton.setLayoutX(BUTTON_X);
-    	  sliderButton.setLayoutY(450);
+    	  sliderButton.setLayoutX(BUTTON_X + slider.getMinWidth() + BUTTON_SPACING);
+    	  sliderButton.setLayoutY(slider.getLayoutY());
     	  root.getChildren().add(sliderButton);
     	  sliderButton.setOnAction((ActionEvent event) -> resize());
 
@@ -168,15 +189,37 @@ public class GUI {
     private void resize() {
     	mySimulator.resize((int) slider.getValue(), root);
     }
-    
-    
+
+
+    private void addTitle() {
+        Text titleText = new Text(SIDE_BAR/2 - 80, TOP_BAR, "Cell Society");
+        titleText.setFill(Color.DARKRED);
+        titleText.setFont(Font.font(40));
+        root.getChildren().add(titleText);
+    }
+
+    /**
+     * Adds button to upload file to user interface
+     *
+     * @param stage is the window currently showing the simulation
+     */
+    private void addFileButton(Stage stage) {
+        fileButton = new Button(myResources.getString("UploadFile"));
+        fileButton.setLayoutX(BUTTON_X);
+        fileButton.setLayoutY(TOP_BAR + BUTTON_SPACING);
+        root.getChildren().add(fileButton);
+        fileButton.setOnAction((ActionEvent event) -> changeFile(stage));
+
+
+    }
+
     /**
      * Adds button that allows user to play simulation
      */
     private void addPlayButton() {
         playButton = new ToggleButton(myResources.getString("Play"));
         playButton.setLayoutX(BUTTON_X);
-        playButton.setLayoutY(BUTTON_SPACING);
+        playButton.setLayoutY(fileButton.getLayoutY() + BUTTON_SPACING);
         playButton.setToggleGroup(playStatus);
         root.getChildren().add(playButton);
         playButton.setOnAction((ActionEvent event) -> turnOn());
@@ -187,8 +230,8 @@ public class GUI {
      */
     private void addPauseButton() {
         pauseButton = new ToggleButton(myResources.getString("Pause"));
-        pauseButton.setLayoutX(BUTTON_X);
-        pauseButton.setLayoutY(playButton.getLayoutY() + BUTTON_SPACING);
+        pauseButton.setLayoutX(playButton.getLayoutX() + 50 + BUTTON_SPACING);
+        pauseButton.setLayoutY(playButton.getLayoutY());
         pauseButton.setToggleGroup(playStatus);
         root.getChildren().add(pauseButton);
         pauseButton.setOnAction((ActionEvent event) -> turnOff());
@@ -199,8 +242,8 @@ public class GUI {
      */
     private void addStepButton() {
         stepButton = new Button(myResources.getString("Step"));
-        stepButton.setLayoutX(BUTTON_X);
-        stepButton.setLayoutY(pauseButton.getLayoutY() + BUTTON_SPACING);
+        stepButton.setLayoutX(pauseButton.getLayoutX() + 60 + BUTTON_SPACING);
+        stepButton.setLayoutY(pauseButton.getLayoutY());
         root.getChildren().add(stepButton);
         stepButton.setOnAction((ActionEvent event) -> mySimulator.manualStep(root));
     }
@@ -221,25 +264,10 @@ public class GUI {
      */
     private void addSlowerButton() {
         slowerButton = new Button(myResources.getString("Slower"));
-        slowerButton.setLayoutX(BUTTON_X);
-        slowerButton.setLayoutY(fasterButton.getLayoutY() + BUTTON_SPACING);
+        slowerButton.setLayoutX(fasterButton.getLayoutX() + 100 + BUTTON_SPACING);
+        slowerButton.setLayoutY(fasterButton.getLayoutY());
         root.getChildren().add(slowerButton);
         slowerButton.setOnAction((ActionEvent event) -> mySimulator.speedDown());
-    }
-
-    /**
-     * Adds button to upload file to user interface
-     *
-     * @param stage is the window currently showing the simulation
-     */
-    private void addFileButton(Stage stage) {
-        fileButton = new Button(myResources.getString("UploadFile"));
-        fileButton.setLayoutX(BUTTON_X);
-        fileButton.setLayoutY(slowerButton.getLayoutY() + BUTTON_SPACING);
-        root.getChildren().add(fileButton);
-        fileButton.setOnAction((ActionEvent event) -> changeFile(stage));
-        
-        
     }
 
     private void addXMLWriterButton() {

@@ -6,6 +6,7 @@ import java.util.*;
 import cell_controllers.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
@@ -155,7 +156,7 @@ public class Simulator {
         Color[][] newColors = control.getColors();
         for (int i = 0; i < dimensions[0]; i++) {
             for (int j = 0; j < dimensions[1]; j++) {
-                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
+                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, GUI.TOP_BAR + j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
                 currentGrid.add(currentCell);
                 root.getChildren().add(currentCell);
             }
@@ -166,6 +167,7 @@ public class Simulator {
         Map<String, Map<Color, Integer>> data = control.getData();
         for (String thisType : data.keySet()) {
             for (Color thisColor : data.get(thisType).keySet()) {
+                System.out.println(thisType + ": " + data.get(thisType).get(thisColor));
                 myGraph.addPoint(thisType, stepNum, data.get(thisType).get(thisColor), thisColor);
             }
         }
