@@ -243,7 +243,15 @@ public class Simulator {
     
     
     
-    
-    
+//	public static void main(String[] args) {
+//		
+//		Simulator yuh = new Simulator();
+//		File start = new File("./data/life.xml");
+//		yuh.setFile(start);
+//		
+//		WriterXML tester = new WriterXML("lifetest", "life", yuh.parameters, yuh.cellTypes, yuh.dimensions[0], yuh.dimensions[1]);
+//		tester.convert();
+//	}
+//    
     
 }
