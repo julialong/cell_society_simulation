@@ -57,7 +57,9 @@ public class RPSCell extends Cell {
 
 	public RPSCell retrieveRandomNeighbour() {
 		Random rand = new Random();
-		int index = rand.nextInt(9);
+		int index = rand.nextInt(8);
+		System.out.println(neighbors.length);
+		System.out.println(index);
 		return (RPSCell) neighbors[index];
 
 	}
