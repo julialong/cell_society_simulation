@@ -13,7 +13,7 @@ public class SegregationController extends CellController {
 	private double orate;
 
 
-	public SegregationController(int[] dimensions, Map<String, Double> paramMap, Map<String, int[][]> map,
+	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap, 
 			boolean random) {
 		
 		super(dimensions, random);

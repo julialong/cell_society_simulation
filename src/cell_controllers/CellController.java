@@ -33,7 +33,8 @@ public abstract class CellController {
 	public CellController(int[] dimensions, boolean random) {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
-
+		isRandom = random;
+    	
 		data = new HashMap<>();
 
 		cellGrid = new Cell[xSize][ySize];
