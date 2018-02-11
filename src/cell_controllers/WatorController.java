@@ -27,7 +27,7 @@ public class WatorController extends CellController {
 	private static double fishPercent;
 	private static double sharkPercent;
 
-	public WatorController(int[] dimensions, Map<String, Double> paramMap, Map<String, int[][]> map, boolean random) {
+	public WatorController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap,  boolean random) {
 		super(dimensions, random);
 		fishPercent = paramMap.get(FISHRATE);
 		sharkPercent = paramMap.get(SHARKRATE);

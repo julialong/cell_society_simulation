@@ -12,7 +12,7 @@ public class LifeCellController extends CellController {
 
 	// 2 maps and bololean
 
-	public LifeCellController(int[] dimensions, Map<String, Double> paramMap, Map<String, int[][]> map,
+	public LifeCellController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap,
 			boolean random) {
 
 		super(dimensions, random);
@@ -21,6 +21,7 @@ public class LifeCellController extends CellController {
 				cellGrid[x][y] = new GameOfLifeCell(OFF);
 			}
 		}
+		System.out.println(random);
 		if (isRandom) {
 			setUpRandom(paramMap);
 		} else {
@@ -32,7 +33,7 @@ public class LifeCellController extends CellController {
 	public void setUpRandom(Map<String, Double> paramMap) {
 
 		double onrate = paramMap.get("onrate");
-
+	
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				double rand = Math.random();
