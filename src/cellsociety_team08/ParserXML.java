@@ -56,7 +56,7 @@ public class ParserXML {
 		NodeList checkRandom = doc.getElementsByTagName("cell_on_list");
 		Node isRandom = checkRandom.item(0);
 		Element rElement = (Element) isRandom;
-		return Boolean.parseBoolean(rElement.getAttribute("isOn"));
+		return (!Boolean.parseBoolean(rElement.getAttribute("isOn")));
 	}
 	
 	public Map<String, int[][]> getAllCells() {
@@ -126,5 +126,11 @@ public class ParserXML {
 			return dim;
 	
 	}
+	
+//	public static void main(String[] args) {
+//		File test = new File("./data/wator.xml");
+//		ParserXML parse = new ParserXML(test);
+//		System.out.println(parse.isRandom());
+//	}
 }
 
