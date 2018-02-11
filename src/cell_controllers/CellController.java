@@ -138,13 +138,13 @@ public abstract class CellController {
 //		 return null;
 
 		if (x < 0) {
-			x = xSize;
+			x = xSize-1;
 		}
 		if (x >= xSize) {
 			x = 0;
 		}
 		if (y < 0) {
-			y = ySize;
+			y = ySize-1;
 		}
 		if (y >= ySize) {
 			y = 0;
