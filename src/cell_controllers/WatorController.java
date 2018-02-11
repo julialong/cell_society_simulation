@@ -24,12 +24,13 @@ public class WatorController extends CellController {
 	private static final int BOTTOM = 1;
 	private static final int TOP = 2;
 	private static final int RIGHT = 3;
-	
+	private static double fishPercent;
+	private static double sharkPercent;
 
 	public WatorController(int[] dimensions, Map<String, Double> paramMap) {
 		super(dimensions);
-		double fishPercent = paramMap.get(FISHRATE);
-		double sharkPercent = paramMap.get(SHARKRATE);
+		fishPercent = paramMap.get(FISHRATE);
+		sharkPercent = paramMap.get(SHARKRATE);
 
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
@@ -92,6 +93,12 @@ public class WatorController extends CellController {
 				fishCell.setToWater();
 			}
 		}
+	}
+	
+	
+	public Cell getDefaultCell() {
+		Cell tempCell = randomAnimalGenerator(fishPercent, sharkPercent);
+		return tempCell;
 	}
 
 	public void updateShark(WatorCell sharkCell) {

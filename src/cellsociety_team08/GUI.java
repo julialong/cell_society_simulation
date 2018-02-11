@@ -35,7 +35,7 @@ public class GUI {
 
 
     private static final String DEFAULT_RESOURCE_PATH = "resources/";
-    private static final String START_FILE = "./data/randomlife.xml";
+    private static final String START_FILE = "./data/startfile.xml";
 
 
     private ToggleButton playButton;
@@ -45,7 +45,10 @@ public class GUI {
     private Button fasterButton;
     private Button slowerButton;
     private Button fileButton;
-
+    private Button sliderButton;
+    private Slider slider;
+    
+    
     private ResourceBundle myResources;
     private String language = "English";
 
@@ -68,6 +71,8 @@ public class GUI {
         addUserBar(stage);
         openStartFile();
         startSimulation(stage);
+        
+      
     }
 
     /**
@@ -129,8 +134,42 @@ public class GUI {
         addFasterButton();
         addSlowerButton();
         addFileButton(stage);
+        
+        
     }
+    private void addDimensionSlider() {
+    	  
+    	  slider = new Slider(); // take in the current dimension
+    	  slider.setMin(10);
+    	  slider.setMax(70);
+    	  slider.setValue(mySimulator.getDimensions());
+    	  slider.setMajorTickUnit(20);
+    	  
+    	  slider.setLayoutX(BUTTON_X);
+    	  slider.setLayoutY(400);
+    	  
+    	  slider.setShowTickMarks(true);
+          slider.setShowTickLabels(true);
+          slider.setMinWidth(300);
+          slider.setSnapToTicks(true);
+    	  root.getChildren().add(slider);
+    	  
+    	 // make button
+    	
+    	  sliderButton = new Button("Set");
+    	  sliderButton.setLayoutX(BUTTON_X);
+    	  sliderButton.setLayoutY(450);
+    	  root.getChildren().add(sliderButton);
+    	  sliderButton.setOnAction((ActionEvent event) -> resize());
 
+    }
+    // resizes the dimensions
+    
+    private void resize() {
+    	mySimulator.resize((int) slider.getValue(), root);
+    }
+    
+    
     /**
      * Adds button that allows user to play simulation
      */
@@ -199,6 +238,8 @@ public class GUI {
         fileButton.setLayoutY(slowerButton.getLayoutY() + BUTTON_SPACING);
         root.getChildren().add(fileButton);
         fileButton.setOnAction((ActionEvent event) -> changeFile(stage));
+        
+        
     }
 
     private void addXMLWriterButton() {
@@ -237,6 +278,7 @@ public class GUI {
      */
     private void changeFile(Stage stage) {
         mySimulator.turnOff();
+        root.getChildren().remove(slider);
         openFileChooser(stage);
         startSimulation(stage);
     }
@@ -262,6 +304,8 @@ public class GUI {
     private void startSimulation(Stage stage){
         try {
             mySimulator.startSimulation(stage, root);
+            addDimensionSlider();
+            
         }
         catch (Exception e) {
             Rectangle errorBar = new Rectangle(HALF_X - ERROR_X_ADJUSTMENT, HALF_Y - ERROR_Y_ADJUSTMENT, POPUP_BOX_WIDTH, POPUP_BOX_HEIGHT);

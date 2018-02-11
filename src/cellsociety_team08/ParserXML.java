@@ -52,9 +52,18 @@ public class ParserXML {
 		return cell;
 	}
 	
+	public boolean isRandom() {
+		NodeList checkRandom = doc.getElementsByTagName("cell_on_list");
+		Node isRandom = checkRandom.item(0);
+		Element rElement = (Element) isRandom;
+		return Boolean.parseBoolean(rElement.getAttribute("isOn"));
+	}
+	
 	public Map<String, int[][]> getAllCells() {
-
-		Map<String, int[][]> cellMap = new HashMap<String, int[][]>();
+		
+		Map<String, int[][]> cellMap = new HashMap<String, int[][]>();		
+		
+		
 		NodeList types = doc.getElementsByTagName("type");
 		for (int i = 0; i < types.getLength(); i++) {
 			Node node = types.item(i);

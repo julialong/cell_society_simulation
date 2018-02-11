@@ -20,6 +20,7 @@ public class Simulator {
     private static final String SPREADINGFIRE = "fire";
     private static final String SEGREGATION = "segregation";
     private static final String WATOR = "wator";
+    private static final String RPS = "rps";
 
     private static final int FRAMES_PER_SECOND = 40;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -60,7 +61,16 @@ public class Simulator {
         startAnimation(root);
         stepNum = 0;
     }
-
+    public int getDimensions() {
+    	return dimensions[0];
+    }
+    
+    public void resize(int dimensions1, Group root) {
+    	control.resize(dimensions1);
+    	dimensions[0] = dimensions1;
+    	dimensions[1] = dimensions1;
+    	setupGrid(root);
+    }
     /**
      * Steps through the simulation
      *
@@ -114,6 +124,9 @@ public class Simulator {
         }
         else if (simulationType.equals(WATOR)) {
             control = new WatorController(dimensions, parameters);
+        }
+        else if(simulationType.equals(RPS)) {
+            control = new RPSController(dimensions, parameters);
         }
         else {
             throw new IllegalArgumentException();

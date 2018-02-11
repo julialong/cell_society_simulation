@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<segregation>
+  <title>Model of Segregation</title>
+  <authors>
+    <name>Edward Zhuang</name>
+    <name>Julia Long</name>
+    <name>Jeffrey Li</name>
+  </authors>
+  <dimensions>
+    <xsize>20</xsize>
+    <ysize>20</ysize>
+  </dimensions>
+  <parameter_list>
+    <parameters id="threshold">
+      <value>.75</value>
+    </parameters>
+    <parameters id="xrate">
+      <value>0.4</value>
+    </parameters>
+    <parameters id="orate">
+      <value>0.4</value>
+    </parameters>
+
+  </parameter_list>
+  <cell_on_list isOn="false">
+  </cell_on_list>
+</segregation>

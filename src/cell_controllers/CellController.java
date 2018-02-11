@@ -1,10 +1,12 @@
 package cell_controllers;
 
+import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import cells.Cell;
-
+import cells.GameOfLifeCell;
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
@@ -12,7 +14,7 @@ public abstract class CellController {
 	protected Cell[][] cellGrid;
 	protected int xSize;
 	protected int ySize;
-	private Map<String, Map<Color,Integer>> data;
+	private Map<String, Map<Color, Integer>> data;
 
 	private static final int TOPLEFT = 0;
 	private static final int TOP = 1;
@@ -33,7 +35,7 @@ public abstract class CellController {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
 
-		data = new HashMap<String, Map<Color,Integer>>();
+		data = new HashMap<String, Map<Color, Integer>>();
 
 		cellGrid = new Cell[xSize][ySize];
 		for (int x = 0; x < xSize; x++) {
@@ -43,6 +45,54 @@ public abstract class CellController {
 				tempCell.setState(Color.WHITE);
 			}
 		}
+	}
+
+	// changes the size of cell grid
+
+	public void resize(int dimensions) {
+		if (dimensions < xSize)
+			truncate(dimensions);
+		if (dimensions > xSize)
+			enlarge(dimensions);
+	}
+
+	// changes the size of the cell grid, used if desired dimensions are smaller
+	// than current
+
+	public void truncate(int dimensions) {
+		Cell[][] cellGrid2 = new Cell[dimensions][dimensions];
+		for (int i = 0; i < dimensions; i++) {
+			for (int j = 0; j < dimensions; j++) {
+				cellGrid2[i][j] = cellGrid[i][j];
+
+			}
+		}
+		cellGrid = cellGrid2;
+
+		xSize = dimensions;
+		ySize = dimensions;
+	}
+
+	public abstract Cell getDefaultCell();
+
+	public void enlarge(int dimensions) {
+		Cell[][] cellGrid2 = new Cell[dimensions][dimensions];
+		for (int i = 0; i < dimensions; i++) {
+			for (int j = 0; j < dimensions; j++) {
+				if (i < xSize && j < ySize) {
+					cellGrid2[i][j] = cellGrid[i][j];
+				} else {
+					cellGrid2[i][j] = getDefaultCell();
+				}
+			}
+		}
+
+		cellGrid = cellGrid2;
+
+		xSize = dimensions;
+		ySize = dimensions;
+
+		initializeNeighbors();
 	}
 
 	/**
@@ -55,6 +105,7 @@ public abstract class CellController {
 			for (int y = 0; y < ySize; y++) {
 
 				Cell[] tempArray = new Cell[NUMBER_OF_NEIGHBOURS];
+
 				tempArray[TOPLEFT] = retrieveCell(x - 1, y - 1);
 				tempArray[TOP] = retrieveCell(x - 1, y);
 				tempArray[TOPRIGHT] = retrieveCell(x - 1, y + 1);
@@ -63,7 +114,8 @@ public abstract class CellController {
 				tempArray[BOTTOMLEFT] = retrieveCell(x + 1, y - 1);
 				tempArray[BOTTOM] = retrieveCell(x + 1, y);
 				tempArray[BOTTOMRIGHT] = retrieveCell(x + 1, y + 1);
-				cellGrid[x][y].addNeighbors(tempArray);
+
+				retrieveCell(x, y).addNeighbors(tempArray);
 			}
 		}
 	}
@@ -79,10 +131,25 @@ public abstract class CellController {
 	 *         otherwise)
 	 */
 	public Cell retrieveCell(int x, int y) {
-		if (x < 0 || x >= cellGrid.length)
-			return null;
-		if (y < 0 || y >= cellGrid[x].length)
-			return null;
+
+//		 if (x < 0 || x >= xSize)
+//		 return null;
+//		 if (y < 0 || y >= ySize)
+//		 return null;
+
+		if (x < 0) {
+			x = xSize;
+		}
+		if (x >= xSize) {
+			x = 0;
+		}
+		if (y < 0) {
+			y = ySize;
+		}
+		if (y >= ySize) {
+			y = 0;
+		}
+
 		return cellGrid[x][y];
 	}
 
@@ -97,14 +164,14 @@ public abstract class CellController {
 		data = new HashMap<>();
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				Cell toGet = retrieveCell(x,y);
+				Cell toGet = retrieveCell(x, y);
 				colour = toGet.getColor();
 				type = toGet.getState();
 				if (!data.containsKey(type)) {
 					data.put(type, new HashMap<>());
 					data.get(type).put(colour, 0);
 				}
-				data.get(type).put(colour, data.get(type).get(colour)+1);
+				data.get(type).put(colour, data.get(type).get(colour) + 1);
 			}
 		}
 	}

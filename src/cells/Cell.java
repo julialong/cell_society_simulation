@@ -1,5 +1,7 @@
 package cells;
 
+import java.util.Arrays;
+
 import javafx.scene.paint.Color;
 
 public class Cell {
@@ -7,7 +9,7 @@ public class Cell {
 	protected String nextState;
 	protected Color colour;
 	private static final int NUMBER_OF_NEIGHBOURS = 8;
-	private Cell[] neighbors;
+	protected Cell[] neighbors;
 
 	// array of neighbor cells with specific order
 	// 0 1 2
@@ -63,6 +65,7 @@ public class Cell {
 	// 3 x 4
 	// 5 6 7
 	public void addNeighbors(Cell[] neighbors) {
+		
 		this.neighbors = neighbors;
 	}
 }

@@ -2,6 +2,7 @@ package cell_controllers;
 
 import java.util.Map;
 
+import cells.Cell;
 import cells.GameOfLifeCell;
 
 
@@ -41,8 +42,13 @@ public class LifeCellController extends CellController {
 		}
 		initializeNeighbors();
 	}
+	
+	public Cell getDefaultCell() {
+		return new GameOfLifeCell(OFF);
+		
+	}
+	
 
-	// for each cell, check how many neighbors are on
 	public void setNextStates() {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
