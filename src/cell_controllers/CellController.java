@@ -35,7 +35,7 @@ public abstract class CellController {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
 
-		data = new HashMap<String, Map<Color, Integer>>();
+		data = new HashMap<>();
 
 		cellGrid = new Cell[xSize][ySize];
 		for (int x = 0; x < xSize; x++) {

@@ -30,6 +30,7 @@ public class Simulator {
     private Map<String, int[][]> cellTypes;
     private String simulationType;
     private Map<String, Double> parameters;
+    private Boolean isRandom;
 
     private int gridWidth;
     private int gridHeight;
@@ -123,19 +124,19 @@ public class Simulator {
      */
     private void setupCellController() {
         if (simulationType.equals(CONWAYS)) {
-            control = new LifeCellController(dimensions, cellTypes, parameters);
+            control = new LifeCellController(dimensions, cellTypes, parameters, isRandom);
         }
         else if (simulationType.equals(SPREADINGFIRE)) {
-            control = new FireController(dimensions, cellTypes, parameters);
+            control = new FireController(dimensions, cellTypes, parameters, isRandom);
         }
         else if (simulationType.equals(SEGREGATION)) {
-            control = new SegregationController(dimensions, parameters);
+            control = new SegregationController(dimensions, cellTypes, parameters, isRandom);
         }
         else if (simulationType.equals(WATOR)) {
-            control = new WatorController(dimensions, parameters);
+            control = new WatorController(dimensions, cellTypes, parameters, isRandom);
         }
         else if(simulationType.equals(RPS)) {
-            control = new RPSController(dimensions, parameters);
+            control = new RPSController(dimensions, cellTypes, parameters, isRandom);
         }
         else {
             throw new IllegalArgumentException();
