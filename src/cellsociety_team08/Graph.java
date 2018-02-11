@@ -17,8 +17,6 @@ public class Graph {
     public final int GRAPH_X_SIZE = 600;
     public final int GRAPH_Y_SIZE = 200;
 
-    private Rectangle myGraph;
-
     private Map<String, Color> plotColors;
     private Map<String, ArrayList<Double>> steps;
     private Map<String, ArrayList<Integer>> numCells;
@@ -29,9 +27,10 @@ public class Graph {
     private LineChart<NumberAxis, NumberAxis> lineChart;
     private VBox vbox;
 
-
+    /**
+     * Creates a new Graph object
+     */
     public Graph() {
-        myGraph = new Rectangle(GRAPH_X_SIZE, GRAPH_Y_SIZE);
         plotColors = new HashMap<>();
         steps = new HashMap<>();
         numCells = new HashMap<>();
@@ -43,7 +42,15 @@ public class Graph {
         yAxis.setLabel("Number of cells");
     }
 
+    /**
+     * Adds point to the graph
+     * @param cellType type of cell
+     * @param step step number
+     * @param number number of cells
+     * @param color color of cells
+     */
     public void addPoint(String cellType, int step, Integer number, Color color) {
+        if (cellType.equals("default")) return;
         if (!steps.containsKey(cellType)) {
             steps.put(cellType, new ArrayList<>());
             numCells.put(cellType, new ArrayList<>());
@@ -55,6 +62,10 @@ public class Graph {
         series.get(cellType).getData().add(new XYChart.Data(step, number));
     }
 
+    /**
+     * Updates the graph and adds it to screen
+     * @param root The JavaFX Group in GUI
+     */
     public void updateGraph(Group root) {
         vbox = new VBox();
         lineChart = new LineChart(xAxis,yAxis);

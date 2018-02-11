@@ -3,10 +3,7 @@ package cellsociety_team08;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -15,26 +12,21 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GUI {
 
-    public static final String NAME = "Cell Society";
+    private static final String NAME = "Cell Society";
     private Scene startScene;
     public static final int XSIZE = 600;
     public static final int YSIZE = 600;
-    public static final int HALF_X = XSIZE/2;
-    public static final int HALF_Y = YSIZE/2;
     public static final int SIDE_BAR = 600;
     public static final int TOP_BAR = 50;
-    public static final int RIGHT_SIDE_BAR = 50;
-    public static final int BOTTOM_BAR = 200;
-    public static final int POPUP_BOX_WIDTH = 300;
-    public static final int POPUP_BOX_HEIGHT = 50;
-    public static final int ERROR_X_ADJUSTMENT = 50;
-    public static final int ERROR_Y_ADJUSTMENT = 25;
+    private static final int RIGHT_SIDE_BAR = 50;
+    private static final int BOTTOM_BAR = 200;
     public static final int BUTTON_X = 20;
-    public static final int BUTTON_SPACING = 50;
+    private static final int BUTTON_SPACING = 50;
 
 
     private static final String DEFAULT_RESOURCE_PATH = "resources/";
@@ -49,12 +41,12 @@ public class GUI {
     private Button slowerButton;
     private Button fileButton;
     private Button sliderButton;
+    private Button toXMLButton;
     private Slider slider;
     
     
     private ResourceBundle myResources;
     private String language = "English";
-    private int adjust;
 
     private FileChooser fileChooser = new FileChooser();
     private File configFile;
@@ -75,8 +67,6 @@ public class GUI {
         addUserBar(stage);
         openStartFile();
         startSimulation(stage);
-        
-      
     }
 
     /**
@@ -129,12 +119,18 @@ public class GUI {
         root.getChildren().add(bottomBar);
     }
 
+    /**
+     * Adds bar to the top of the simulator
+     */
     private void addTopBar() {
         Rectangle topBar = new Rectangle(0, 0, XSIZE + SIDE_BAR, TOP_BAR);
         topBar.setFill(Color.LIGHTGRAY);
         root.getChildren().add(topBar);
     }
 
+    /**
+     * Adds bar to the right of the simulator
+     */
     private void addRightBar() {
         Rectangle rightBar = new Rectangle(SIDE_BAR + XSIZE, 0, RIGHT_SIDE_BAR, YSIZE);
         rightBar.setFill(Color.LIGHTGRAY);
@@ -144,7 +140,7 @@ public class GUI {
     /**
      * Adds necessary buttons to user interface
      *
-     * @param stage
+     * @param stage current stage
      */
     private void addButtons(Stage stage) {
         addFileButton(stage);
@@ -153,14 +149,17 @@ public class GUI {
         addStepButton();
         addFasterButton();
         addSlowerButton();
+        addXMLWriterButton();
     }
-    private void addDimensionSlider() {
 
+    /**
+     * Adds slider to change dimensions of simulation
+     */
+    private void addDimensionSlider() {
         Text sliderText = new Text(BUTTON_X, fasterButton.getLayoutY() + 10 + BUTTON_SPACING, "Change dimensions");
         root.getChildren().add(sliderText);
 
-
-        slider = new Slider(); // take in the current dimension
+        slider = new Slider();
         slider.setMin(10);
         slider.setMax(70);
         slider.setValue(mySimulator.getDimensions());
@@ -174,23 +173,20 @@ public class GUI {
         slider.setMinWidth(300);
         slider.setSnapToTicks(true);
         root.getChildren().add(slider);
-    	  
-    	 // make button
-    	
-    	  sliderButton = new Button("Set");
-    	  sliderButton.setLayoutX(BUTTON_X + slider.getMinWidth() + BUTTON_SPACING);
-    	  sliderButton.setLayoutY(slider.getLayoutY());
-    	  root.getChildren().add(sliderButton);
-    	  sliderButton.setOnAction((ActionEvent event) -> resize());
 
+        addSliderButton();
     }
-    // resizes the dimensions
-    
+
+    /**
+     * Resizes the simulator grid
+     */
     private void resize() {
-    	mySimulator.resize((int) slider.getValue(), root);
+        mySimulator.resize((int) slider.getValue(), root);
     }
 
-
+    /**
+     * Adds Cell Society title to window
+     */
     private void addTitle() {
         Text titleText = new Text(SIDE_BAR/2 - 80, TOP_BAR, "Cell Society");
         titleText.setFill(Color.DARKRED);
@@ -270,17 +266,37 @@ public class GUI {
         slowerButton.setOnAction((ActionEvent event) -> mySimulator.speedDown());
     }
 
+    /**
+     * Adds button to write new XML file
+     */
     private void addXMLWriterButton() {
-
+        toXMLButton = new Button(myResources.getString("Write"));
+        toXMLButton.setLayoutX(BUTTON_X);
+        toXMLButton.setLayoutY(slowerButton.getLayoutY() + 200);
+        root.getChildren().add(toXMLButton);
+        toXMLButton.setOnAction((ActionEvent event) -> promptForFilename());
     }
 
+    /**
+     * Adds button to set slider dimensions
+     */
+    private void addSliderButton() {
+        sliderButton = new Button("Set");
+        sliderButton.setLayoutX(BUTTON_X + slider.getMinWidth() + BUTTON_SPACING);
+        sliderButton.setLayoutY(slider.getLayoutY());
+        root.getChildren().add(sliderButton);
+        sliderButton.setOnAction((ActionEvent event) -> resize());
+    }
+
+    /**
+     *  Adds slider to change cell percentages in simulation
+     */
     private void addSlider() {
         String[] cellTypes = mySimulator.getCellTypes();
         for (String cell : cellTypes) {
             Slider tempSlider = new Slider(0, mySimulator.getMaxCells(), 0);
         }
     }
-
 
     /**
      * Selects the "play" button in the toggle group, and turns on the simulation
@@ -326,6 +342,17 @@ public class GUI {
     }
 
     /**
+     * Prompts user for the filename of the XML file they want to write
+     */
+    private void promptForFilename() {
+        TextInputDialog prompt = new TextInputDialog("newfile");
+        prompt.setTitle("Write to file");
+        prompt.setHeaderText("Please enter the name of your configuration file.");
+        Optional<String> result = prompt.showAndWait();
+        result.ifPresent(filename -> mySimulator.toXML(filename));
+    }
+
+    /**
      * Tries to start the simulation, catches exception where the simulation type is invalid and displays an error
      * @param stage is the window currently showing the simulation
      */
@@ -336,12 +363,11 @@ public class GUI {
             
         }
         catch (Exception e) {
-            Rectangle errorBar = new Rectangle(HALF_X - ERROR_X_ADJUSTMENT, HALF_Y - ERROR_Y_ADJUSTMENT, POPUP_BOX_WIDTH, POPUP_BOX_HEIGHT);
-            errorBar.setFill(Color.DARKRED);
-            Text errorText = new Text(HALF_X, HALF_Y, myResources.getString("Error"));
-            errorText.setFill(Color.WHITE);
-            root.getChildren().add(errorBar);
-            root.getChildren().add(errorText);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Incorrect type");
+            alert.setContentText(myResources.getString("Error"));
+            alert.showAndWait();
         }
     }
 }

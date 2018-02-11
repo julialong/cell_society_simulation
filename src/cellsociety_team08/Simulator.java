@@ -6,7 +6,6 @@ import java.util.*;
 import cell_controllers.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
@@ -57,19 +56,29 @@ public class Simulator {
         stepTime = START_STEP;
         setupCellController();
         myGraph = new Graph();
+        myGraph.updateGraph(root);
         setupGrid(root);
         stage.show();
         startAnimation(root);
         stepNum = 0;
     }
+
+    /**
+     * @return current dimensions of the grid
+     */
     public int getDimensions() {
     	return dimensions[0];
     }
-    
-    public void resize(int dimensions1, Group root) {
-    	control.resize(dimensions1);
-    	dimensions[0] = dimensions1;
-    	dimensions[1] = dimensions1;
+
+    /**
+     *
+     * @param newDimensions is the new dimension of the gris
+     * @param root is the JavaFX Group
+     */
+    public void resize(int newDimensions, Group root) {
+    	control.resize(newDimensions);
+    	dimensions[0] = newDimensions;
+    	dimensions[1] = newDimensions;
     	setupGrid(root);
     }
     /**
@@ -90,7 +99,6 @@ public class Simulator {
      */
     private void updateCells(Group root) {
         stepNum++;
-        System.out.println("S:" + stepNum);
         control.setNextStates();
         control.updateCells();
         updateGraph(root);
@@ -163,11 +171,14 @@ public class Simulator {
         }
     }
 
+    /**
+     * Updates the graph with the correct colors
+     * @param root the JavaFX Group root in GUI
+     */
     public void updateGraph(Group root) {
         Map<String, Map<Color, Integer>> data = control.getData();
         for (String thisType : data.keySet()) {
             for (Color thisColor : data.get(thisType).keySet()) {
-                System.out.println(thisType + ": " + data.get(thisType).get(thisColor));
                 myGraph.addPoint(thisType, stepNum, data.get(thisType).get(thisColor), thisColor);
             }
         }
@@ -253,6 +264,9 @@ public class Simulator {
         this.stepTime++;
     }
 
+    /**
+     * @return array with cell type strings
+     */
     public String[] getCellTypes() {
         String[] answer = new String[cellTypes.keySet().size()];
         int i = 0;
@@ -263,11 +277,21 @@ public class Simulator {
         return answer;
     }
 
+    /**
+     * @return the maximum number of cells in the grid
+     */
     public int getMaxCells() {
         return dimensions[0]*dimensions[1];
     }
 
+    /**
+     * Creates a new file with the current configuration
+     * @param filename the filename given by the user
+     */
     public void toXML(String filename) {
-        // TODO: get map from Jeffrey
+        System.out.println(filename);
+        //TODO: Change empty map to map from Jeffrey OR we can change this method to be called in CellController
+        new WriterXML(filename, simulationType, new HashMap<>(), dimensions[0], dimensions[1]);
     }
+
 }
