@@ -31,9 +31,9 @@ public class Grid {
         Color[][] newColors = control.getColors();
         for (int i = 0; i < dimensions[0]; i++) {
             for (int j = 0; j < dimensions[1]; j++) {
-                //Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, GUI.TOP_BAR + j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
-                //currentGrid.add(currentCell);
-                //root.getChildren().add(currentCell);
+                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, GUI.TOP_BAR + j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
+                currentGrid.add(currentCell);
+                root.getChildren().add(currentCell);
             }
         }
     }
@@ -60,9 +60,9 @@ public class Grid {
      * @param root the JavaFX Group root in GUI
      */
     private void clearGrid(Group root) {
-//        for (Rectangle cell : currentGrid) {
-//            root.getChildren().remove(cell);
-//        }
+        for (Rectangle cell : currentGrid) {
+            root.getChildren().remove(cell);
+        }
         currentGrid = null;
     }
 
