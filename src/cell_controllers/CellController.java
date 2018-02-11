@@ -1,12 +1,10 @@
 package cell_controllers;
 
-import java.util.Arrays;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import cells.Cell;
-import cells.GameOfLifeCell;
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
@@ -15,6 +13,7 @@ public abstract class CellController {
 	protected int xSize;
 	protected int ySize;
 	private Map<String, Map<Color, Integer>> data;
+	protected boolean isRandom;
 
 	private static final int TOPLEFT = 0;
 	private static final int TOP = 1;
@@ -31,7 +30,7 @@ public abstract class CellController {
 	 * @param dimensions
 	 *            the dimensions of the cellGrid
 	 */
-	public CellController(int[] dimensions) {
+	public CellController(int[] dimensions, boolean random) {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
 
@@ -46,7 +45,10 @@ public abstract class CellController {
 			}
 		}
 	}
-
+	
+	public abstract void setUpSpecific(Map<String, int[][]> map);
+	public abstract void setUpRandom(Map<String, Double> paramMap);
+	
 	// changes the size of cell grid
 
 	public void resize(int dimensions) {
