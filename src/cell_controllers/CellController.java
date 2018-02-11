@@ -174,6 +174,10 @@ public abstract class CellController {
 					data.put(type, new HashMap<>());
 					data.get(type).put(colour, 0);
 				}
+				System.out.println(type);
+				if (data.get(type).get(colour) == null){
+					data.get(type).put(colour, 0);
+				}
 				data.get(type).put(colour, data.get(type).get(colour) + 1);
 			}
 		}

@@ -21,7 +21,6 @@ public class LifeCellController extends CellController {
 				cellGrid[x][y] = new GameOfLifeCell(OFF);
 			}
 		}
-		System.out.println(random);
 		if (isRandom) {
 			setUpRandom(paramMap);
 		} else {

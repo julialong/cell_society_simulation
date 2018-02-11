@@ -56,7 +56,6 @@ public class ParserXML {
 		NodeList checkRandom = doc.getElementsByTagName("cell_on_list");
 		Node isRandom = checkRandom.item(0);
 		Element rElement = (Element) isRandom;
-		System.out.println("isRandom() is returning " + !Boolean.parseBoolean(rElement.getAttribute("isOn")));
 		return (!Boolean.parseBoolean(rElement.getAttribute("isOn")));
 	}
 	
