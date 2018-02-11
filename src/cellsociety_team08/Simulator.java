@@ -22,8 +22,8 @@ public class Simulator {
     private static final String WATOR = "wator";
     private static final String RPS = "rps";
 
-    private static final int FRAMES_PER_SECOND = 40;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final int FRAMES_PER_SECOND = 30;
+    private static final int MILLISECOND_DELAY = 6000 / FRAMES_PER_SECOND;
     private static final int START_STEP = 5;
 
     private int[] dimensions;

@@ -23,7 +23,7 @@ public class WriterXML {
 	 * creates a writerXML file
 	 * @param fileName desired name of written XML file
 	 */
-	public WriterXML(String fileName, String simType, Map<String, Double> map, int x, int y) {
+	public WriterXML(String fileName, String simType, Map<String, Double> map, Map<String, int[][]> cellMap, int x, int y) {
 		String destination = "/Users/edwar/eclipse-workspace/cellsociety_team08/data/" + fileName + ".xml";
 		System.out.println(destination);
 		result = new StreamResult(new File(destination));
@@ -57,15 +57,40 @@ public class WriterXML {
 		
 		addDimensions(x, y);
 		addParams(map);
-		
+		addCells(cellMap);
 		
 		
 		}
 	/**
 	 * adds cells
 	 */
-	public void addCells() {
+	public void addCells(Map<String, int[][]> map) {
 		Element cellsList = doc.createElement("cell_on_list");
+		Attr attribute = doc.createAttribute("isOn");
+		attribute.setValue("true");
+		for (String key: map.keySet()) {
+			Element cellType = doc.createElement("type");
+			Attr typeAttribute = doc.createAttribute("id");
+			typeAttribute.setValue(key);
+			cellType.setAttributeNode(typeAttribute);
+			int[][] tempArray = map.get(key);
+			for (int x = 0; x < tempArray.length; x++) {
+				Element cell = doc.createElement("cell");
+				Element ycoord = doc.createElement("ycoord");
+				Element xcoord = doc.createElement("xcoord");
+				ycoord.appendChild(doc.createTextNode(Integer.toString(tempArray[x][0])));
+				xcoord.appendChild(doc.createTextNode(Integer.toString(tempArray[x][1])));
+				
+				cell.appendChild(ycoord);
+				cell.appendChild(xcoord);			
+				cellType.appendChild(cell);
+			}
+			cellsList.appendChild(cellType);
+			
+		}
+		
+		baseXML.appendChild(cellsList);
+		
 		
 	}
 	/**
@@ -74,8 +99,7 @@ public class WriterXML {
 	public void addParams(Map<String, Double> map) {
 		parameterList = doc.createElement("parameter_list");
 		
-		for (String key: map.keySet()) {
-			
+		for (String key: map.keySet()) {			
 			Element temp = doc.createElement("parameters");
 			Attr attribute = doc.createAttribute("id");
 			attribute.setValue(key);
@@ -147,5 +171,7 @@ public class WriterXML {
 			e.printStackTrace();
 		}
 	}
+	
+
 	
 }
