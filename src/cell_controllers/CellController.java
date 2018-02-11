@@ -30,9 +30,6 @@ public abstract class CellController {
 	 * 
 	 * @param dimensions
 	 *            the dimensions of the cellGrid
-	 * @param cellsOn
-	 *            contains a list of cells which should be on (default cell config
-	 *            is off)
 	 */
 	public CellController(int[] dimensions) {
 		xSize = dimensions[0];
@@ -164,13 +161,14 @@ public abstract class CellController {
 	private void updataData() {
 		Color colour;
 		String type;
+		data = new HashMap<>();
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				Cell toGet = retrieveCell(x, y);
 				colour = toGet.getColor();
 				type = toGet.getState();
 				if (!data.containsKey(type)) {
-					data.put(type, new HashMap<Color, Integer>());
+					data.put(type, new HashMap<>());
 					data.get(type).put(colour, 0);
 				}
 				data.get(type).put(colour, data.get(type).get(colour) + 1);
