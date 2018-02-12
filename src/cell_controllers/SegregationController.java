@@ -1,6 +1,7 @@
 package cell_controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import cells.Cell;
@@ -28,6 +29,7 @@ public class SegregationController extends CellController {
 			setUpSpecific(map);
 		}
 		initializeNeighbors();
+		initializeData();
 	}
 	
 	@Override
@@ -47,7 +49,24 @@ public class SegregationController extends CellController {
 			cellGrid[xCoord][yCoord].setState(Color.BLUE);
 		}
 	}
+	
+	@Override
+	protected void updateData() {
+		//method unnecessary for this class now that the graph is refactored in this simulation
+	}
+	
+	public void initializeData() {
 
+		data = new HashMap<>();
+		data.put(DEFAULT, new HashMap<>());
+		data.get(DEFAULT).put(Color.WHITE, 0);
+		data.put("X", new HashMap<>());
+		data.get("X").put(Color.RED, 0);
+		data.put("O", new HashMap<>());
+		data.get("O").put(Color.BLUE, 0);
+		initialValues();
+	}
+	
 	@Override
 	public void setUpRandom(Map<String, Double> paramMap) {
 		// TODO Auto-generated method stub
@@ -138,7 +157,11 @@ public class SegregationController extends CellController {
 
 	@Override
 	public Cell getDefaultCell() {
-		return generateCell();
+		Cell temp = generateCell();
+		String type = temp.getState();
+		Color colour = temp.getColor();
+		data.get(type).put(colour, data.get(type).get(colour) + 1);
+		return temp;
 	}
 
 

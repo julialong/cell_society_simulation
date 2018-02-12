@@ -44,7 +44,8 @@ public abstract class CellController {
 		updateData();
 		return data;
 	}
-
+	
+	// this wouldn't be necessary after refactoring, as seen in the firecontroller class
 	protected void updateData() {
 		Color colour;
 		String type;
@@ -60,6 +61,19 @@ public abstract class CellController {
 
 				}
 
+				data.get(type).put(colour, data.get(type).get(colour) + 1);
+			}
+		}
+	}
+	
+	protected void initialValues() {
+		Color colour;
+		String type;
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				Cell toGet = cellGrid[x][y];
+				colour = toGet.getColor();
+				type = toGet.getState();
 				data.get(type).put(colour, data.get(type).get(colour) + 1);
 			}
 		}

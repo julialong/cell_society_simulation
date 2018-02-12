@@ -34,25 +34,15 @@ public class FireController extends CellController {
 	}
 	
 	public void initializeData() {
-		Color colour;
-		String type;
+
 		data = new HashMap<>();
-		
 		data.put(DEFAULT, new HashMap<>());
 		data.get(DEFAULT).put(Color.WHITE, 0);
 		data.put(TREE, new HashMap<>());
 		data.get(TREE).put(Color.GREEN, 0);
 		data.put(FIRE, new HashMap<>());
 		data.get(FIRE).put(Color.RED, 0);
-		
-		for (int x = 0; x < xSize; x++) {
-			for (int y = 0; y < ySize; y++) {
-				Cell toGet = cellGrid[x][y];
-				colour = toGet.getColor();
-				type = toGet.getState();
-				data.get(type).put(colour, data.get(type).get(colour) + 1);
-			}
-		}
+		initialValues();
 	}
 	
 	public void increaseData(String type, Color colour) {
@@ -74,10 +64,9 @@ public class FireController extends CellController {
 	
 	
 	@Override
-	public void updateData() {
-		//method unnecessary for this class now that the graph is refactored
+	protected void updateData() {
+		//method unnecessary for this class now that the graph is refactored in this simulation
 	}
-	
 	
 	public void setUpRandom(Map<String, Double> paramMap) {
 		double onrate = paramMap.get("firerate");
@@ -123,6 +112,7 @@ public class FireController extends CellController {
 			}
 		}
 	}
+	
 
 	private boolean catchResult() {
 		return Math.random() < catchProbability;
@@ -143,6 +133,7 @@ public class FireController extends CellController {
 	public Cell getDefaultCell() {
 		Cell temp = new Cell(TREE);
 		temp.setState(Color.GREEN);
+		increaseData(TREE,Color.GREEN);
 		return temp;
 	}
 
