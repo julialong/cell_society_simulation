@@ -11,6 +11,9 @@
     <ysize>25</ysize>
   </dimensions>
   <parameter_list>
+    <parameters id="edgenumber">
+      <value>4</value>
+    </parameters>  
   <parameters id="onrate">
     <value>.2</value>
   </parameters>

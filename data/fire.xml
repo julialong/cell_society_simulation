@@ -6,11 +6,14 @@
     <name>Julia Long</name>
     <name>Jeffrey Li</name>
   </authors>
-  <dimensions>
+  <dimensions isToroidal="true">
     <xsize>20</xsize>
     <ysize>20</ysize>
   </dimensions>
   <parameter_list>
+    <parameters id="edgenumber">
+      <value>4</value>
+    </parameters>
     <parameters id="probability">
       <value>.69</value>
     </parameters>
