@@ -371,6 +371,7 @@ public class GUI {
             addDimensionSlider();
         }
         catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(myResources.getString("Error"));
             alert.setHeaderText(myResources.getString("ErrorType"));

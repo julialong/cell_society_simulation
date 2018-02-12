@@ -120,20 +120,23 @@ public class Simulator {
      * Sets up the cell controller based on the simulation type from the XML file
      */
     private void setupCellController() {
-
-        switch (simulationType) {
-            case CONWAYS:
-                control = new LifeCellController(dimensions, cellTypes, parameters, isRandom);
-            case SPREADINGFIRE:
-                control = new FireController(dimensions, cellTypes, parameters, isRandom);
-            case SEGREGATION:
-                control = new FireController(dimensions, cellTypes, parameters, isRandom);
-            case WATOR:
-                control = new WatorController(dimensions, cellTypes, parameters, isRandom);
-            case RPS:
-                control = new RPSController(dimensions, cellTypes, parameters, isRandom);
-            default:
-                throw new IllegalArgumentException();
+        if (simulationType.equals(CONWAYS)) {
+            control = new LifeCellController(dimensions, cellTypes, parameters, isRandom);
+        }
+        else if (simulationType.equals(SPREADINGFIRE)) {
+            control = new FireController(dimensions, cellTypes, parameters, isRandom);
+        }
+        else if (simulationType.equals(SEGREGATION)) {
+            control = new SegregationController(dimensions, cellTypes, parameters, isRandom);
+        }
+        else if (simulationType.equals(WATOR)) {
+            control = new WatorController(dimensions, cellTypes, parameters, isRandom);
+        }
+        else if (simulationType.equals(RPS)) {
+            control = new RPSController(dimensions, cellTypes, parameters, isRandom);
+        }
+        else {
+            throw new IllegalArgumentException();
         }
     }
 
