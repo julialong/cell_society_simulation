@@ -7,11 +7,14 @@ import cell_controllers.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.util.Duration;
 
+/**
+ * Manages the simulation steps
+ * @author julialong
+ */
 public class Simulator {
 
 
@@ -31,8 +34,6 @@ public class Simulator {
     private Map<String, Double> parameters;
     private Boolean isRandom;
 
-    private int gridWidth;
-    private int gridHeight;
     private CellController control;
 
     private Boolean simulationState = false;
@@ -40,12 +41,7 @@ public class Simulator {
     private int stepNum = 0;
 
     private Grid myGrid;
-    private List<Rectangle> currentGrid = new ArrayList<>();
-
     private Graph myGraph;
-
-    private Timeline animation;
-    private KeyFrame frame;
 
     /**
      * Sets up the beginning configuration for the simulation
@@ -108,12 +104,11 @@ public class Simulator {
 
     /**
      * Sets up the simulation
-     *
      * @param root the JavaFX Group root in GUI
      */
     private void startAnimation(Group root) {
-        frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(root));
-        animation = new Timeline();
+        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(root));
+        Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
@@ -123,25 +118,20 @@ public class Simulator {
      * Sets up the cell controller based on the simulation type from the XML file
      */
     private void setupCellController() {
-    		
-        if (simulationType.equals(CONWAYS)) {
 
-            control = new LifeCellController(dimensions, cellTypes, parameters, isRandom);
-        }
-        else if (simulationType.equals(SPREADINGFIRE)) {
-            control = new FireController(dimensions, cellTypes, parameters, isRandom);
-        }
-        else if (simulationType.equals(SEGREGATION)) {
-            control = new SegregationController(dimensions, cellTypes, parameters, isRandom);
-        }
-        else if (simulationType.equals(WATOR)) {
-            control = new WatorController(dimensions, cellTypes, parameters, isRandom);
-        }
-        else if(simulationType.equals(RPS)) {
-            control = new RPSController(dimensions, cellTypes, parameters, isRandom);
-        }
-        else {
-            throw new IllegalArgumentException();
+        switch (simulationType) {
+            case CONWAYS:
+                control = new LifeCellController(dimensions, cellTypes, parameters, isRandom);
+            case SPREADINGFIRE:
+                control = new FireController(dimensions, cellTypes, parameters, isRandom);
+            case SEGREGATION:
+                control = new FireController(dimensions, cellTypes, parameters, isRandom);
+            case WATOR:
+                control = new WatorController(dimensions, cellTypes, parameters, isRandom);
+            case RPS:
+                control = new RPSController(dimensions, cellTypes, parameters, isRandom);
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
@@ -152,9 +142,10 @@ public class Simulator {
      * @param root the JavaFX Group root in GUI
      */
     private void setupGrid(Group root) {
-        gridWidth = GUI.XSIZE / dimensions[0];
-        gridHeight = GUI.YSIZE / dimensions[1];
-        myGrid = new Grid(dimensions, gridWidth, gridHeight);
+        int gridWidth = GUI.XSIZE / dimensions[0];
+        int gridHeight = GUI.YSIZE / dimensions[1];
+        Double edges = chooseShape();
+        myGrid = new Grid(dimensions, gridWidth, gridHeight, edges);
         myGrid.updateGridColors(root, control);
     }
 
@@ -163,7 +154,7 @@ public class Simulator {
      * Updates the graph with the correct colors
      * @param root the JavaFX Group root in GUI
      */
-    public void updateGraph(Group root) {
+    private void updateGraph(Group root) {
         Map<String, Map<Color, Integer>> data = control.getData();
         for (String thisType : data.keySet()) {
             for (Color thisColor : data.get(thisType).keySet()) {
@@ -226,25 +217,8 @@ public class Simulator {
     }
 
     /**
-     * @return array with cell type strings
+     * Toggles the cell controller's toroidal state
      */
-    public String[] getCellTypes() {
-        String[] answer = new String[cellTypes.keySet().size()];
-        int i = 0;
-        for (String type : cellTypes.keySet()){
-            answer[i] = type;
-            i++;
-        }
-        return answer;
-    }
-
-    /**
-     * @return the maximum number of cells in the grid
-     */
-    public int getMaxCells() {
-        return dimensions[0]*dimensions[1];
-    }
-
     public void switchToroidal() {
         control.switchTorroidal();
     }
@@ -254,9 +228,11 @@ public class Simulator {
      * @param filename the filename given by the user
      */
     public void toXML(String filename) {
-        System.out.println(filename);
-        //TODO: Change empty map to map from Jeffrey OR we can change this method to be called in CellController
         new WriterXML(filename, simulationType, parameters, cellTypes, dimensions[0], dimensions[1]);
+    }
+
+    private Double chooseShape() {
+        return parameters.get("edgenumber");
     }
 
 }

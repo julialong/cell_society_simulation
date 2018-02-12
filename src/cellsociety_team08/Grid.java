@@ -4,26 +4,37 @@ import cell_controllers.CellController;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Creates the appropriate shapes for the grid
+ * @author julialong
+ */
 public class Grid {
 
     private List<Polygon> currentGrid;
     private int[] dimensions;
     private int gridWidth;
     private int gridHeight;
+    private Double edgeType;
 
-    public Grid(int[] dim, int width, int height) {
+    /**
+     * Initializes a new grid
+     * @param dim dimensions of the total simulation window
+     * @param width number of columns needed
+     * @param height number of rows needed
+     */
+    public Grid(int[] dim, int width, int height, Double edges) {
         dimensions = new int[2];
         currentGrid = new ArrayList<>();
         dimensions[0] = dim[0];
         dimensions[1] = dim[1];
         gridWidth = width;
         gridHeight = height;
+        edgeType = edges;
     }
 
     /**
@@ -48,12 +59,16 @@ public class Grid {
      * @param x x position
      * @param y y position
      * @param color color of cell
-     * @return
+     * @return cell of the correct shape
      */
     private Polygon createNewCell(int xIndex, int yIndex, int x, int y, Color color) {
-        //Polygon newCell = createTriangle(xIndex, yIndex, x, y);
         Polygon newCell = createSquare(x, y);
-        //Polygon newCell = createHexagon(yIndex,x,y);
+        if (edgeType == 3) {
+            newCell = createTriangle(xIndex, yIndex, x, y);
+        }
+        if (edgeType == 6) {
+            newCell = createHexagon(yIndex,x,y);
+        }
         newCell.setFill(color);
         newCell.setStroke(Color.DARKGREY);
         newCell.setStrokeType(StrokeType.INSIDE);
@@ -62,15 +77,16 @@ public class Grid {
 
     /**
      * Creates square shaped cell
-     * @param x x position of cell
-     * @param y y y position of cell
+     * @param i x position of cell
+     * @param j y y position of cell
      * @return new square cell
      */
-    private Polygon createSquare(int x, int y) {
+    private Polygon createSquare(double i, double j) {
         Polygon square = new Polygon();
-        double i = x;
-        double j = y;
-        square.getPoints().addAll(i, j, i, j + gridHeight, i + gridWidth, j + gridHeight, i + gridWidth, j);
+        square.getPoints().addAll(i, j,
+                i, j + gridHeight,
+                i + gridWidth, j + gridHeight,
+                i + gridWidth, j);
         return square;
     }
 
@@ -85,7 +101,9 @@ public class Grid {
     private Polygon createTriangle(int xIndex, int yIndex, double x, double y) {
         Polygon triangle = new Polygon();
         if (yIndex % 2 != 0)  x = x + gridWidth/2;
-        if (xIndex != 0) triangle.getPoints().addAll( x , y, x - gridWidth /2, y + gridHeight, x + gridWidth /2, y + gridHeight);
+        if (xIndex != 0 || yIndex % 2 != 0) {
+            triangle.getPoints().addAll( x , y, x - gridWidth /2, y + gridHeight, x + gridWidth /2, y + gridHeight);
+        }
         triangle.getPoints().addAll(x, y, x + gridWidth /2, y + gridHeight, x + gridWidth, y);
         return triangle;
     }
@@ -93,14 +111,12 @@ public class Grid {
     /**
      * Creates hexagon shaped cell
      * @param yIndex current row of cell
-     * @param x x position of cell
-     * @param y y position of cells
+     * @param i x position of cell
+     * @param j y position of cells
      * @return new hexagonal cell
      */
-    private Polygon createHexagon(int yIndex, int x, int y) {
+    private Polygon createHexagon(int yIndex, double i, double j) {
         Polygon hexagon = new Polygon();
-        double i = x;
-        double j = y;
         if (yIndex % 2 != 0)  i = i + gridWidth/2;
         hexagon.getPoints().addAll(i, j,
                 i + gridWidth/2, j - gridHeight/2,
