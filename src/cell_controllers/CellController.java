@@ -7,6 +7,7 @@ import cells.Cell;
 import javafx.scene.paint.Color;
 import shapes.NeighborFinder;
 import shapes.SquareNeighborFinder;
+import xml.WriterException;
 
 /**
  * 
@@ -243,6 +244,6 @@ public abstract class CellController {
 	 * makes an XML file containing the current locations of cells
 	 * @param filename to name the newly created XML file
 	 */
-	public abstract void writeToXML(String filename); 
+	public abstract void writeToXML(String filename) throws WriterException;
 
 }

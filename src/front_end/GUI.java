@@ -100,7 +100,12 @@ public class GUI {
      */
     private void openStartFile() {
         File start = new File(START_FILE);
-        mySimulator.setFile(start);
+        try {
+            mySimulator.setFile(start);
+        }
+        catch (Exception e){
+            showInvalidFileError();
+        }
     }
 
     /**
@@ -346,7 +351,12 @@ public class GUI {
         File configFile = fileChooser.showOpenDialog(stage);
         if (configFile != null) {
             mySimulator = new Simulator();
+            try {
             mySimulator.setFile(configFile);
+            }
+            catch (Exception e){
+            showInvalidFileError();
+            }
         }
     }
 
@@ -358,7 +368,15 @@ public class GUI {
         prompt.setTitle("Write to file");
         prompt.setHeaderText("Please enter the name of your configuration file.");
         Optional<String> result = prompt.showAndWait();
-        result.ifPresent(filename -> mySimulator.toXML(filename));
+        result.ifPresent(this::writeXML);
+    }
+
+    private void writeXML(String filename) {
+        try {
+            mySimulator.toXML(filename);
+        } catch (Exception e) {
+            showInvalidWriterError();
+        }
     }
 
     /**
@@ -371,12 +389,23 @@ public class GUI {
             addDimensionSlider();
         }
         catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(myResources.getString("Error"));
-            alert.setHeaderText(myResources.getString("ErrorType"));
-            alert.setContentText(myResources.getString("Error"));
-            alert.showAndWait();
+            showInvalidFileError();
         }
+    }
+
+    private void showInvalidFileError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(myResources.getString("Error"));
+        alert.setHeaderText(myResources.getString("ErrorType"));
+        alert.setContentText(myResources.getString("Error"));
+        alert.showAndWait();
+    }
+
+    private void showInvalidWriterError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(myResources.getString("Error"));
+        alert.setHeaderText(myResources.getString("WriterType"));
+        alert.setContentText(myResources.getString("Error"));
+        alert.showAndWait();
     }
 }

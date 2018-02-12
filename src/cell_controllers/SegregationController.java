@@ -7,6 +7,7 @@ import java.util.Map;
 
 import cells.Cell;
 import javafx.scene.paint.Color;
+import xml.WriterException;
 import xml.WriterXML;
 /**
  * simulator based on racism
@@ -200,10 +201,14 @@ public class SegregationController extends CellController {
 	}
 	
 	@Override
-	public void writeToXML(String filename) {
-		// TODO Auto-generated method stub
-		WriterXML writer = new WriterXML(filename, "segregation", param, makeCellMap(), xSize, ySize);
-		writer.convert();
+	public void writeToXML(String filename) throws WriterException {
+		try {
+			WriterXML writer = new WriterXML(filename, "segregation", param, makeCellMap(), xSize, ySize);
+			writer.convert();
+		}
+		catch (Exception e) {
+			throw new WriterException();
+		}
 	}
 
 
