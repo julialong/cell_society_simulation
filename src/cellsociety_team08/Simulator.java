@@ -8,7 +8,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.util.Duration;
@@ -40,6 +39,7 @@ public class Simulator {
     private int stepTime;
     private int stepNum = 0;
 
+    private Grid myGrid;
     private List<Rectangle> currentGrid = new ArrayList<>();
 
     private Graph myGraph;
@@ -103,7 +103,7 @@ public class Simulator {
         control.setNextStates();
         control.updateCells();
         updateGraph(root);
-        updateGridColors(root);
+        myGrid.updateGridColors(root, control);
     }
 
     /**
@@ -154,25 +154,10 @@ public class Simulator {
     private void setupGrid(Group root) {
         gridWidth = GUI.XSIZE / dimensions[0];
         gridHeight = GUI.YSIZE / dimensions[1];
-        updateGridColors(root);
+        myGrid = new Grid(dimensions, gridWidth, gridHeight);
+        myGrid.updateGridColors(root, control);
     }
 
-    /**
-     * Gets the current cell colors from the cell controller and updates the displayed grid
-     * @param root the JavaFX Group root in GUI
-     */
-    private void updateGridColors(Group root) {
-        clearGrid(root);
-		currentGrid = new ArrayList<>();
-        Color[][] newColors = control.getColors();
-        for (int i = 0; i < dimensions[0]; i++) {
-            for (int j = 0; j < dimensions[1]; j++) {
-                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, GUI.TOP_BAR + j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
-                currentGrid.add(currentCell);
-                root.getChildren().add(currentCell);
-            }
-        }
-    }
 
     /**
      * Updates the graph with the correct colors
@@ -186,34 +171,6 @@ public class Simulator {
             }
         }
         myGraph.updateGraph(root);
-    }
-
-	/**
-	 * Creates a new cell with the given parameters
-	 * @param x x position
-	 * @param y y position
-	 * @param width width of cell
-	 * @param height height of cell
-	 * @param color color of cell
-	 * @return
-	 */
-    private Rectangle createNewCell(int x, int y, int width, int height, Color color) {
-    	Rectangle newCell = new Rectangle(x, y, width, height);
-		newCell.setFill(color);
-		newCell.setStroke(Color.DARKGREY);
-		newCell.setStrokeType(StrokeType.INSIDE);
-		return newCell;
-	}
-
-    /**
-     * Removes current cells from the GUI root
-     * @param root the JavaFX Group root in GUI
-     */
-    private void clearGrid(Group root) {
-        for (Rectangle cell : currentGrid) {
-            root.getChildren().remove(cell);
-        }
-        currentGrid = null;
     }
 
     /**
@@ -286,6 +243,10 @@ public class Simulator {
      */
     public int getMaxCells() {
         return dimensions[0]*dimensions[1];
+    }
+
+    public void switchToroidal() {
+        control.switchTorroidal();
     }
 
     /**

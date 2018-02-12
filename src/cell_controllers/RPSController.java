@@ -107,7 +107,7 @@ public class RPSController extends CellController {
 		RPSCell temp;
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				temp = (RPSCell) retrieveCell(x, y);
+				temp = (RPSCell) cellGrid[x][y];
 				temp.infect(temp.retrieveRandomNeighbour());
 			}
 		}

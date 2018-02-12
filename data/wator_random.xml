@@ -15,10 +15,10 @@
       <value>4</value>
     </parameters>  
     <parameters id="sharkrate">
-      <value>.2</value>
+      <value>0.2</value>
     </parameters>
     <parameters id="fishrate">
-      <value>.2</value>
+      <value>0.35</value>
     </parameters>
   </parameter_list>
   <cell_on_list isOn="false">

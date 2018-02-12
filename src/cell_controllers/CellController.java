@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cells.Cell;
+import cellsociety_team08.NeighborFinder;
+import cellsociety_team08.SquareNeighborFinder;
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
@@ -13,6 +15,7 @@ public abstract class CellController {
 	protected int ySize;
 	private Map<String, Map<Color, Integer>> data;
 	protected boolean isRandom;
+	private boolean torroidal;
 
 	private static final int TOPLEFT = 0;
 	private static final int TOP = 1;
@@ -33,6 +36,7 @@ public abstract class CellController {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
 		isRandom = random;
+		torroidal = false;
 
 		data = new HashMap<>();
 
@@ -77,6 +81,11 @@ public abstract class CellController {
 	}
 
 	public abstract Cell getDefaultCell();
+	
+	public void switchTorroidal() {
+		torroidal = !torroidal;
+		initializeNeighbors();
+	}
 
 	public void enlarge(int dimensions) {
 		Cell[][] cellGrid2 = new Cell[dimensions][dimensions];
@@ -105,7 +114,7 @@ public abstract class CellController {
 	 */
 	public void initializeNeighbors() {
 		// create if statements to figure out with neighborfinder
-		NeighborFinder finder = new SquareNeighborFinder(cellGrid);
+		NeighborFinder finder = new SquareNeighborFinder(cellGrid, torroidal);
 		finder.initializeNeighbors();
 		cellGrid = finder.getCellGrid();
 	}
@@ -120,28 +129,6 @@ public abstract class CellController {
 	 * @return returns the cell at that specific coordinate (if it's in bounds, null
 	 *         otherwise)
 	 */
-	public Cell retrieveCell(int x, int y) {
-
-		// if (x < 0 || x >= xSize)
-		// return null;
-		// if (y < 0 || y >= ySize)
-		// return null;
-
-		if (x < 0) {
-			x = xSize - 1;
-		}
-		if (x >= xSize) {
-			x = 0;
-		}
-		if (y < 0) {
-			y = ySize - 1;
-		}
-		if (y >= ySize) {
-			y = 0;
-		}
-
-		return cellGrid[x][y];
-	}
 
 	public Map getData() {
 		updataData();
@@ -154,7 +141,7 @@ public abstract class CellController {
 		data = new HashMap<>();
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				Cell toGet = retrieveCell(x, y);
+				Cell toGet = cellGrid[x][y];
 				colour = toGet.getColor();
 				type = toGet.getState();
 				if (!data.containsKey(type)) {
@@ -182,7 +169,7 @@ public abstract class CellController {
 		Color[][] colors = new Color[xSize][ySize];
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				colors[x][y] = retrieveCell(x, y).getColor();
+				colors[x][y] = cellGrid[x][y].getColor();
 			}
 		}
 		return colors;

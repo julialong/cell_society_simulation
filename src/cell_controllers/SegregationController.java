@@ -41,7 +41,6 @@ public class SegregationController extends CellController {
 			int yCoord = cellsX[z][1];
 			cellGrid[xCoord][yCoord] = new Cell("X");
 			cellGrid[xCoord][yCoord].setState(Color.RED);
-			System.out.println("wrking");
 		}
 		int[][] cellsO = map.get("o");
 		for (int z = 0; z < cellsO.length; z++) {
@@ -86,7 +85,7 @@ public class SegregationController extends CellController {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				
-				Cell toSet = retrieveCell(x, y);
+				Cell toSet = cellGrid[x][y];
 				String toSetType = toSet.getState();
 				
 				// deal with x and o
