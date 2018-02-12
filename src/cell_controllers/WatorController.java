@@ -280,26 +280,26 @@ public class WatorController extends CellController {
 	@Override
 	public Map<String, int[][]> makeCellMap() {
 		Map<String, int[][]> map = new HashMap<String, int[][]>();
-		// List<int[]> cellListFire = new ArrayList<int[]>();
-		// List<int[]> cellListBurnt = new ArrayList<int[]>();
-		// for (int x = 0; x < xSize; x++) {
-		// for (int y = 0; y < ySize; y++) {
-		// if (cellGrid[x][y].getState() == DEFAULT) {
-		// int[] temp = {x,y};
-		// cellListBurnt.add(temp);
-		// }
-		// if (cellGrid[x][y].getState() == FIRE) {
-		// int[] temp = {x,y};
-		// cellListFire.add(temp);
-		// }
-		//
-		// }
-		// }
-		//
-		// map.put("burning", cellListFire.toArray(new int[cellListFire.size()][]));
-		// map.put("default", cellListBurnt.toArray(new int[cellListBurnt.size()][]));
-		//
-		//
+		 List<int[]> cellListShark = new ArrayList<int[]>();
+		 List<int[]> cellListFish = new ArrayList<int[]>();
+		 for (int x = 0; x < xSize; x++) {
+		 for (int y = 0; y < ySize; y++) {
+		 if (cellGrid[x][y].getState() == SHARK) {
+		 int[] temp = {x,y};
+		 cellListShark.add(temp);
+		 }
+		 if (cellGrid[x][y].getState() == FISH) {
+		 int[] temp = {x,y};
+		 cellListFish.add(temp);
+		 }
+		
+		 }
+		 }
+		
+		 map.put("shark", cellListShark.toArray(new int[cellListShark.size()][]));
+		 map.put("fish", cellListFish.toArray(new int[cellListFish.size()][]));
+		
+		
 
 		return map;
 	}

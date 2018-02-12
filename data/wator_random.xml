@@ -13,12 +13,12 @@
   <parameter_list>
     <parameters id="edgenumber">
       <value>4</value>
-    </parameters>  
+    </parameters>
     <parameters id="sharkrate">
       <value>0.2</value>
     </parameters>
     <parameters id="fishrate">
-      <value>0.35</value>
+      <value>0.2</value>
     </parameters>
   </parameter_list>
   <cell_on_list isOn="false">

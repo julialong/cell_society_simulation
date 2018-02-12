@@ -86,7 +86,7 @@ public class Grid {
         Polygon triangle = new Polygon();
         if (yIndex % 2 != 0)  x = x + gridWidth/2;
         if (xIndex != 0) triangle.getPoints().addAll( x , y, x - gridWidth /2, y + gridHeight, x + gridWidth /2, y + gridHeight);
-        triangle.getPoints().addAll(x, y, x + gridWidth /2, y + gridHeight, x + gridWidth, y);
+        triangle.getPoints().addAll(x, y, x + gridWidth /2, y + gridHeight, x + gridWidth, y); 
         return triangle;
     }
 
