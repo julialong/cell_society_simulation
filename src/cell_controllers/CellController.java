@@ -149,6 +149,7 @@ public abstract class CellController {
 	 * 3 x 4 5 6 7
 	 */
 	public void initializeNeighbors() {
+		
 		// create if statements to figure out with neighborfinder
 		NeighborFinder finder = new SquareNeighborFinder(cellGrid, torroidal);
 		finder.initializeNeighbors();

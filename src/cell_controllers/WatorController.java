@@ -165,9 +165,7 @@ public class WatorController extends CellController {
 		
 		return tempCell;
 	}
-
 	
-
 	public WatorCell newSpot(WatorCell animal) {
 		ArrayList<WatorCell> possibleFish = new ArrayList<WatorCell>();
 		ArrayList<WatorCell> possibleWater = new ArrayList<WatorCell>();
