@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<segregation>
-  <title>Model of Segregation</title>
+<life>
+  <title>Conway&apos;s Game of Life</title>
   <authors>
     <name>Edward Zhuang</name>
     <name>Julia Long</name>
@@ -11,19 +11,12 @@
     <ysize>20</ysize>
   </dimensions>
   <parameter_list>
-    <parameters id="threshold">
-      <value>.75</value>
+    <parameters id="edgenumber">
+      <value>3</value>
     </parameters>
-    <parameters id="xrate">
-      <value>.2</value>
-    </parameters>
-    <parameters id="orate">
-      <value>.2</value>
-    </parameters>
-
   </parameter_list>
   <cell_on_list isOn="true">
-    <type id="x">
+    <type id="on">
       <cell>
         <ycoord>2</ycoord>
         <xcoord>3</xcoord>
@@ -39,30 +32,22 @@
       <cell>
         <ycoord>7</ycoord>
         <xcoord>6</xcoord>
-
       </cell>
       <cell>
         <ycoord>10</ycoord>
         <xcoord>11</xcoord>
-
       </cell>
-    </type>
-
-    <type id="o">
       <cell>
         <ycoord>11</ycoord>
         <xcoord>10</xcoord>
-
       </cell>
       <cell>
         <ycoord>10</ycoord>
         <xcoord>10</xcoord>
-
       </cell>
       <cell>
         <ycoord>9</ycoord>
         <xcoord>10</xcoord>
-
       </cell>
       <cell>
         <ycoord>1</ycoord>
@@ -70,4 +55,4 @@
       </cell>
     </type>
   </cell_on_list>
-</segregation>
+</life>

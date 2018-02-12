@@ -13,6 +13,7 @@ public abstract class CellController {
 	protected int ySize;
 	private Map<String, Map<Color, Integer>> data;
 	protected boolean isRandom;
+	private boolean torroidal;
 
 	private static final int TOPLEFT = 0;
 	private static final int TOP = 1;
@@ -33,6 +34,7 @@ public abstract class CellController {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
 		isRandom = random;
+		torroidal = false;
 
 		data = new HashMap<>();
 
@@ -77,6 +79,11 @@ public abstract class CellController {
 	}
 
 	public abstract Cell getDefaultCell();
+	
+	public void switchTorroidal() {
+		torroidal = !torroidal;
+		initializeNeighbors();
+	}
 
 	public void enlarge(int dimensions) {
 		Cell[][] cellGrid2 = new Cell[dimensions][dimensions];
@@ -104,23 +111,10 @@ public abstract class CellController {
 	 * 3 x 4 5 6 7
 	 */
 	public void initializeNeighbors() {
-		for (int x = 0; x < xSize; x++) {
-			for (int y = 0; y < ySize; y++) {
-
-				Cell[] tempArray = new Cell[NUMBER_OF_NEIGHBOURS];
-
-				tempArray[TOPLEFT] = retrieveCell(x - 1, y - 1);
-				tempArray[TOP] = retrieveCell(x - 1, y);
-				tempArray[TOPRIGHT] = retrieveCell(x - 1, y + 1);
-				tempArray[LEFT] = retrieveCell(x, y - 1);
-				tempArray[RIGHT] = retrieveCell(x, y + 1);
-				tempArray[BOTTOMLEFT] = retrieveCell(x + 1, y - 1);
-				tempArray[BOTTOM] = retrieveCell(x + 1, y);
-				tempArray[BOTTOMRIGHT] = retrieveCell(x + 1, y + 1);
-
-				retrieveCell(x, y).addNeighbors(tempArray);
-			}
-		}
+		// create if statements to figure out with neighborfinder
+		NeighborFinder finder = new SquareNeighborFinder(cellGrid);
+		finder.initializeNeighbors();
+		cellGrid = finder.getCellGrid();
 	}
 
 	/**
@@ -134,12 +128,15 @@ public abstract class CellController {
 	 *         otherwise)
 	 */
 	public Cell retrieveCell(int x, int y) {
+		
+		if (!torroidal) {
+			 if (x < 0 || x >= xSize)
+			 return null;
+			 if (y < 0 || y >= ySize)
+			 return null;	
+		}
 
-		// if (x < 0 || x >= xSize)
-		// return null;
-		// if (y < 0 || y >= ySize)
-		// return null;
-
+		
 		if (x < 0) {
 			x = xSize - 1;
 		}
