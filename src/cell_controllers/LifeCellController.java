@@ -1,21 +1,31 @@
 package cell_controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cells.Cell;
 import cells.GameOfLifeCell;
-
+import xml.WriterXML;
+/**
+ * cell for simulation based on inability to survive overcrowding or undercrowding
+ * @author jeffreyli, edwardzhuang
+ *
+ */
 public class LifeCellController extends CellController {
 
 	private static final String ON = "on";
 	private static final String OFF = "default";
+	private Map<String, Double> param;
 
-	// 2 maps and bololean
+
 
 	public LifeCellController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap,
 			boolean random) {
 
 		super(dimensions, random);
+		param = paramMap;
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				cellGrid[x][y] = new GameOfLifeCell(OFF);
@@ -28,7 +38,8 @@ public class LifeCellController extends CellController {
 		}
 		initializeNeighbors();
 	}
-
+	
+	@Override
 	public void setUpRandom(Map<String, Double> paramMap) {
 
 		double onrate = paramMap.get("onrate");
@@ -42,7 +53,7 @@ public class LifeCellController extends CellController {
 			}
 		}
 	}
-
+	@Override
 	public void setUpSpecific(Map<String, int[][]> map) {
 
 		int[][] cellsOn = map.get(ON);
@@ -52,18 +63,41 @@ public class LifeCellController extends CellController {
 			cellGrid[xCoord][yCoord] = new GameOfLifeCell(ON);
 		}
 	}
-
+	@Override
 	public Cell getDefaultCell() {
 		return new GameOfLifeCell(OFF);
 
 	}
-
+	@Override
 	public void setNextStates() {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				GameOfLifeCell toSet = (GameOfLifeCell) retrieveCell(x, y);
+				GameOfLifeCell toSet = (GameOfLifeCell) cellGrid[x][y];
 				toSet.setNextState();
 			}
 		}
+	}
+
+	@Override
+	public Map<String, int[][]> makeCellMap() {
+		Map<String, int[][]> map = new HashMap<String, int[][]>();
+		List<int[]> cellList = new ArrayList<int[]>();
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				if (cellGrid[x][y].getState() == ON) {
+					int[] temp = {x,y};
+					cellList.add(temp);
+				}
+			}
+		}	
+		map.put("on", cellList.toArray(new int[cellList.size()][]));
+		return map;
+	}
+	
+	@Override
+	public void writeToXML(String filename) {
+		// TODO Auto-generated method stub
+		WriterXML writer = new WriterXML(filename, "life", param, makeCellMap(), xSize, ySize);
+		writer.convert();
 	}
 }

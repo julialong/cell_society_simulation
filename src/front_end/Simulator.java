@@ -1,4 +1,4 @@
-package cellsociety_team08;
+package front_end;
 
 import java.io.File;
 import java.util.*;
@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.util.Duration;
+import xml.ParserXML;
+import xml.WriterXML;
 
 /**
  * Manages the simulation steps

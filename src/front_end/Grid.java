@@ -1,4 +1,4 @@
-package cellsociety_team08;
+package front_end;
 
 import cell_controllers.CellController;
 import javafx.scene.Group;
@@ -101,9 +101,7 @@ public class Grid {
     private Polygon createTriangle(int xIndex, int yIndex, double x, double y) {
         Polygon triangle = new Polygon();
         if (yIndex % 2 != 0)  x = x + gridWidth/2;
-        if (xIndex != 0 || yIndex % 2 != 0) {
-            triangle.getPoints().addAll( x , y, x - gridWidth /2, y + gridHeight, x + gridWidth /2, y + gridHeight);
-        }
+        if (xIndex != 0) triangle.getPoints().addAll( x , y, x - gridWidth /2, y + gridHeight, x + gridWidth /2, y + gridHeight);
         triangle.getPoints().addAll(x, y, x + gridWidth /2, y + gridHeight, x + gridWidth, y);
         return triangle;
     }

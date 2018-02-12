@@ -6,7 +6,7 @@
     <name>Julia Long</name>
     <name>Jeffrey Li</name>
   </authors>
-  <dimensions isToroidal="true">
+  <dimensions>
     <xsize>20</xsize>
     <ysize>20</ysize>
   </dimensions>
@@ -47,26 +47,9 @@
       </cell>
     </type>
 
-    <type id="tree">
-      <cell>
-        <ycoord>11</ycoord>
-        <xcoord>10</xcoord>
 
-      </cell>
-      <cell>
-        <ycoord>10</ycoord>
-        <xcoord>10</xcoord>
-
-      </cell>
-      <cell>
-        <ycoord>9</ycoord>
-        <xcoord>10</xcoord>
-
-      </cell>
-      <cell>
-        <ycoord>1</ycoord>
-        <xcoord>1</xcoord>
-      </cell>
+    <type id="default">
     </type>
+
   </cell_on_list>
 </fire>

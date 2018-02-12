@@ -5,25 +5,22 @@ import java.util.Map;
 
 import cells.Cell;
 import javafx.scene.paint.Color;
+import shapes.NeighborFinder;
+import shapes.SquareNeighborFinder;
 
+/**
+ * 
+ * @author jeffreyli, edwardzhuang
+ * the superclass for organising the grid of cells
+ */
 public abstract class CellController {
 
 	protected Cell[][] cellGrid;
 	protected int xSize;
 	protected int ySize;
-	private Map<String, Map<Color, Integer>> data;
+	protected Map<String, Map<Color, Integer>> data;
 	protected boolean isRandom;
-	private boolean torroidal;
-
-	private static final int TOPLEFT = 0;
-	private static final int TOP = 1;
-	private static final int TOPRIGHT = 2;
-	private static final int LEFT = 3;
-	private static final int RIGHT = 4;
-	private static final int BOTTOMLEFT = 5;
-	private static final int BOTTOM = 6;
-	private static final int BOTTOMRIGHT = 7;
-	private static final int NUMBER_OF_NEIGHBOURS = 8;
+	protected boolean torroidal;
 
 	/**
 	 * 
@@ -47,13 +44,89 @@ public abstract class CellController {
 			}
 		}
 	}
+	/**
+	 * 
+	 * @return data for projecting into a graph
+	 */
+	public Map getData() {
+		updateData();
+		return data;
+	}
+	
+	// this wouldn't be necessary after refactoring, as seen in the firecontroller class
+	/**
+	 * updates the data in the data map
+	 */
+	protected void updateData() {
+		Color colour;
+		String type;
+		data = new HashMap<>();
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				Cell toGet = cellGrid[x][y];
+				colour = toGet.getColor();
+				type = toGet.getState();
+				if (!data.containsKey(type)) {
+					data.put(type, new HashMap<>());
+					data.get(type).put(colour, 0);
 
+				}
+
+				data.get(type).put(colour, data.get(type).get(colour) + 1);
+			}
+		}
+	}
+	
+	/**
+	 * initialises values in the data map
+	 */
+	protected void initialValues() {
+		Color colour;
+		String type;
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				Cell toGet = cellGrid[x][y];
+				colour = toGet.getColor();
+				type = toGet.getState();
+				data.get(type).put(colour, data.get(type).get(colour) + 1);
+			}
+		}
+	}
+	
+	/**
+	 * increments value in map by 1
+	 * @param type to increase
+	 * @param colour to increase
+	 */
+	public void increaseData(String type, Color colour) {
+		data.get(type).put(colour, data.get(type).get(colour) + 1);
+	}
+	
+	/**
+	 * decrements value in map by 1
+	 * @param type to decrease
+	 * @param colour to decrease
+	 */
+	public void decreaseData(String type, Color colour) {
+		data.get(type).put(colour, data.get(type).get(colour) -1);
+	}
+	
+	/**
+	 * sets up specific configuration of grid with cells set to spots
+	 * @param map of cell locations
+	 */
 	public abstract void setUpSpecific(Map<String, int[][]> map);
 
+	/**
+	 * generates cells randomly throughout the grid based on their probability
+	 * @param paramMap contains probabilities of generation for each cell
+	 */
 	public abstract void setUpRandom(Map<String, Double> paramMap);
 
-	// changes the size of cell grid
-
+	/**
+	 * changes size of grid dynamically
+	 * @param dimensions of new grid
+	 */
 	public void resize(int dimensions) {
 		if (dimensions < xSize)
 			truncate(dimensions);
@@ -61,9 +134,10 @@ public abstract class CellController {
 			enlarge(dimensions);
 	}
 
-	// changes the size of the cell grid, used if desired dimensions are smaller
-	// than current
-
+	/**
+	 * reduces size of grid
+	 * @param new dimensions
+	 */
 	public void truncate(int dimensions) {
 		Cell[][] cellGrid2 = new Cell[dimensions][dimensions];
 		for (int i = 0; i < dimensions; i++) {
@@ -77,14 +151,25 @@ public abstract class CellController {
 		xSize = dimensions;
 		ySize = dimensions;
 	}
-
+	
+	/**
+	 * 
+	 * @return cell to populate the rest of simulation if grid size increases dynamically
+	 */
 	public abstract Cell getDefaultCell();
 	
+	/**
+	 * toggles whether the simulation is torroidal or finite
+	 */
 	public void switchTorroidal() {
 		torroidal = !torroidal;
 		initializeNeighbors();
 	}
-
+	
+	/**
+	 * increases the size of the grid
+	 * @param dimensions
+	 */
 	public void enlarge(int dimensions) {
 		Cell[][] cellGrid2 = new Cell[dimensions][dimensions];
 		for (int i = 0; i < dimensions; i++) {
@@ -111,75 +196,22 @@ public abstract class CellController {
 	 * 3 x 4 5 6 7
 	 */
 	public void initializeNeighbors() {
+		
 		// create if statements to figure out with neighborfinder
-		NeighborFinder finder = new SquareNeighborFinder(cellGrid);
+		NeighborFinder finder = new SquareNeighborFinder(cellGrid, torroidal);
 		finder.initializeNeighbors();
 		cellGrid = finder.getCellGrid();
 	}
 
+	
 	/**
-	 * Checks to see if a suggested neighbor is in bounds
-	 * 
-	 * @param x
-	 *            x-coordinate of neighbor cell in grid
-	 * @param y
-	 *            y-coordinate of neighbor cell in grid
-	 * @return returns the cell at that specific coordinate (if it's in bounds, null
-	 *         otherwise)
+	 * goes through cells in grid and sets their next states given their surrounding cells
 	 */
-	public Cell retrieveCell(int x, int y) {
-		
-		if (!torroidal) {
-			 if (x < 0 || x >= xSize)
-			 return null;
-			 if (y < 0 || y >= ySize)
-			 return null;	
-		}
-
-		
-		if (x < 0) {
-			x = xSize - 1;
-		}
-		if (x >= xSize) {
-			x = 0;
-		}
-		if (y < 0) {
-			y = ySize - 1;
-		}
-		if (y >= ySize) {
-			y = 0;
-		}
-
-		return cellGrid[x][y];
-	}
-
-	public Map getData() {
-		updataData();
-		return data;
-	}
-
-	private void updataData() {
-		Color colour;
-		String type;
-		data = new HashMap<>();
-		for (int x = 0; x < xSize; x++) {
-			for (int y = 0; y < ySize; y++) {
-				Cell toGet = retrieveCell(x, y);
-				colour = toGet.getColor();
-				type = toGet.getState();
-				if (!data.containsKey(type)) {
-					data.put(type, new HashMap<>());
-					data.get(type).put(colour, 0);
-
-				}
-
-				data.get(type).put(colour, data.get(type).get(colour) + 1);
-			}
-		}
-	}
-
 	public abstract void setNextStates();
-
+	
+	/**
+	 * changes cells to their next state
+	 */
 	public void updateCells() {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
@@ -187,15 +219,30 @@ public abstract class CellController {
 			}
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @return grid of colours to project in the simulation
+	 */
 	public Color[][] getColors() {
 		Color[][] colors = new Color[xSize][ySize];
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				colors[x][y] = retrieveCell(x, y).getColor();
+				colors[x][y] = cellGrid[x][y].getColor();
 			}
 		}
 		return colors;
 	}
+	/**
+	 * 
+	 * @return map of current cell locations.
+	 */
+	public abstract Map<String, int[][]> makeCellMap();
+	
+	/**
+	 * makes an XML file containing the current locations of cells
+	 * @param filename to name the newly created XML file
+	 */
+	public abstract void writeToXML(String filename); 
 
 }

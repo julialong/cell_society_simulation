@@ -1,4 +1,4 @@
-package cellsociety_team08;
+package front_end;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
@@ -170,9 +170,9 @@ public class GUI {
 
         slider = new Slider();
         slider.setMin(10);
-        slider.setMax(70);
+        slider.setMax(50);
         slider.setValue(mySimulator.getDimensions());
-        slider.setMajorTickUnit(20);
+        slider.setMajorTickUnit(10);
 
         slider.setLayoutX(BUTTON_X);
         slider.setLayoutY(fasterButton.getLayoutY() + 20 + BUTTON_SPACING);

@@ -1,23 +1,30 @@
 package cell_controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cells.Cell;
 import javafx.scene.paint.Color;
-
+import xml.WriterXML;
+/**
+ * simulator based on racism
+ * @author jeffreyli
+ *
+ */
 public class SegregationController extends CellController {
 	private double threshold;
 	private static final String DEFAULT = "default";
 	private double xrate;
 	private double orate;
-
+	private Map<String, Double> param;
 
 	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap, 
 			boolean random) {
 		
 		super(dimensions, random);
-
+		param = paramMap;
 		xrate = paramMap.get("xrate");
 		orate = paramMap.get("orate");
 
@@ -28,6 +35,7 @@ public class SegregationController extends CellController {
 			setUpSpecific(map);
 		}
 		initializeNeighbors();
+		initializeData();
 	}
 	
 	@Override
@@ -47,7 +55,24 @@ public class SegregationController extends CellController {
 			cellGrid[xCoord][yCoord].setState(Color.BLUE);
 		}
 	}
+	
+	@Override
+	protected void updateData() {
+		//method unnecessary for this class now that the graph is refactored in this simulation
+	}
+	
+	public void initializeData() {
 
+		data = new HashMap<>();
+		data.put(DEFAULT, new HashMap<>());
+		data.get(DEFAULT).put(Color.WHITE, 0);
+		data.put("X", new HashMap<>());
+		data.get("X").put(Color.RED, 0);
+		data.put("O", new HashMap<>());
+		data.get("O").put(Color.BLUE, 0);
+		initialValues();
+	}
+	
 	@Override
 	public void setUpRandom(Map<String, Double> paramMap) {
 		// TODO Auto-generated method stub
@@ -59,7 +84,10 @@ public class SegregationController extends CellController {
 	}
 	
 
-	
+	/**
+	 * generates a random cell given probabilities
+	 * @return
+	 */
 	private Cell generateCell() {
 		Cell tempCell;
 		double rand = Math.random();
@@ -82,7 +110,7 @@ public class SegregationController extends CellController {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				
-				Cell toSet = retrieveCell(x, y);
+				Cell toSet = cellGrid[x][y];
 				String toSetType = toSet.getState();
 				
 				// deal with x and o
@@ -138,7 +166,44 @@ public class SegregationController extends CellController {
 
 	@Override
 	public Cell getDefaultCell() {
-		return generateCell();
+		Cell temp = generateCell();
+		String type = temp.getState();
+		Color colour = temp.getColor();
+		data.get(type).put(colour, data.get(type).get(colour) + 1);
+		return temp;
+	}
+
+	@Override
+	public Map<String, int[][]> makeCellMap() {
+		Map<String, int[][]> map = new HashMap<String, int[][]>();
+		List<int[]> cellListX = new ArrayList<int[]>();
+		List<int[]> cellListO = new ArrayList<int[]>();
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				if (cellGrid[x][y].getState() == "X") {
+					int[] temp = {x,y};
+					cellListX.add(temp);
+				}
+				if (cellGrid[x][y].getState() == "O") {
+					int[] temp = {x,y};
+					cellListO.add(temp);
+				}
+				
+			}
+		}
+		
+		map.put("x", cellListX.toArray(new int[cellListX.size()][]));
+		map.put("o", cellListO.toArray(new int[cellListO.size()][]));
+		
+		
+		return map;
+	}
+	
+	@Override
+	public void writeToXML(String filename) {
+		// TODO Auto-generated method stub
+		WriterXML writer = new WriterXML(filename, "segregation", param, makeCellMap(), xSize, ySize);
+		writer.convert();
 	}
 
 

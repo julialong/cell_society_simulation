@@ -1,7 +1,11 @@
 package cells;
 
 import javafx.scene.paint.Color;
-
+/**
+ * cell for simulation based on inability to survive overcrowding or undercrowding
+ * @author jeffreyli
+ *
+ */
 public class GameOfLifeCell extends Cell {
 
 	private static final String ON = "on";
@@ -48,7 +52,11 @@ public class GameOfLifeCell extends Cell {
 		colour = Color.BLACK;
 		nextState = OFF;
 	}
-
+	/**
+	 * calculates the number of adjacent states on
+	 * @param neighbourStates contains neighbour states
+	 * @return number of cells on
+	 */
 	private int calcNumbersOn(String[] neighbourStates) {
 		int numberOn = 0;
 
