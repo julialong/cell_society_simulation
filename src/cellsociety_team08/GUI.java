@@ -90,6 +90,7 @@ public class GUI {
         addBottomBar();
         addTopBar();
         addRightBar();
+        addBlockBar();
         addTitle();
         addButtons(stage);
     }
@@ -109,6 +110,12 @@ public class GUI {
         Rectangle settingsBar = new Rectangle(0, 0, SIDE_BAR, YSIZE);
         settingsBar.setFill(Color.LIGHTGRAY);
         root.getChildren().add(settingsBar);
+    }
+
+    private void addBlockBar() {
+        Rectangle blockBar = new Rectangle(SIDE_BAR, 0, XSIZE + RIGHT_SIDE_BAR, TOP_BAR + YSIZE + BOTTOM_BAR);
+        blockBar.setFill(Color.LIGHTGRAY);
+        root.getChildren().add(blockBar);
     }
 
     /**

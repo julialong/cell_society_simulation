@@ -256,7 +256,7 @@ public class Simulator {
     public void toXML(String filename) {
         System.out.println(filename);
         //TODO: Change empty map to map from Jeffrey OR we can change this method to be called in CellController
-        new WriterXML(filename, simulationType, parameters, cellTypes, dimensions[0], dimensions[1]);
+        control.writeToXML(filename);
     }
 
 }

@@ -180,5 +180,8 @@ public abstract class CellController {
 		}
 		return colors;
 	}
+	
+	public abstract Map<String, int[][]> makeCellMap();
+	public abstract void writeToXML(String filename); 
 
 }
