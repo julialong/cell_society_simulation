@@ -78,6 +78,13 @@ public abstract class CellController {
 			}
 		}
 	}
+	
+	public void increaseData(String type, Color colour) {
+		data.get(type).put(colour, data.get(type).get(colour) + 1);
+	}
+	public void decreaseData(String type, Color colour) {
+		data.get(type).put(colour, data.get(type).get(colour) -1);
+	}
 
 	public abstract void setUpSpecific(Map<String, int[][]> map);
 
