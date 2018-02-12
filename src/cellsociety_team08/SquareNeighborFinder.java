@@ -1,4 +1,4 @@
-package cell_controllers;
+package cellsociety_team08;
 
 import cells.Cell;
 
@@ -15,8 +15,8 @@ public class SquareNeighborFinder extends NeighborFinder {
 	private static final int NUMBER_OF_NEIGHBOURS = 8;
 	
 	
-	public SquareNeighborFinder(Cell[][] inputCellGrid) {
-		super(inputCellGrid);
+	public SquareNeighborFinder(Cell[][] inputCellGrid, Boolean torroidal2) {
+		super(inputCellGrid, torroidal2);
 	}
 
 	@Override

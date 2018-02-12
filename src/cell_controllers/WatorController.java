@@ -27,7 +27,7 @@ public class WatorController extends CellController {
 	private static double fishPercent;
 	private static double sharkPercent;
 
-	public WatorController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap,  boolean random) {
+	public WatorController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap, boolean random) {
 		super(dimensions, random);
 		fishPercent = paramMap.get(FISHRATE);
 		sharkPercent = paramMap.get(SHARKRATE);
@@ -43,10 +43,10 @@ public class WatorController extends CellController {
 			for (int y = 0; y < ySize; y++) {
 
 				WatorCell[] tempArray = new WatorCell[NUMBER_OF_NEIGHBOURS];
-				tempArray[LEFT] = (WatorCell) retrieveCell(x - 1, y);
-				tempArray[BOTTOM] = (WatorCell) retrieveCell(x, y - 1);
-				tempArray[TOP] = (WatorCell) retrieveCell(x, y + 1);
-				tempArray[RIGHT] = (WatorCell) retrieveCell(x + 1, y);
+				tempArray[LEFT] = (WatorCell) cellGrid[x - 1][y];
+				tempArray[BOTTOM] = (WatorCell) cellGrid[x][y - 1];
+				tempArray[TOP] = (WatorCell) cellGrid[x][y + 1];
+				tempArray[RIGHT] = (WatorCell) cellGrid[x + 1][y];
 				cellGrid[x][y].addNeighbors(tempArray);
 			}
 		}
@@ -67,7 +67,7 @@ public class WatorController extends CellController {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 
-				WatorCell toSet = (WatorCell) retrieveCell(x, y);
+				WatorCell toSet = (WatorCell) cellGrid[x][y];
 				toSet.getAnimal().incrementTime();
 				if (toSet.getAnimalType().equals(SHARK)) {
 					updateShark(toSet);

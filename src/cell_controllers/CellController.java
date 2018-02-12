@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cells.Cell;
+import cellsociety_team08.NeighborFinder;
+import cellsociety_team08.SquareNeighborFinder;
 import javafx.scene.paint.Color;
 
 public abstract class CellController {
@@ -112,7 +114,7 @@ public abstract class CellController {
 	 */
 	public void initializeNeighbors() {
 		// create if statements to figure out with neighborfinder
-		NeighborFinder finder = new SquareNeighborFinder(cellGrid);
+		NeighborFinder finder = new SquareNeighborFinder(cellGrid, torroidal);
 		finder.initializeNeighbors();
 		cellGrid = finder.getCellGrid();
 	}
@@ -127,31 +129,6 @@ public abstract class CellController {
 	 * @return returns the cell at that specific coordinate (if it's in bounds, null
 	 *         otherwise)
 	 */
-	public Cell retrieveCell(int x, int y) {
-		
-		if (!torroidal) {
-			 if (x < 0 || x >= xSize)
-			 return null;
-			 if (y < 0 || y >= ySize)
-			 return null;	
-		}
-
-		
-		if (x < 0) {
-			x = xSize - 1;
-		}
-		if (x >= xSize) {
-			x = 0;
-		}
-		if (y < 0) {
-			y = ySize - 1;
-		}
-		if (y >= ySize) {
-			y = 0;
-		}
-
-		return cellGrid[x][y];
-	}
 
 	public Map getData() {
 		updataData();
@@ -164,7 +141,7 @@ public abstract class CellController {
 		data = new HashMap<>();
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				Cell toGet = retrieveCell(x, y);
+				Cell toGet = cellGrid[x][y];
 				colour = toGet.getColor();
 				type = toGet.getState();
 				if (!data.containsKey(type)) {
@@ -192,7 +169,7 @@ public abstract class CellController {
 		Color[][] colors = new Color[xSize][ySize];
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				colors[x][y] = retrieveCell(x, y).getColor();
+				colors[x][y] = cellGrid[x][y].getColor();
 			}
 		}
 		return colors;
