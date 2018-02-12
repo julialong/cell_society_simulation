@@ -42,6 +42,7 @@ public class GUI {
     private Button fileButton;
     private Button sliderButton;
     private Button toXMLButton;
+    private ToggleButton toroidalButton;
     private Slider slider;
     
     
@@ -150,6 +151,7 @@ public class GUI {
         addFasterButton();
         addSlowerButton();
         addXMLWriterButton();
+        addToroidalButton();
     }
 
     /**
@@ -264,6 +266,14 @@ public class GUI {
         slowerButton.setLayoutY(fasterButton.getLayoutY());
         root.getChildren().add(slowerButton);
         slowerButton.setOnAction((ActionEvent event) -> mySimulator.speedDown());
+    }
+
+    private void addToroidalButton() {
+        toroidalButton = new ToggleButton(myResources.getString("Toggle"));
+        toroidalButton.setLayoutX(BUTTON_X);
+        toroidalButton.setLayoutY(slowerButton.getLayoutY() + 150);
+        root.getChildren().add(toroidalButton);
+        toroidalButton.setOnAction((ActionEvent event) -> System.out.println("Make toroidal"));
     }
 
     /**

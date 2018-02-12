@@ -3,6 +3,7 @@ package cellsociety_team08;
 import cell_controllers.CellController;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class Grid {
 
-    private List<Rectangle> currentGrid;
+    private List<Polygon> currentGrid;
     private int[] dimensions;
     private int gridWidth;
     private int gridHeight;
@@ -35,7 +36,7 @@ public class Grid {
         Color[][] newColors = control.getColors();
         for (int i = 0; i < dimensions[0]; i++) {
             for (int j = 0; j < dimensions[1]; j++) {
-                Rectangle currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, GUI.TOP_BAR + j * gridHeight, gridWidth, gridHeight, newColors[i][j]);
+                Polygon currentCell = createNewCell(GUI.SIDE_BAR + i * gridWidth, GUI.TOP_BAR + j * gridHeight, newColors[i][j]);
                 currentGrid.add(currentCell);
                 root.getChildren().add(currentCell);
             }
@@ -46,17 +47,32 @@ public class Grid {
      * Creates a new cell with the given parameters
      * @param x x position
      * @param y y position
-     * @param width width of cell
-     * @param height height of cell
      * @param color color of cell
      * @return
      */
-    private Rectangle createNewCell(int x, int y, int width, int height, Color color) {
-        Rectangle newCell = new Rectangle(x, y, width, height);
+    private Polygon createNewCell(int x, int y, Color color) {
+        Polygon newCell = createTriangle(x, y);
         newCell.setFill(color);
         newCell.setStroke(Color.DARKGREY);
         newCell.setStrokeType(StrokeType.INSIDE);
         return newCell;
+    }
+
+    private Polygon createSquare(int x, int y) {
+        Polygon square = new Polygon();
+        double i = x;
+        double j = y;
+        square.getPoints().addAll(i, j, i, j + gridHeight, i + gridWidth, j + gridHeight, i + gridWidth, j);
+        return square;
+    }
+
+    private Polygon createTriangle(int x, int y) {
+        Polygon triangle = new Polygon();
+        double i = x;
+        double j = y;
+        if ((x + y) % 2 == 0) triangle.getPoints().addAll(i, j, i + gridWidth /2, j + gridHeight, i + gridWidth, j);
+        else triangle.getPoints().addAll( i , j, i - gridWidth /2, j + gridHeight, i + gridWidth /2, j + gridHeight);
+        return triangle;
     }
 
     /**
@@ -64,7 +80,7 @@ public class Grid {
      * @param root the JavaFX Group root in GUI
      */
     private void clearGrid(Group root) {
-        for (Rectangle cell : currentGrid) {
+        for (Polygon cell : currentGrid) {
             root.getChildren().remove(cell);
         }
         currentGrid = null;
