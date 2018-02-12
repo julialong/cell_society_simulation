@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.util.Duration;
 import xml.ParserXML;
-import xml.WriterXML;
+import xml.WriterException;
 
 /**
  * Manages the simulation steps
@@ -182,8 +182,14 @@ public class Simulator {
      * including simulation type, dimensions of grid, and types of cells
      * @param file is the configuration file to be read
      */
-    public void setFile(File file) {
-        ParserXML parser = new ParserXML(file);
+    public void setFile(File file) throws IllegalArgumentException {
+        ParserXML parser;
+        try {
+            parser = new ParserXML(file);
+        }
+        catch(Exception e) {
+            throw new IllegalArgumentException();
+        }
         simulationType = parser.getSimulationType();
         dimensions = parser.getDimensions();
         cellTypes = parser.getAllCells();
@@ -232,8 +238,13 @@ public class Simulator {
      * Creates a new file with the current configuration
      * @param filename the filename given by the user
      */
-    public void toXML(String filename) {
-        new WriterXML(filename, simulationType, parameters, cellTypes, dimensions[0], dimensions[1]);
+    public void toXML(String filename) throws WriterException {
+        try {
+            control.writeToXML(filename);
+        }
+        catch (Exception e){
+            throw new WriterException();
+        }
     }
 
     private Double chooseShape() {

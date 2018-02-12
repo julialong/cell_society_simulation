@@ -7,6 +7,7 @@ import java.util.Map;
 
 import cells.Cell;
 import javafx.scene.paint.Color;
+import xml.WriterException;
 import xml.WriterXML;
 /**
  * 
@@ -187,11 +188,14 @@ public class FireController extends CellController {
 	}
 	
 	@Override
-	public void writeToXML(String filename) {
-		// TODO Auto-generated method stub
-		WriterXML writer = new WriterXML(filename, "fire", param, makeCellMap(), xSize, ySize);
-		writer.convert();
+	public void writeToXML(String filename) throws WriterException {
+		try {
+			WriterXML writer = new WriterXML(filename, "fire", param, makeCellMap(), xSize, ySize);
+			writer.convert();
+		}
+		catch (Exception e) {
+		throw new WriterException();
+		}
 	}
-	
 
 }

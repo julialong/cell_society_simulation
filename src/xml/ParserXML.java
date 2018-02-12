@@ -26,7 +26,7 @@ public class ParserXML {
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		doc = dBuilder.parse(file);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException();
 		}
 		doc.getDocumentElement().normalize();
 	}

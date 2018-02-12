@@ -13,6 +13,7 @@ import watorCells.Fish;
 import watorCells.Shark;
 import watorCells.Water;
 import watorCells.WatorCell;
+import xml.WriterException;
 import xml.WriterXML;
 
  /**
@@ -305,10 +306,14 @@ public class WatorController extends CellController {
 	}
 
 	@Override
-	public void writeToXML(String filename) {
-		// TODO Auto-generated method stub
+	public void writeToXML(String filename) throws WriterException {
+		try {
 		WriterXML writer = new WriterXML(filename, "wator", param, makeCellMap(), xSize, ySize);
 		writer.convert();
+		}
+		catch (Exception e) {
+			throw new WriterException();
+		}
 	}
 	
 	public void initializeData() {

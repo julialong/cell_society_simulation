@@ -9,6 +9,7 @@ import cells.Cell;
 import cells.RPSCell;
 
 import javafx.scene.paint.Color;
+import xml.WriterException;
 import xml.WriterXML;
 
 public class RPSController extends CellController {
@@ -158,10 +159,14 @@ public class RPSController extends CellController {
 	}
 
 	@Override
-	public void writeToXML(String filename) {
-		// TODO Auto-generated method stub
-		WriterXML writer = new WriterXML(filename, "rps", param, makeCellMap(), xSize, ySize);
-		writer.convert();
+	public void writeToXML(String filename) throws WriterException {
+		try {
+			WriterXML writer = new WriterXML(filename, "rps", param, makeCellMap(), xSize, ySize);
+			writer.convert();
+		}
+		catch (Exception e) {
+			throw new WriterException();
+		}
 	}
 
 }

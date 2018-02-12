@@ -7,6 +7,7 @@ import java.util.Map;
 
 import cells.Cell;
 import cells.GameOfLifeCell;
+import xml.WriterException;
 import xml.WriterXML;
 /**
  * cell for simulation based on inability to survive overcrowding or undercrowding
@@ -95,9 +96,13 @@ public class LifeCellController extends CellController {
 	}
 	
 	@Override
-	public void writeToXML(String filename) {
-		// TODO Auto-generated method stub
+	public void writeToXML(String filename) throws WriterException {
+		try {
 		WriterXML writer = new WriterXML(filename, "life", param, makeCellMap(), xSize, ySize);
 		writer.convert();
+		}
+		catch (Exception e) {
+			throw new WriterException();
+		}
 	}
 }
