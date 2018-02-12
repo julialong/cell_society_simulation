@@ -4,6 +4,12 @@ import java.util.Random;
 
 import javafx.scene.paint.Color;
 
+/**
+ * simulation based on rock paper scissors hierachy. 
+ * all coloured cells can infect lower level cells, but they can only infect other coloured cells if they fall below them in the hierachy
+ * @author jeffreyli, edwardzhuang
+ * 
+ */
 public class RPSCell extends Cell {
 	private int level;
 	private int nextLevel;
@@ -28,7 +34,11 @@ public class RPSCell extends Cell {
 		colour = color;
 		nextLevel = 1;
 	}
-
+	
+	/**
+	 * infects the neighbouring cell if required
+	 * @param neighbour to infect
+	 */
 	public void infect(RPSCell neighbour) {
 		if (level < 9) {
 			if (edible(neighbour)) {
@@ -40,7 +50,12 @@ public class RPSCell extends Cell {
 			}
 		}
 	}
-
+	
+	/**
+	 * checks if neighbour is infectable given the RPS hierachy
+	 * @param neighbour to check
+	 * @return 
+	 */
 	public boolean edible(RPSCell neighbour) {
 		if (neighbour.currentState.equals(WHITE)) {
 			return true;
@@ -54,7 +69,11 @@ public class RPSCell extends Cell {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * gets a random neighbour
+	 * @return
+	 */
 	public RPSCell retrieveRandomNeighbour() {
 		Random rand = new Random();
 		int index = rand.nextInt(8);

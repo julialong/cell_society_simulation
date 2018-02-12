@@ -8,7 +8,11 @@ import java.util.Map;
 import cells.Cell;
 import javafx.scene.paint.Color;
 import xml.WriterXML;
-
+/**
+ * simulator based on racism
+ * @author jeffreyli
+ *
+ */
 public class SegregationController extends CellController {
 	private double threshold;
 	private static final String DEFAULT = "default";
@@ -80,7 +84,10 @@ public class SegregationController extends CellController {
 	}
 	
 
-	
+	/**
+	 * generates a random cell given probabilities
+	 * @return
+	 */
 	private Cell generateCell() {
 		Cell tempCell;
 		double rand = Math.random();

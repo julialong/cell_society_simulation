@@ -7,6 +7,7 @@ import java.util.Map;
 
 import cells.Cell;
 import cells.RPSCell;
+
 import javafx.scene.paint.Color;
 import xml.WriterXML;
 
@@ -76,7 +77,11 @@ public class RPSController extends CellController {
 			cellGrid[xCoord][yCoord] = new RPSCell();
 		}
 	}
-
+	
+	/**
+	 * generates a random cell
+	 * @return a random cell type give the probabilities
+	 */
 	private RPSCell generateRandomCell() {
 		RPSCell tempCell;
 		double rand = Math.random();

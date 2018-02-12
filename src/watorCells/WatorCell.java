@@ -2,7 +2,11 @@ package watorCells;
 
 import cells.Cell;
 import javafx.scene.paint.Color;
-
+/**
+ * Controller subclass of wator simulation
+ * @author jeffreyli
+ *
+ */
 public class WatorCell extends Cell{
 	private Animal animal;
 	
@@ -24,6 +28,9 @@ public class WatorCell extends Cell{
 		return animal;
 	}
 	
+	/**
+	 * sets cell to water
+	 */
 	public void setToWater() { 
 		animal = new Water();
 		colour = Color.CORNFLOWERBLUE;
@@ -41,6 +48,11 @@ public class WatorCell extends Cell{
 		}
 	}
 	
+	/**
+	 * 
+	 * @param newAnimal = animal object of new cell state
+	 * @param newState = string of new cell state
+	 */
 	public void setNewAnimal(Animal newAnimal, String newState) {
 		animal = newAnimal;
 		currentState = newState;
