@@ -15,6 +15,11 @@ import watorCells.Water;
 import watorCells.WatorCell;
 import xml.WriterXML;
 
+ /**
+  * simulation of predator prey relationship
+  * @author jeffreyli
+  *
+  */
 public class WatorController extends CellController {
 
 	private static final String SHARK = "shark";
@@ -60,7 +65,13 @@ public class WatorController extends CellController {
 			}
 		}
 	}
-
+	
+	/**
+	 * retrieves a cell from the grid
+	 * @param x value of cell to retrieve
+	 * @param y value of cell to retrieve
+	 * @return the cell to retrieve
+	 */
 	public Cell retrieveCell(int x, int y) {
 
 		if (!torroidal) {
@@ -84,7 +95,13 @@ public class WatorController extends CellController {
 
 		return cellGrid[x][y];
 	}
-
+	
+	/**
+	 * generates either water, fish, or shark given probabilities/
+	 * @param fishPercent probability of generating fish
+	 * @param sharkPercent probability of generating shark
+	 * @return a random animal
+	 */
 	private Cell randomAnimalGenerator(double fishPercent, double sharkPercent) {
 		double rand = Math.random();
 		if (rand < fishPercent) {
@@ -110,7 +127,11 @@ public class WatorController extends CellController {
 			}
 		}
 	}
-
+	
+	/**
+	 * calculates next state of a fish cell
+	 * @param fishCell
+	 */
 	public void updateFish(WatorCell fishCell) {
 		WatorCell moveHere = newSpot(fishCell);
 		moveHere.setNewAnimal(fishCell.getAnimal(), fishCell.getState());
@@ -125,6 +146,10 @@ public class WatorController extends CellController {
 			}
 		}
 	}
+	/**
+	 * calculates next state of a shark cell
+	 * @param sharkCell
+	 */
 	public void updateShark(WatorCell sharkCell) {
 
 		sharkCell.decrementAnimalHealth();
@@ -151,7 +176,7 @@ public class WatorController extends CellController {
 			}
 		}
 	}
-
+	@Override
 	public Cell getDefaultCell() {
 		Cell tempCell = randomAnimalGenerator(fishPercent, sharkPercent);
 		String type = tempCell.getState();
@@ -166,6 +191,11 @@ public class WatorController extends CellController {
 		return tempCell;
 	}
 	
+	/**
+	 * retrieves a spot for an animal to move to
+	 * @param animal
+	 * @return
+	 */
 	public WatorCell newSpot(WatorCell animal) {
 		ArrayList<WatorCell> possibleFish = new ArrayList<WatorCell>();
 		ArrayList<WatorCell> possibleWater = new ArrayList<WatorCell>();
