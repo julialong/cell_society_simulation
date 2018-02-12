@@ -1,4 +1,4 @@
-package cell_controllers;
+package cellsociety_team08;
 
 import cells.Cell;
 

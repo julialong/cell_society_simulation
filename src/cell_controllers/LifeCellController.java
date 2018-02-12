@@ -61,7 +61,7 @@ public class LifeCellController extends CellController {
 	public void setNextStates() {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-				GameOfLifeCell toSet = (GameOfLifeCell) retrieveCell(x, y);
+				GameOfLifeCell toSet = (GameOfLifeCell) cellGrid[x][y];
 				toSet.setNextState();
 			}
 		}
