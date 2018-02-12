@@ -11,6 +11,9 @@
     <ysize>20</ysize>
   </dimensions>
   <parameter_list>
+    <parameters id="edgenumber">
+      <value>3</value>
+    </parameters>
   </parameter_list>
   <cell_on_list isOn="true">
     <type id="on">

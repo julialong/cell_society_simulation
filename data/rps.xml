@@ -6,11 +6,14 @@
     <name>Julia Long</name>
     <name>Jeffrey Li</name>
   </authors>
-  <dimensions>
+  <dimensions isToroidal="true">
     <xsize>40</xsize>
     <ysize>40</ysize>
   </dimensions>
   <parameter_list>
+    <parameters id="edgenumber">
+      <value>4</value>
+    </parameters>
     <parameters id="greenRate">
       <value>.1</value>
     </parameters>

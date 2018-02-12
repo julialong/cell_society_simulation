@@ -11,6 +11,9 @@
     <ysize>30</ysize>
   </dimensions>
   <parameter_list>
+    <parameters id="edgenumber">
+      <value>4</value>
+    </parameters>  
     <parameters id="sharkrate">
       <value>.2</value>
     </parameters>
