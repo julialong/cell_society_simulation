@@ -51,12 +51,6 @@ public class FireController extends CellController {
 		initialValues();
 	}
 	
-	public void increaseData(String type, Color colour) {
-		data.get(type).put(colour, data.get(type).get(colour) + 1);
-	}
-	public void decreaseData(String type, Color colour) {
-		data.get(type).put(colour, data.get(type).get(colour) -1);
-	}
 
 	public void setUpSpecific(Map<String, int[][]> map) {
 		int[][] cellsOnFire = map.get("burning");

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import cells.Cell;
 import cells.RPSCell;
 import cellsociety_team08.WriterXML;
@@ -21,11 +20,10 @@ public class RPSController extends CellController {
 	private static final String WHITE = "default";
 	private Map<String, Double> param;
 
-	public RPSController(int[] dimensions,Map<String, int[][]> map, Map<String, Double> paramMap, 
-			boolean random) {
+	public RPSController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap, boolean random) {
 		super(dimensions, random);
 		param = paramMap;
-		
+
 		if (isRandom) {
 			setUpRandom(paramMap);
 		} else {
@@ -70,7 +68,7 @@ public class RPSController extends CellController {
 			int yCoord = cellsRed[z][1];
 			cellGrid[xCoord][yCoord] = new RPSCell(Color.RED, RED);
 		}
-		
+
 		int[][] cellsWhite = map.get(WHITE);
 		for (int z = 0; z < cellsWhite.length; z++) {
 			int xCoord = cellsWhite[z][0];
@@ -108,11 +106,15 @@ public class RPSController extends CellController {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				temp = (RPSCell) cellGrid[x][y];
-				temp.infect(temp.retrieveRandomNeighbour());
+
+				RPSCell toInfect = temp.retrieveRandomNeighbour();
+				if (toInfect != null) {
+					temp.infect(toInfect);
+				}
 			}
 		}
 	}
-	
+
 	@Override
 	public Map<String, int[][]> makeCellMap() {
 		Map<String, int[][]> map = new HashMap<String, int[][]>();
@@ -120,41 +122,41 @@ public class RPSController extends CellController {
 		List<int[]> cellListBlue = new ArrayList<int[]>();
 		List<int[]> cellListGreen = new ArrayList<int[]>();
 		List<int[]> cellListWhite = new ArrayList<int[]>();
-		
+
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
 				if (cellGrid[x][y].getState() == RED) {
-					int[] temp = {x,y};
+					int[] temp = { x, y };
 					cellListRed.add(temp);
 				}
 				if (cellGrid[x][y].getState() == BLUE) {
-					int[] temp = {x,y};
+					int[] temp = { x, y };
 					cellListBlue.add(temp);
 				}
 				if (cellGrid[x][y].getState() == GREEN) {
-					int[] temp = {x,y};
+					int[] temp = { x, y };
 					cellListGreen.add(temp);
 				}
 				if (cellGrid[x][y].getState() == WHITE) {
-					int[] temp = {x,y};
+					int[] temp = { x, y };
 					cellListWhite.add(temp);
 				}
 			}
 		}
-		
+
 		map.put("red", cellListRed.toArray(new int[cellListRed.size()][]));
 		map.put("blue", cellListBlue.toArray(new int[cellListBlue.size()][]));
 		map.put("green", cellListGreen.toArray(new int[cellListGreen.size()][]));
 		map.put("default", cellListWhite.toArray(new int[cellListWhite.size()][]));
-		
+
 		return map;
 	}
-	
+
 	@Override
 	public void writeToXML(String filename) {
 		// TODO Auto-generated method stub
 		WriterXML writer = new WriterXML(filename, "rps", param, makeCellMap(), xSize, ySize);
 		writer.convert();
 	}
-	
+
 }

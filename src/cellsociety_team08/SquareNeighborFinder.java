@@ -23,9 +23,9 @@ public class SquareNeighborFinder extends NeighborFinder {
 	public void initializeNeighbors() {		
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
-
+				
 				Cell[] tempArray = new Cell[NUMBER_OF_NEIGHBOURS];
-
+				
 				tempArray[TOPLEFT] = retrieveCell(x - 1, y - 1);
 				tempArray[TOP] = retrieveCell(x - 1, y);
 				tempArray[TOPRIGHT] = retrieveCell(x - 1, y + 1);
@@ -34,7 +34,6 @@ public class SquareNeighborFinder extends NeighborFinder {
 				tempArray[BOTTOMLEFT] = retrieveCell(x + 1, y - 1);
 				tempArray[BOTTOM] = retrieveCell(x + 1, y);
 				tempArray[BOTTOMRIGHT] = retrieveCell(x + 1, y + 1);
-
 				retrieveCell(x, y).addNeighbors(tempArray);
 			}
 		}
