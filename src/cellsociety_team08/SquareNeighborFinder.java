@@ -2,6 +2,11 @@ package cellsociety_team08;
 
 import cells.Cell;
 
+/**
+ * Neighbor Finder class, used to help find neighbors for cells
+ * @author Edward Zhuang, Jeffrey Li
+ *
+ */
 public class SquareNeighborFinder extends NeighborFinder {
 	
 	private static final int TOPLEFT = 0;
@@ -14,11 +19,17 @@ public class SquareNeighborFinder extends NeighborFinder {
 	private static final int BOTTOMRIGHT = 7;
 	private static final int NUMBER_OF_NEIGHBOURS = 8;
 	
-	
+	/**
+	 * Constructor for SquareNeighborFinder
+	 * @param inputCellGrid cellGrid which contains array of array of cells
+	 * @param torroidal2 chooses whether cellGrid should be toroidal 
+	 */
 	public SquareNeighborFinder(Cell[][] inputCellGrid, Boolean torroidal2) {
 		super(inputCellGrid, torroidal2);
 	}
-
+	/**
+	 * initializes neighbors for each cell
+	 */
 	@Override
 	public void initializeNeighbors() {		
 		for (int x = 0; x < xSize; x++) {

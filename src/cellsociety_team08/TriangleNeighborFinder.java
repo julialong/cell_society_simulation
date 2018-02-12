@@ -2,6 +2,11 @@ package cellsociety_team08;
 
 import cells.Cell;
 
+/**
+ * Neighbor Finder class, used to help find neighbors for cells
+ * @author Edward Zhuang, Jeffrey Li
+ *
+ */
 public class TriangleNeighborFinder extends NeighborFinder {
 
 	private static final int TOPLEFT = 0;
@@ -19,11 +24,17 @@ public class TriangleNeighborFinder extends NeighborFinder {
 	private static final int NUMBER_OF_NEIGHBOURS = 12;
 	private boolean down = true;
 	
+	/**
+	 * Constructor for TriangleNeighborFinder
+	 * @param inputCellGrid cellGrid which contains array of array of cells
+	 * @param torroidal2 chooses whether cellGrid should be toroidal 
+	 */
 	public TriangleNeighborFinder(Cell[][] inputCellGrid, boolean torroidal2) {
 		super(inputCellGrid, torroidal2);
-		// TODO Auto-generated constructor stub
 	}
-
+	/**
+	 * initializes neighbors for each cell
+	 */
 	@Override
 	public void initializeNeighbors() {
 		for (int x = 0; x < xSize; x++) {
