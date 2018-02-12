@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<rps>
+  <title>RPS Simulation</title>
+  <authors>
+    <name>Edward Zhuang</name>
+    <name>Julia Long</name>
+    <name>Jeffrey Li</name>
+  </authors>
+  <dimensions isToroidal="true">
+    <xsize>40</xsize>
+    <ysize>40</ysize>
+  </dimensions>
+  <parameter_list>
+    <parameters id="edgenumber">
+      <value>6</value>
+    </parameters>
+    <parameters id="greenRate">
+      <value>.1</value>
+    </parameters>
+    <parameters id="blueRate">
+      <value>.1</value>
+    </parameters>
+    <parameters id="redRate">
+      <value>.1</value>
+    </parameters>
+  </parameter_list>
+  <cell_on_list isOn="false">
+    <type id="on">
+    </type>
+  </cell_on_list>
+</rps>
