@@ -28,7 +28,6 @@ public abstract class NeighborFinder {
 	if (!torroidal) {
 		 if (x < 0 || x >= xSize)
 		 return null;
-		 System.out.println("helloooo");
 		 if (y < 0 || y >= ySize)
 		 return null;	
 	}

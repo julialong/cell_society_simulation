@@ -13,19 +13,9 @@ public abstract class CellController {
 	protected Cell[][] cellGrid;
 	protected int xSize;
 	protected int ySize;
-	private Map<String, Map<Color, Integer>> data;
+	protected Map<String, Map<Color, Integer>> data;
 	protected boolean isRandom;
 	private boolean torroidal;
-
-	private static final int TOPLEFT = 0;
-	private static final int TOP = 1;
-	private static final int TOPRIGHT = 2;
-	private static final int LEFT = 3;
-	private static final int RIGHT = 4;
-	private static final int BOTTOMLEFT = 5;
-	private static final int BOTTOM = 6;
-	private static final int BOTTOMRIGHT = 7;
-	private static final int NUMBER_OF_NEIGHBOURS = 8;
 
 	/**
 	 * 
@@ -46,6 +36,31 @@ public abstract class CellController {
 				Cell tempCell = new Cell("default");
 				cellGrid[x][y] = tempCell;
 				tempCell.setState(Color.WHITE);
+			}
+		}
+	}
+	
+	public Map getData() {
+		updateData();
+		return data;
+	}
+
+	protected void updateData() {
+		Color colour;
+		String type;
+		data = new HashMap<>();
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				Cell toGet = cellGrid[x][y];
+				colour = toGet.getColor();
+				type = toGet.getState();
+				if (!data.containsKey(type)) {
+					data.put(type, new HashMap<>());
+					data.get(type).put(colour, 0);
+
+				}
+
+				data.get(type).put(colour, data.get(type).get(colour) + 1);
 			}
 		}
 	}
@@ -130,30 +145,7 @@ public abstract class CellController {
 	 *         otherwise)
 	 */
 
-	public Map getData() {
-		updataData();
-		return data;
-	}
 
-	private void updataData() {
-		Color colour;
-		String type;
-		data = new HashMap<>();
-		for (int x = 0; x < xSize; x++) {
-			for (int y = 0; y < ySize; y++) {
-				Cell toGet = cellGrid[x][y];
-				colour = toGet.getColor();
-				type = toGet.getState();
-				if (!data.containsKey(type)) {
-					data.put(type, new HashMap<>());
-					data.get(type).put(colour, 0);
-
-				}
-
-				data.get(type).put(colour, data.get(type).get(colour) + 1);
-			}
-		}
-	}
 
 	public abstract void setNextStates();
 
