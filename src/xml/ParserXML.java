@@ -1,7 +1,6 @@
 package xml;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ public class ParserXML {
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		doc = dBuilder.parse(file);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException();
 		}
 		doc.getDocumentElement().normalize();
 	}
