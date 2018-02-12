@@ -15,15 +15,10 @@ import java.io.File;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-/**
- * The basic user interface of the simulator, including buttons
- * and sliders
- * Websites used: http://code.makery.ch/blog/javafx-dialogs-official/
- * @author julialong, edwardzhuang
- */
 public class GUI {
 
     private static final String NAME = "Cell Society";
+    private Scene startScene;
     public static final int XSIZE = 600;
     public static final int YSIZE = 600;
     public static final int SIDE_BAR = 600;
@@ -32,12 +27,11 @@ public class GUI {
     private static final int BOTTOM_BAR = 200;
     public static final int BUTTON_X = 20;
     private static final int BUTTON_SPACING = 50;
-    private static final int LARGE_BUTTON_SPACING = 150;
-    private static final int JUMBO_BUTTON_SPACING = 250;
 
-    public static final String DEFAULT_RESOURCE_PATH = "resources/";
-    public static final String LANGUAGE = "English";
+
+    private static final String DEFAULT_RESOURCE_PATH = "resources/";
     private static final String START_FILE = "./data/startfile.xml";
+
 
     private ToggleButton playButton;
     private ToggleButton pauseButton;
@@ -46,12 +40,17 @@ public class GUI {
     private Button fasterButton;
     private Button slowerButton;
     private Button fileButton;
+    private Button sliderButton;
+    private Button toXMLButton;
     private ToggleButton toroidalButton;
     private Slider slider;
-
+    
+    
     private ResourceBundle myResources;
+    private String language = "English";
 
     private FileChooser fileChooser = new FileChooser();
+    private File configFile;
 
     private Group root = new Group();
     private Simulator mySimulator;
@@ -63,8 +62,9 @@ public class GUI {
      */
     public void start(Stage stage) {
         setStage(stage);
-        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + LANGUAGE);
+        myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PATH + language);
         mySimulator = new Simulator();
+
         addUserBar(stage);
         openStartFile();
         startSimulation(stage);
@@ -77,13 +77,13 @@ public class GUI {
      */
     private void setStage(Stage stage) {
         stage.setTitle(NAME);
-        Scene startScene = new Scene(root, XSIZE + SIDE_BAR + RIGHT_SIDE_BAR, YSIZE + BOTTOM_BAR);
+        startScene = new Scene(root, XSIZE + SIDE_BAR + RIGHT_SIDE_BAR, YSIZE + BOTTOM_BAR);
         stage.setScene(startScene);
     }
 
     /**
      * Adds setting bar and buttons
-     * @param stage current JavaFX stage
+     * @param stage
      */
     private void addUserBar(Stage stage) {
         addSettingsBar();
@@ -157,15 +157,15 @@ public class GUI {
         addStepButton();
         addFasterButton();
         addSlowerButton();
-        addToroidalButton();
         addXMLWriterButton();
+        addToroidalButton();
     }
 
     /**
      * Adds slider to change dimensions of simulation
      */
     private void addDimensionSlider() {
-        Text sliderText = new Text(BUTTON_X, fasterButton.getLayoutY() + 10 + BUTTON_SPACING, myResources.getString("SetDimensions"));
+        Text sliderText = new Text(BUTTON_X, fasterButton.getLayoutY() + 10 + BUTTON_SPACING, "Change dimensions");
         root.getChildren().add(sliderText);
 
         slider = new Slider();
@@ -197,7 +197,7 @@ public class GUI {
      * Adds Cell Society title to window
      */
     private void addTitle() {
-        Text titleText = new Text(SIDE_BAR/2 - LARGE_BUTTON_SPACING, TOP_BAR, "Cell Society");
+        Text titleText = new Text(SIDE_BAR/2 - 80, TOP_BAR, "Cell Society");
         titleText.setFill(Color.DARKRED);
         titleText.setFont(Font.font(40));
         root.getChildren().add(titleText);
@@ -214,6 +214,8 @@ public class GUI {
         fileButton.setLayoutY(TOP_BAR + BUTTON_SPACING);
         root.getChildren().add(fileButton);
         fileButton.setOnAction((ActionEvent event) -> changeFile(stage));
+
+
     }
 
     /**
@@ -233,7 +235,7 @@ public class GUI {
      */
     private void addPauseButton() {
         pauseButton = new ToggleButton(myResources.getString("Pause"));
-        pauseButton.setLayoutX(playButton.getLayoutX() + BUTTON_SPACING + BUTTON_SPACING);
+        pauseButton.setLayoutX(playButton.getLayoutX() + 50 + BUTTON_SPACING);
         pauseButton.setLayoutY(playButton.getLayoutY());
         pauseButton.setToggleGroup(playStatus);
         root.getChildren().add(pauseButton);
@@ -245,7 +247,7 @@ public class GUI {
      */
     private void addStepButton() {
         stepButton = new Button(myResources.getString("Step"));
-        stepButton.setLayoutX(pauseButton.getLayoutX() + BUTTON_SPACING + BUTTON_SPACING);
+        stepButton.setLayoutX(pauseButton.getLayoutX() + 60 + BUTTON_SPACING);
         stepButton.setLayoutY(pauseButton.getLayoutY());
         root.getChildren().add(stepButton);
         stepButton.setOnAction((ActionEvent event) -> mySimulator.manualStep(root));
@@ -267,16 +269,16 @@ public class GUI {
      */
     private void addSlowerButton() {
         slowerButton = new Button(myResources.getString("Slower"));
-        slowerButton.setLayoutX(fasterButton.getLayoutX() + LARGE_BUTTON_SPACING);
+        slowerButton.setLayoutX(fasterButton.getLayoutX() + 100 + BUTTON_SPACING);
         slowerButton.setLayoutY(fasterButton.getLayoutY());
         root.getChildren().add(slowerButton);
         slowerButton.setOnAction((ActionEvent event) -> mySimulator.speedDown());
     }
 
     private void addToroidalButton() {
-        toroidalButton = new ToggleButton(myResources.getString("Toroidal"));
+        toroidalButton = new ToggleButton(myResources.getString("Toggle"));
         toroidalButton.setLayoutX(BUTTON_X);
-        toroidalButton.setLayoutY(slowerButton.getLayoutY() + JUMBO_BUTTON_SPACING);
+        toroidalButton.setLayoutY(slowerButton.getLayoutY() + 150);
         root.getChildren().add(toroidalButton);
         toroidalButton.setOnAction((ActionEvent event) -> mySimulator.switchToroidal());
     }
@@ -285,9 +287,9 @@ public class GUI {
      * Adds button to write new XML file
      */
     private void addXMLWriterButton() {
-        Button toXMLButton = new Button(myResources.getString("Write"));
+        toXMLButton = new Button(myResources.getString("Write"));
         toXMLButton.setLayoutX(BUTTON_X);
-        toXMLButton.setLayoutY(toroidalButton.getLayoutY() + BUTTON_SPACING);
+        toXMLButton.setLayoutY(slowerButton.getLayoutY() + 200);
         root.getChildren().add(toXMLButton);
         toXMLButton.setOnAction((ActionEvent event) -> promptForFilename());
     }
@@ -296,14 +298,21 @@ public class GUI {
      * Adds button to set slider dimensions
      */
     private void addSliderButton() {
-        Button sliderButton = new Button(myResources.getString("Set"));
+        sliderButton = new Button("Set");
         sliderButton.setLayoutX(BUTTON_X + slider.getMinWidth() + BUTTON_SPACING);
         sliderButton.setLayoutY(slider.getLayoutY());
         root.getChildren().add(sliderButton);
-        sliderButton.setOnAction((ActionEvent event) -> {
-            addBlockBar();
-            resize();
-        });
+        sliderButton.setOnAction((ActionEvent event) -> resize());
+    }
+
+    /**
+     *  Adds slider to change cell percentages in simulation
+     */
+    private void addSlider() {
+        String[] cellTypes = mySimulator.getCellTypes();
+        for (String cell : cellTypes) {
+            Slider tempSlider = new Slider(0, mySimulator.getMaxCells(), 0);
+        }
     }
 
     /**
@@ -343,7 +352,7 @@ public class GUI {
      * @param stage is the window currently showing the simulation
      */
     private void openFileChooser(Stage stage) {
-        File configFile = fileChooser.showOpenDialog(stage);
+        configFile = fileChooser.showOpenDialog(stage);
         if (configFile != null) {
             mySimulator = new Simulator();
             mySimulator.setFile(configFile);
@@ -369,11 +378,13 @@ public class GUI {
         try {
             mySimulator.startSimulation(stage, root);
             addDimensionSlider();
+            
         }
         catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(myResources.getString("Error"));
-            alert.setHeaderText(myResources.getString("ErrorType"));
+            alert.setTitle("Error");
+            alert.setHeaderText("Incorrect type");
             alert.setContentText(myResources.getString("Error"));
             alert.showAndWait();
         }
