@@ -324,6 +324,7 @@ public class GUI {
         mySimulator.turnOff();
         root.getChildren().remove(slider);
         openFileChooser(stage);
+        addUserBar(stage);
         startSimulation(stage);
     }
 
@@ -363,6 +364,7 @@ public class GUI {
             
         }
         catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Incorrect type");

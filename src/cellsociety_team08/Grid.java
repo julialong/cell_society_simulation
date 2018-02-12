@@ -11,21 +11,25 @@ import java.util.List;
 
 public class Grid {
 
-    private List currentGrid;
+    private List<Rectangle> currentGrid;
     private int[] dimensions;
+    private int gridWidth;
+    private int gridHeight;
 
-    public Grid(int[] dim) {
+    public Grid(int[] dim, int width, int height) {
+        dimensions = new int[2];
+        currentGrid = new ArrayList<>();
         dimensions[0] = dim[0];
         dimensions[1] = dim[1];
-
-
+        gridWidth = width;
+        gridHeight = height;
     }
 
     /**
      * Gets the current cell colors from the cell controller and updates the displayed grid
      * @param root the JavaFX Group root in GUI
      */
-    private void updateGridColors(Group root, CellController control) {
+    public void updateGridColors(Group root, CellController control) {
         clearGrid(root);
         currentGrid = new ArrayList<>();
         Color[][] newColors = control.getColors();
