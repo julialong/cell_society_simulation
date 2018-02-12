@@ -1,4 +1,4 @@
-package cellsociety_team08;
+package shapes;
 
 import cells.Cell;
 

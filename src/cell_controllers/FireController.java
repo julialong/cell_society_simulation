@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import cells.Cell;
-import cellsociety_team08.WriterXML;
 import javafx.scene.paint.Color;
-
+import xml.WriterXML;
+/**
+ * 
+ * @author jeffreyli
+ * simiulation of fire spreading through trees
+ */
 public class FireController extends CellController {
 
 	private double catchProbability;
@@ -39,8 +43,10 @@ public class FireController extends CellController {
 		initializeData();
 	}
 	
+	/**
+	 * initializes the data map
+	 */
 	public void initializeData() {
-
 		data = new HashMap<>();
 		data.put(DEFAULT, new HashMap<>());
 		data.get(DEFAULT).put(Color.WHITE, 0);
@@ -51,13 +57,7 @@ public class FireController extends CellController {
 		initialValues();
 	}
 	
-	public void increaseData(String type, Color colour) {
-		data.get(type).put(colour, data.get(type).get(colour) + 1);
-	}
-	public void decreaseData(String type, Color colour) {
-		data.get(type).put(colour, data.get(type).get(colour) -1);
-	}
-
+	@Override
 	public void setUpSpecific(Map<String, int[][]> map) {
 		int[][] cellsOnFire = map.get("burning");
 		for (int x = 0; x < cellsOnFire.length; x++) {
@@ -74,13 +74,7 @@ public class FireController extends CellController {
 			cellGrid[xCoord][yCoord].setState(Color.WHITE);
 		}
 	}
-	
-	
 	@Override
-	protected void updateData() {
-		//method unnecessary for this class now that the graph is refactored in this simulation
-	}
-	
 	public void setUpRandom(Map<String, Double> paramMap) {
 		double onrate = paramMap.get("firerate");
 
@@ -94,6 +88,13 @@ public class FireController extends CellController {
 			}
 		}
 	}
+	
+	@Override
+	protected void updateData() {
+		//method unnecessary for this class now that the graph is refactored in this simulation
+	}
+	
+
 
 	@Override
 	public void setNextStates() {
@@ -126,11 +127,19 @@ public class FireController extends CellController {
 		}
 	}
 	
-
+	/**
+	 * determines whether the fire spreads or not
+	 * @return
+	 */
 	private boolean catchResult() {
 		return Math.random() < catchProbability;
 	}
-
+	
+	/**
+	 * determines whether a cell has a fire beside it
+	 * @param cell to check
+	 * @return result
+	 */
 	private boolean fireBeside(Cell cell) {
 		for (String state : cell.getNeighborStateNames()) {
 			if (state != null) {

@@ -3,7 +3,11 @@ package cells;
 import java.util.Arrays;
 
 import javafx.scene.paint.Color;
-
+/**
+ * Core part of the simulation, holds information regarding states and colours to be projected
+ * @author jeffreyli, edwardzhuang
+ *
+ */
 public class Cell {
 	protected String currentState;
 	protected String nextState;
@@ -15,7 +19,11 @@ public class Cell {
 	// 0 1 2
 	// 3 x 4
 	// 5 6 7
-
+	
+	/**
+	 * 
+	 * @param state = state of cell
+	 */
 	public Cell(String state) {
 		currentState = state;
 		nextState = state;
@@ -32,7 +40,10 @@ public class Cell {
 	public void setState(Color newColour) {
 		colour = newColour;
 	}
-
+	
+	/**
+	 * sets the next state as default cell
+	 */
 	public void setNextStateDefault() {
 		colour = Color.WHITE;
 		nextState = "default";
@@ -46,7 +57,12 @@ public class Cell {
 	public Color getColor() {
 		return colour;
 	}
-
+	
+	
+	/**
+	 * retrieves neighbours state names
+	 * @return String array of neighbour state names
+	 */
 	public String[] getNeighborStateNames() {
 		String[] neighborStateNames = new String[NUMBER_OF_NEIGHBOURS];
 		for (int x = 0; x < neighborStateNames.length; x++) {

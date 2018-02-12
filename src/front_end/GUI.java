@@ -1,4 +1,4 @@
-package cellsociety_team08;
+package front_end;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Group;

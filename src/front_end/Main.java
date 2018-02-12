@@ -1,4 +1,4 @@
-package cellsociety_team08;
+package front_end;
 
 import java.util.Random;
 

@@ -7,15 +7,19 @@ import java.util.Map;
 
 import cells.Cell;
 import cells.GameOfLifeCell;
-import cellsociety_team08.WriterXML;
-
+import xml.WriterXML;
+/**
+ * cell for simulation based on inability to survive overcrowding or undercrowding
+ * @author jeffreyli, edwardzhuang
+ *
+ */
 public class LifeCellController extends CellController {
 
 	private static final String ON = "on";
 	private static final String OFF = "default";
 	private Map<String, Double> param;
 
-	// 2 maps and bololean
+
 
 	public LifeCellController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap,
 			boolean random) {
@@ -35,8 +39,7 @@ public class LifeCellController extends CellController {
 		initializeNeighbors();
 	}
 	
-	
-
+	@Override
 	public void setUpRandom(Map<String, Double> paramMap) {
 
 		double onrate = paramMap.get("onrate");
@@ -50,7 +53,7 @@ public class LifeCellController extends CellController {
 			}
 		}
 	}
-
+	@Override
 	public void setUpSpecific(Map<String, int[][]> map) {
 
 		int[][] cellsOn = map.get(ON);
@@ -60,12 +63,12 @@ public class LifeCellController extends CellController {
 			cellGrid[xCoord][yCoord] = new GameOfLifeCell(ON);
 		}
 	}
-
+	@Override
 	public Cell getDefaultCell() {
 		return new GameOfLifeCell(OFF);
 
 	}
-
+	@Override
 	public void setNextStates() {
 		for (int x = 0; x < xSize; x++) {
 			for (int y = 0; y < ySize; y++) {
@@ -86,11 +89,8 @@ public class LifeCellController extends CellController {
 					cellList.add(temp);
 				}
 			}
-		}
-		
+		}	
 		map.put("on", cellList.toArray(new int[cellList.size()][]));
-		
-		
 		return map;
 	}
 	

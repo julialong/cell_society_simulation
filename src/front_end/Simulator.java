@@ -1,4 +1,4 @@
-package cellsociety_team08;
+package front_end;
 
 import java.io.File;
 import java.util.*;
@@ -11,6 +11,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.util.Duration;
+import xml.ParserXML;
 
 public class Simulator {
 
