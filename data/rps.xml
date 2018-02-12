@@ -1,12 +1,11 @@
 <?xml version="1.0" ?>
 <rps>
-  <title>RPS Simulation</title>
   <authors>
     <name>Edward Zhuang</name>
     <name>Julia Long</name>
     <name>Jeffrey Li</name>
   </authors>
-  <dimensions isToroidal="true">
+  <dimensions>
     <xsize>40</xsize>
     <ysize>40</ysize>
   </dimensions>

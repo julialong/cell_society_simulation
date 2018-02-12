@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <segregation>
-  <title>Model of Segregation</title>
   <authors>
     <name>Edward Zhuang</name>
     <name>Julia Long</name>
@@ -13,7 +12,7 @@
   <parameter_list>
     <parameters id="edgenumber">
       <value>4</value>
-    </parameters>  
+    </parameters>
     <parameters id="threshold">
       <value>.75</value>
     </parameters>
