@@ -19,8 +19,8 @@ public class TriangleNeighborFinder extends NeighborFinder {
 	private static final int NUMBER_OF_NEIGHBOURS = 12;
 	private boolean down = true;
 	
-	public TriangleNeighborFinder(Cell[][] inputCellGrid) {
-		super(inputCellGrid);
+	public TriangleNeighborFinder(Cell[][] inputCellGrid, boolean torroidal2) {
+		super(inputCellGrid, torroidal2);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -12,8 +12,8 @@ public class HexagonNeighborFinder extends NeighborFinder {
 	private static final int BOTTOMRIGHT = 5;
 	private static final int NUMBER_OF_NEIGHBOURS = 6;
 	
-	public HexagonNeighborFinder(Cell[][] inputCellGrid) {
-		super(inputCellGrid);
+	public HexagonNeighborFinder(Cell[][] inputCellGrid, boolean torroidal2) {
+		super(inputCellGrid, torroidal2);
 		// TODO Auto-generated constructor stub
 	}
 
