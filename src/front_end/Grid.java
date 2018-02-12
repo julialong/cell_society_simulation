@@ -1,4 +1,4 @@
-package cellsociety_team08;
+package front_end;
 
 import cell_controllers.CellController;
 import javafx.scene.Group;

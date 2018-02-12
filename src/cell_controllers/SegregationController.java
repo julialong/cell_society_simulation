@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import cells.Cell;
-import cellsociety_team08.WriterXML;
 import javafx.scene.paint.Color;
+import xml.WriterXML;
 
 public class SegregationController extends CellController {
 	private double threshold;

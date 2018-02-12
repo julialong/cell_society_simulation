@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.Random;
 
 import cells.Cell;
-import cellsociety_team08.WriterXML;
 import javafx.scene.paint.Color;
 import watorCells.Animal;
 import watorCells.Fish;
 import watorCells.Shark;
 import watorCells.Water;
 import watorCells.WatorCell;
+import xml.WriterXML;
 
 public class WatorController extends CellController {
 
