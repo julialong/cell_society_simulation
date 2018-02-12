@@ -11,35 +11,40 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
+/**
+ * Creates and displays the graph that shows tha number of cells of each type,
+ * excluding any "default" cells
+ * @author julialong
+ */
 public class Graph {
 
-    public final int GRAPH_X_SIZE = 600;
-    public final int GRAPH_Y_SIZE = 200;
+    private static final int GRAPH_Y = 550;
+    private static final int GRAPH_HEIGHT = 200;
+    private static final int GRAPH_WIDTH = 600;
 
-    private Map<String, Color> plotColors;
     private Map<String, ArrayList<Double>> steps;
     private Map<String, ArrayList<Integer>> numCells;
     private Map<String, XYChart.Series> series;
 
     private NumberAxis xAxis;
     private NumberAxis yAxis;
-    private LineChart<NumberAxis, NumberAxis> lineChart;
-    private VBox vbox;
+
+    private ResourceBundle myResources = ResourceBundle.getBundle(GUI.DEFAULT_RESOURCE_PATH + GUI.LANGUAGE);
 
     /**
      * Creates a new Graph object
      */
     public Graph() {
-        plotColors = new HashMap<>();
         steps = new HashMap<>();
         numCells = new HashMap<>();
         series = new HashMap<>();
 
         xAxis = new NumberAxis();
-        xAxis.setLabel("Step");
+        xAxis.setLabel(myResources.getString("Steps"));
         yAxis = new NumberAxis();
-        yAxis.setLabel("Number of cells");
+        yAxis.setLabel(myResources.getString("CellNumber"));
     }
 
     /**
@@ -54,7 +59,6 @@ public class Graph {
         if (!steps.containsKey(cellType)) {
             steps.put(cellType, new ArrayList<>());
             numCells.put(cellType, new ArrayList<>());
-            plotColors.put(cellType, color);
             series.put(cellType, new XYChart.Series());
             series.get(cellType).setName(cellType);
         }
@@ -67,16 +71,16 @@ public class Graph {
      * @param root The JavaFX Group in GUI
      */
     public void updateGraph(Group root) {
-        vbox = new VBox();
-        lineChart = new LineChart(xAxis,yAxis);
+        VBox vbox = new VBox();
+        LineChart lineChart = new LineChart(xAxis, yAxis);
         for (String type : series.keySet()) {
             lineChart.getData().add(series.get(type));
         }
         vbox.getChildren().add(lineChart);
         vbox.setLayoutX(GUI.BUTTON_X);
-        vbox.setLayoutY(500);
-        vbox.setMaxHeight(200);
-        vbox.setMaxWidth(600);
+        vbox.setLayoutY(GRAPH_Y);
+        vbox.setMaxHeight(GRAPH_HEIGHT);
+        vbox.setMaxWidth(GRAPH_WIDTH);
         root.getChildren().add(vbox);
     }
 }

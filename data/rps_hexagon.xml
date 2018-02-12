@@ -1,17 +1,18 @@
 <?xml version="1.0" ?>
 <rps>
+  <title>RPS Simulation</title>
   <authors>
     <name>Edward Zhuang</name>
     <name>Julia Long</name>
     <name>Jeffrey Li</name>
   </authors>
-  <dimensions>
+  <dimensions isToroidal="true">
     <xsize>40</xsize>
     <ysize>40</ysize>
   </dimensions>
   <parameter_list>
     <parameters id="edgenumber">
-      <value>4</value>
+      <value>6</value>
     </parameters>
     <parameters id="greenRate">
       <value>.1</value>
