@@ -31,7 +31,6 @@ public class WatorController extends CellController {
 	private static double sharkPercent;
 	private Map<String, Double> param;
 
-
 	public WatorController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap, boolean random) {
 		super(dimensions, random);
 		param = paramMap;
@@ -39,6 +38,9 @@ public class WatorController extends CellController {
 		sharkPercent = paramMap.get(SHARKRATE);
 		if (isRandom) {
 			setUpRandom(paramMap);
+		}
+		else {
+			setUpSpecific(map);
 		}
 		initializeNeighbors();
 	}
@@ -49,13 +51,37 @@ public class WatorController extends CellController {
 			for (int y = 0; y < ySize; y++) {
 
 				WatorCell[] tempArray = new WatorCell[NUMBER_OF_NEIGHBOURS];
-				tempArray[LEFT] = (WatorCell) cellGrid[x - 1][y];
-				tempArray[BOTTOM] = (WatorCell) cellGrid[x][y - 1];
-				tempArray[TOP] = (WatorCell) cellGrid[x][y + 1];
-				tempArray[RIGHT] = (WatorCell) cellGrid[x + 1][y];
+				tempArray[LEFT] = (WatorCell) retrieveCell(x - 1, y);
+				tempArray[BOTTOM] = (WatorCell) retrieveCell(x, y - 1);
+				tempArray[TOP] = (WatorCell) retrieveCell(x, y + 1);
+				tempArray[RIGHT] = (WatorCell) retrieveCell(x + 1, y);
 				cellGrid[x][y].addNeighbors(tempArray);
 			}
 		}
+	}
+
+	public Cell retrieveCell(int x, int y) {
+
+		if (!torroidal) {
+			if (x < 0 || x >= xSize)
+				return null;
+			if (y < 0 || y >= ySize)
+				return null;
+		}
+		if (x < 0) {
+			x = xSize - 1;
+		}
+		if (x >= xSize) {
+			x = 0;
+		}
+		if (y < 0) {
+			y = ySize - 1;
+		}
+		if (y >= ySize) {
+			y = 0;
+		}
+
+		return cellGrid[x][y];
 	}
 
 	private Cell randomAnimalGenerator(double fishPercent, double sharkPercent) {
@@ -167,8 +193,25 @@ public class WatorController extends CellController {
 
 	@Override
 	public void setUpSpecific(Map<String, int[][]> map) {
-		// TODO Auto-generated method stub
 
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				Cell tempCell = new WatorCell(WATER, new Water());
+				cellGrid[x][y] = tempCell;
+			}
+		}
+		int[][] cellsX = map.get(SHARK);
+		for (int z = 0; z < cellsX.length; z++) {
+			int xCoord = cellsX[z][0];
+			int yCoord = cellsX[z][1];
+			cellGrid[xCoord][yCoord] = new WatorCell(SHARK, new Shark());
+		}
+		int[][] cellsO = map.get(FISH);
+		for (int z = 0; z < cellsO.length; z++) {
+			int xCoord = cellsO[z][0];
+			int yCoord = cellsO[z][1];
+			cellGrid[xCoord][yCoord] = new WatorCell(FISH, new Fish());
+		}
 	}
 
 	@Override
@@ -179,36 +222,35 @@ public class WatorController extends CellController {
 				cellGrid[x][y] = tempCell;
 			}
 		}
-
 	}
-	
+
 	@Override
 	public Map<String, int[][]> makeCellMap() {
 		Map<String, int[][]> map = new HashMap<String, int[][]>();
-//		List<int[]> cellListFire = new ArrayList<int[]>();
-//		List<int[]> cellListBurnt = new ArrayList<int[]>();
-//		for (int x = 0; x < xSize; x++) {
-//			for (int y = 0; y < ySize; y++) {
-//				if (cellGrid[x][y].getState() == DEFAULT) {
-//					int[] temp = {x,y};
-//					cellListBurnt.add(temp);
-//				}
-//				if (cellGrid[x][y].getState() == FIRE) {
-//					int[] temp = {x,y};
-//					cellListFire.add(temp);
-//				}
-//				
-//			}
-//		}
-//		
-//		map.put("burning", cellListFire.toArray(new int[cellListFire.size()][]));
-//		map.put("default", cellListBurnt.toArray(new int[cellListBurnt.size()][]));
-//		
-//		
-		
+		// List<int[]> cellListFire = new ArrayList<int[]>();
+		// List<int[]> cellListBurnt = new ArrayList<int[]>();
+		// for (int x = 0; x < xSize; x++) {
+		// for (int y = 0; y < ySize; y++) {
+		// if (cellGrid[x][y].getState() == DEFAULT) {
+		// int[] temp = {x,y};
+		// cellListBurnt.add(temp);
+		// }
+		// if (cellGrid[x][y].getState() == FIRE) {
+		// int[] temp = {x,y};
+		// cellListFire.add(temp);
+		// }
+		//
+		// }
+		// }
+		//
+		// map.put("burning", cellListFire.toArray(new int[cellListFire.size()][]));
+		// map.put("default", cellListBurnt.toArray(new int[cellListBurnt.size()][]));
+		//
+		//
+
 		return map;
 	}
-	
+
 	@Override
 	public void writeToXML(String filename) {
 		// TODO Auto-generated method stub

@@ -36,6 +36,26 @@ public class FireController extends CellController {
 			setUpSpecific(map);
 		}
 		initializeNeighbors();
+		initializeData();
+	}
+	
+	public void initializeData() {
+
+		data = new HashMap<>();
+		data.put(DEFAULT, new HashMap<>());
+		data.get(DEFAULT).put(Color.WHITE, 0);
+		data.put(TREE, new HashMap<>());
+		data.get(TREE).put(Color.GREEN, 0);
+		data.put(FIRE, new HashMap<>());
+		data.get(FIRE).put(Color.RED, 0);
+		initialValues();
+	}
+	
+	public void increaseData(String type, Color colour) {
+		data.get(type).put(colour, data.get(type).get(colour) + 1);
+	}
+	public void decreaseData(String type, Color colour) {
+		data.get(type).put(colour, data.get(type).get(colour) -1);
 	}
 
 	public void setUpSpecific(Map<String, int[][]> map) {
@@ -54,7 +74,13 @@ public class FireController extends CellController {
 			cellGrid[xCoord][yCoord].setState(Color.WHITE);
 		}
 	}
-
+	
+	
+	@Override
+	protected void updateData() {
+		//method unnecessary for this class now that the graph is refactored in this simulation
+	}
+	
 	public void setUpRandom(Map<String, Double> paramMap) {
 		double onrate = paramMap.get("firerate");
 
@@ -82,12 +108,16 @@ public class FireController extends CellController {
 
 				else if (toSetType.equals(FIRE)) {
 					toSet.setNextStateDefault();
+					decreaseData(FIRE, Color.RED);
+					increaseData(DEFAULT, Color.WHITE);
 				}
 
 				else if (toSetType.equals(TREE)) {
 					if (fireBeside(toSet) && catchResult()) {
 						toSet.setNextState(FIRE);
 						toSet.setState(Color.ORANGERED);
+						decreaseData(DEFAULT, Color.WHITE);
+						increaseData(FIRE, Color.RED);
 					} else {
 						toSet.setNextState(TREE);
 					}
@@ -95,6 +125,7 @@ public class FireController extends CellController {
 			}
 		}
 	}
+	
 
 	private boolean catchResult() {
 		return Math.random() < catchProbability;
@@ -115,6 +146,7 @@ public class FireController extends CellController {
 	public Cell getDefaultCell() {
 		Cell temp = new Cell(TREE);
 		temp.setState(Color.GREEN);
+		increaseData(TREE,Color.GREEN);
 		return temp;
 	}
 	

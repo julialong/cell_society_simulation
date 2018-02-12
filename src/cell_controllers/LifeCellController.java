@@ -34,6 +34,8 @@ public class LifeCellController extends CellController {
 		}
 		initializeNeighbors();
 	}
+	
+	
 
 	public void setUpRandom(Map<String, Double> paramMap) {
 
