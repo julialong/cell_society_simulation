@@ -7,8 +7,8 @@ import java.util.Map;
 
 import cells.Cell;
 import cells.RPSCell;
-import cellsociety_team08.WriterXML;
 import javafx.scene.paint.Color;
+import xml.WriterXML;
 
 public class RPSController extends CellController {
 	private double greenRate;

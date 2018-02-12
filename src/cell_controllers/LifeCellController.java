@@ -7,7 +7,7 @@ import java.util.Map;
 
 import cells.Cell;
 import cells.GameOfLifeCell;
-import cellsociety_team08.WriterXML;
+import xml.WriterXML;
 
 public class LifeCellController extends CellController {
 

@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cells.Cell;
-import cellsociety_team08.NeighborFinder;
-import cellsociety_team08.SquareNeighborFinder;
 import javafx.scene.paint.Color;
+import shapes.NeighborFinder;
+import shapes.SquareNeighborFinder;
 
 public abstract class CellController {
 
