@@ -2,6 +2,11 @@ package shapes;
 
 import cells.Cell;
 
+/**
+ * Neighbor Finder class, used to help find neighbors for cells
+ * @author Edward Zhuang, Jeffrey Li
+ *
+ */
 public abstract class NeighborFinder {
 	private Cell[][] cellGrid;
 	protected int xSize;
@@ -9,7 +14,11 @@ public abstract class NeighborFinder {
 	boolean torroidal;
 	
 	
-	
+	/**
+	 * Constructor for NeighborFinder
+	 * @param inputCellGrid cellGrid which contains array of array of cells
+	 * @param torroidal2 chooses whether cellGrid should be toroidal 
+	 */
 	public NeighborFinder(Cell[][] inputCellGrid, Boolean torroidal2) {
 		cellGrid = inputCellGrid;
 		xSize = cellGrid.length;
@@ -17,12 +26,25 @@ public abstract class NeighborFinder {
 		torroidal = torroidal2;
 	};
 	
+	/**
+	 * initializes neighbors for each cell
+	 */
 	public abstract void initializeNeighbors();
 	
+	/**
+	 *  gets Cell Grid
+	 * @return cellGrid
+	 */
 	public Cell[][] getCellGrid(){
 		return cellGrid;
 	}
 	
+	/**
+	 * Retrieves a cell from cell grid
+	 * @param x x coordinate of cell
+	 * @param y y coordinate of cell
+	 * @return
+	 */
 	public Cell retrieveCell(int x, int y) {
 	
 	if (!torroidal) {

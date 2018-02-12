@@ -8,11 +8,22 @@ import java.util.Map;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 
+/**
+ * ParserXML class, designed to parse XML files to interpret for simulation
+ * @author Edward Zhuang
+ *	Help received from:
+ *	https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
+ */
 public class ParserXML {
 	private Document doc;
+	
+	/**
+	 * Constructor for ParserXML
+	 * @param file XML file to be parsed
+	 */
 	public ParserXML(File file) {
 		try {
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); // https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		doc = dBuilder.parse(file);
 		} catch (Exception e) {
@@ -21,7 +32,9 @@ public class ParserXML {
 		doc.getDocumentElement().normalize();
 	}
 	
-	
+	/**
+	 * Finds cell types and prints them out
+	 */
 	public void findCellTypes() {
 		NodeList typeList = doc.getElementsByTagName("state");
 		for (int x = 0; x < typeList.getLength(); x++) {
@@ -34,24 +47,27 @@ public class ParserXML {
 		
 	}
 	
+	/**
+	 * 
+	 * @param cellNode cellNode which contains x and y coordinates of a cell
+	 * @return returns the coordinates of a cell
+	 */
 	public int[] getCellInfo(Node cellNode) {
-		
-//		NodeList cellList = doc.getElementsByTagName(cells);
-//		int[][] onCells = new int[cellList.getLength()][];
-		
 			
 			Element eElement = (Element) cellNode;
 			
 			int xsize = Integer.parseInt(eElement.getElementsByTagName("ycoord").item(0).getTextContent());
 			int ysize = Integer.parseInt(eElement.getElementsByTagName("xcoord").item(0).getTextContent());		
-			
-			
+						
 			int[] cell = {xsize, ysize};
-
 		
 		return cell;
 	}
 	
+	/**
+	 * checks to see if a simulation is random
+	 * @return returns true if the XML file calls for a random simulation, false otherwise
+	 */
 	public boolean isRandom() {
 		NodeList checkRandom = doc.getElementsByTagName("cell_on_list");
 		Node isRandom = checkRandom.item(0);
@@ -59,11 +75,14 @@ public class ParserXML {
 		return (!Boolean.parseBoolean(rElement.getAttribute("isOn")));
 	}
 	
+	/**
+	 * Collects all the cells from an XML file, uses getCellInfo
+	 * @return returns a map with key of cell type and value of int[][] which contains list of coordinates of that type of cell
+	 */
 	public Map<String, int[][]> getAllCells() {
 		
 		Map<String, int[][]> cellMap = new HashMap<String, int[][]>();		
-		
-		
+			
 		NodeList types = doc.getElementsByTagName("type");
 		for (int i = 0; i < types.getLength(); i++) {
 			Node node = types.item(i);
@@ -77,7 +96,6 @@ public class ParserXML {
 
 			for (int x = 0; x < childNodes.getLength(); x++) {
 				Node cellNode = childNodes.item(x);
-//				Element cElement = (Element) cellNode;
 
 				tempArray[x] = getCellInfo(cellNode);
 			}
@@ -88,17 +106,18 @@ public class ParserXML {
 		return cellMap;
 	}
 	
+	/**
+	 * Gets the parameters of an XML file
+	 * @return returns map with keys as parameters and values as doubles
+	 */
 	public Map<String, Double> getParameters(){
 		Map<String, Double> paramMap = new HashMap<String, Double>();
 		NodeList params = doc.getElementsByTagName("parameters");
 		for (int i = 0; i < params.getLength(); i++) {
 			Node node = params.item(i);
 			Element eElement = (Element) node;
-
 			String temp = eElement.getAttribute("id");
-
 			Double tempDouble = Double.parseDouble(eElement.getElementsByTagName("value").item(0).getTextContent());
-
 			paramMap.put(temp, tempDouble);
 		}
 
@@ -106,10 +125,17 @@ public class ParserXML {
 	}
 	
 	
+	/**
+	 * Gets the type of simulation
+	 * @return String simulation type
+	 */
 	public String getSimulationType() {
 		return doc.getDocumentElement().getNodeName();
 	}
-	
+	/**
+	 * Gets the dimensions of simulation
+	 * @return int[] containing width and height of a simulation
+	 */
 	public int[] getDimensions(){
 			
 			NodeList dimensions = doc.getElementsByTagName("dimensions");
@@ -119,18 +145,11 @@ public class ParserXML {
 			int xsize = Integer.parseInt(eElement.getElementsByTagName("xsize").item(0).getTextContent());
 			int ysize = Integer.parseInt(eElement.getElementsByTagName("ysize").item(0).getTextContent());
 			
-			//System.out.println("Dimensions: " + xsize + " wide by " + ysize + " tall");
-			
 			int[] dim = {xsize, ysize};
 	
 			return dim;
 	
 	}
 	
-//	public static void main(String[] args) {
-//		File test = new File("./data/wator.xml");
-//		ParserXML parse = new ParserXML(test);
-//		System.out.println(parse.isRandom());
-//	}
 }
 
