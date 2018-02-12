@@ -15,7 +15,7 @@ public abstract class CellController {
 	protected int ySize;
 	protected Map<String, Map<Color, Integer>> data;
 	protected boolean isRandom;
-	private boolean torroidal;
+	protected boolean torroidal;
 
 	/**
 	 * 
