@@ -51,7 +51,7 @@ public class Grid {
      * @return
      */
     private Polygon createNewCell(int x, int y, Color color) {
-        Polygon newCell = createTriangle(x, y);
+        Polygon newCell = createSquare(x, y);
         newCell.setFill(color);
         newCell.setStroke(Color.DARKGREY);
         newCell.setStrokeType(StrokeType.INSIDE);

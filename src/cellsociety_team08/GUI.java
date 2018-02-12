@@ -273,7 +273,7 @@ public class GUI {
         toroidalButton.setLayoutX(BUTTON_X);
         toroidalButton.setLayoutY(slowerButton.getLayoutY() + 150);
         root.getChildren().add(toroidalButton);
-        toroidalButton.setOnAction((ActionEvent event) -> System.out.println("Make toroidal"));
+        toroidalButton.setOnAction((ActionEvent event) -> mySimulator.switchToroidal());
     }
 
     /**

@@ -245,6 +245,10 @@ public class Simulator {
         return dimensions[0]*dimensions[1];
     }
 
+    public void switchToroidal() {
+        control.switchTorroidal();
+    }
+
     /**
      * Creates a new file with the current configuration
      * @param filename the filename given by the user
