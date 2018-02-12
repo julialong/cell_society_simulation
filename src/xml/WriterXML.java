@@ -33,9 +33,10 @@ public class WriterXML {
 	 * @param cellMap contains map of cell types as keys and int[][] of location of cells with aforementioned cell types
 	 * @param x x value for dimension 
 	 * @param y y value for dimension
+	 * @throws WriterException 
 	 */
 	public WriterXML(String fileName, String simType, Map<String, Double> map, Map<String, int[][]> cellMap, int x,
-			int y) {
+			int y) throws WriterException {
 		String destination = "/Users/edwar/eclipse-workspace/cellsociety_team08/data/" + fileName + ".xml";
 		result = new StreamResult(new File(destination));
 
@@ -45,7 +46,7 @@ public class WriterXML {
 			// root elements
 			doc = docBuilder.newDocument();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new WriterException();
 		}
 
 		baseXML = doc.createElement(simType);
@@ -156,8 +157,9 @@ public class WriterXML {
 
 	/**
 	 * Creates the actual XML file, formats it as well
+	 * @throws WriterException 
 	 */
-	public void convert() {
+	public void convert() throws WriterException {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
 		try {
@@ -173,13 +175,11 @@ public class WriterXML {
 				transformer.transform(source, result);
 
 			} catch (TransformerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new WriterException();
 			}
 
 		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new WriterException();
 		}
 	}
 
