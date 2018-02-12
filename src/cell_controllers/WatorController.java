@@ -1,10 +1,13 @@
 package cell_controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import cells.Cell;
+import cellsociety_team08.WriterXML;
 import javafx.scene.paint.Color;
 import watorCells.Animal;
 import watorCells.Fish;
@@ -26,9 +29,12 @@ public class WatorController extends CellController {
 	private static final int RIGHT = 3;
 	private static double fishPercent;
 	private static double sharkPercent;
+	private Map<String, Double> param;
+
 
 	public WatorController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap,  boolean random) {
 		super(dimensions, random);
+		param = paramMap;
 		fishPercent = paramMap.get(FISHRATE);
 		sharkPercent = paramMap.get(SHARKRATE);
 		if (isRandom) {
@@ -174,5 +180,39 @@ public class WatorController extends CellController {
 			}
 		}
 
+	}
+	
+	@Override
+	public Map<String, int[][]> makeCellMap() {
+		Map<String, int[][]> map = new HashMap<String, int[][]>();
+//		List<int[]> cellListFire = new ArrayList<int[]>();
+//		List<int[]> cellListBurnt = new ArrayList<int[]>();
+//		for (int x = 0; x < xSize; x++) {
+//			for (int y = 0; y < ySize; y++) {
+//				if (cellGrid[x][y].getState() == DEFAULT) {
+//					int[] temp = {x,y};
+//					cellListBurnt.add(temp);
+//				}
+//				if (cellGrid[x][y].getState() == FIRE) {
+//					int[] temp = {x,y};
+//					cellListFire.add(temp);
+//				}
+//				
+//			}
+//		}
+//		
+//		map.put("burning", cellListFire.toArray(new int[cellListFire.size()][]));
+//		map.put("default", cellListBurnt.toArray(new int[cellListBurnt.size()][]));
+//		
+//		
+		
+		return map;
+	}
+	
+	@Override
+	public void writeToXML(String filename) {
+		// TODO Auto-generated method stub
+		WriterXML writer = new WriterXML(filename, "wator", param, makeCellMap(), xSize, ySize);
+		writer.convert();
 	}
 }

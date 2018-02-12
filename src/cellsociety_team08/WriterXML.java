@@ -68,6 +68,7 @@ public class WriterXML {
 		Element cellsList = doc.createElement("cell_on_list");
 		Attr attribute = doc.createAttribute("isOn");
 		attribute.setValue("true");
+		cellsList.setAttributeNode(attribute);
 		for (String key: map.keySet()) {
 			Element cellType = doc.createElement("type");
 			Attr typeAttribute = doc.createAttribute("id");
@@ -134,9 +135,6 @@ public class WriterXML {
 	/**
 	 * add's author information, adds title of simulation
 	 */
-	public void addInfo() {
-		
-	}
 	
 	public void convert() {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();

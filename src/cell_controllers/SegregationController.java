@@ -1,9 +1,12 @@
 package cell_controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cells.Cell;
+import cellsociety_team08.WriterXML;
 import javafx.scene.paint.Color;
 
 public class SegregationController extends CellController {
@@ -11,13 +14,13 @@ public class SegregationController extends CellController {
 	private static final String DEFAULT = "default";
 	private double xrate;
 	private double orate;
-
+	private Map<String, Double> param;
 
 	public SegregationController(int[] dimensions, Map<String, int[][]> map, Map<String, Double> paramMap, 
 			boolean random) {
 		
 		super(dimensions, random);
-
+		param = paramMap;
 		xrate = paramMap.get("xrate");
 		orate = paramMap.get("orate");
 
@@ -140,6 +143,39 @@ public class SegregationController extends CellController {
 	@Override
 	public Cell getDefaultCell() {
 		return generateCell();
+	}
+
+	@Override
+	public Map<String, int[][]> makeCellMap() {
+		Map<String, int[][]> map = new HashMap<String, int[][]>();
+		List<int[]> cellListX = new ArrayList<int[]>();
+		List<int[]> cellListO = new ArrayList<int[]>();
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				if (cellGrid[x][y].getState() == "X") {
+					int[] temp = {x,y};
+					cellListX.add(temp);
+				}
+				if (cellGrid[x][y].getState() == "O") {
+					int[] temp = {x,y};
+					cellListO.add(temp);
+				}
+				
+			}
+		}
+		
+		map.put("x", cellListX.toArray(new int[cellListX.size()][]));
+		map.put("o", cellListO.toArray(new int[cellListO.size()][]));
+		
+		
+		return map;
+	}
+	
+	@Override
+	public void writeToXML(String filename) {
+		// TODO Auto-generated method stub
+		WriterXML writer = new WriterXML(filename, "segregation", param, makeCellMap(), xSize, ySize);
+		writer.convert();
 	}
 
 
