@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class WatorCell extends Cell{
 	private Animal animal;
-
+	
 	public WatorCell(String state, Animal object) {
 		super(state);
 		animal = object;
@@ -16,6 +16,10 @@ public class WatorCell extends Cell{
 		return animal.getType();
 	}
 	
+	@Override
+	public String getState() {
+		return animal.getType();
+	}
 	public Animal getAnimal() {
 		return animal;
 	}

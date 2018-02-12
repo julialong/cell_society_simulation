@@ -77,7 +77,7 @@ public class ParserXML {
 
 			for (int x = 0; x < childNodes.getLength(); x++) {
 				Node cellNode = childNodes.item(x);
-				Element cElement = (Element) cellNode;
+//				Element cElement = (Element) cellNode;
 
 				tempArray[x] = getCellInfo(cellNode);
 			}

@@ -123,7 +123,9 @@ public class Simulator {
      * Sets up the cell controller based on the simulation type from the XML file
      */
     private void setupCellController() {
+    		
         if (simulationType.equals(CONWAYS)) {
+
             control = new LifeCellController(dimensions, cellTypes, parameters, isRandom);
         }
         else if (simulationType.equals(SPREADINGFIRE)) {
@@ -233,6 +235,7 @@ public class Simulator {
         dimensions = parser.getDimensions();
         cellTypes = parser.getAllCells();
         parameters = parser.getParameters();
+        isRandom = parser.isRandom();
     }
 
     /**
@@ -292,7 +295,7 @@ public class Simulator {
     public void toXML(String filename) {
         System.out.println(filename);
         //TODO: Change empty map to map from Jeffrey OR we can change this method to be called in CellController
-        new WriterXML(filename, simulationType, new HashMap<>(), new HashMap<>(), dimensions[0], dimensions[1]);
+        new WriterXML(filename, simulationType, parameters, cellTypes, dimensions[0], dimensions[1]);
     }
 
 }

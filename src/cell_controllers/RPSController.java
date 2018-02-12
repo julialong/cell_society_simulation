@@ -1,8 +1,7 @@
 package cell_controllers;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
+
 
 import cells.Cell;
 import cells.RPSCell;
@@ -16,7 +15,7 @@ public class RPSController extends CellController {
 	private static final String BLUE = "blue";
 	private static final String RED = "red";
 
-	public RPSController(int[] dimensions, TreeMap<String, Double> paramMap, HashMap<String, int[][]> map,
+	public RPSController(int[] dimensions,Map<String, int[][]> map, Map<String, Double> paramMap, 
 			boolean random) {
 		super(dimensions, random);
 		if (isRandom) {

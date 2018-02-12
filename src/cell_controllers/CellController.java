@@ -1,6 +1,5 @@
 package cell_controllers;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +32,7 @@ public abstract class CellController {
 	public CellController(int[] dimensions, boolean random) {
 		xSize = dimensions[0];
 		ySize = dimensions[1];
+		isRandom = random;
 
 		data = new HashMap<>();
 
@@ -45,10 +45,11 @@ public abstract class CellController {
 			}
 		}
 	}
-	
+
 	public abstract void setUpSpecific(Map<String, int[][]> map);
+
 	public abstract void setUpRandom(Map<String, Double> paramMap);
-	
+
 	// changes the size of cell grid
 
 	public void resize(int dimensions) {
@@ -134,19 +135,19 @@ public abstract class CellController {
 	 */
 	public Cell retrieveCell(int x, int y) {
 
-//		 if (x < 0 || x >= xSize)
-//		 return null;
-//		 if (y < 0 || y >= ySize)
-//		 return null;
+		// if (x < 0 || x >= xSize)
+		// return null;
+		// if (y < 0 || y >= ySize)
+		// return null;
 
 		if (x < 0) {
-			x = xSize-1;
+			x = xSize - 1;
 		}
 		if (x >= xSize) {
 			x = 0;
 		}
 		if (y < 0) {
-			y = ySize-1;
+			y = ySize - 1;
 		}
 		if (y >= ySize) {
 			y = 0;
@@ -172,7 +173,9 @@ public abstract class CellController {
 				if (!data.containsKey(type)) {
 					data.put(type, new HashMap<>());
 					data.get(type).put(colour, 0);
+
 				}
+
 				data.get(type).put(colour, data.get(type).get(colour) + 1);
 			}
 		}
