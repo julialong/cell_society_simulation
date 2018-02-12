@@ -39,6 +39,9 @@ public class WatorController extends CellController {
 		if (isRandom) {
 			setUpRandom(paramMap);
 		}
+		else {
+			setUpSpecific(map);
+		}
 		initializeNeighbors();
 	}
 
@@ -190,8 +193,25 @@ public class WatorController extends CellController {
 
 	@Override
 	public void setUpSpecific(Map<String, int[][]> map) {
-		// TODO Auto-generated method stub
 
+		for (int x = 0; x < xSize; x++) {
+			for (int y = 0; y < ySize; y++) {
+				Cell tempCell = new WatorCell(WATER, new Water());
+				cellGrid[x][y] = tempCell;
+			}
+		}
+		int[][] cellsX = map.get(SHARK);
+		for (int z = 0; z < cellsX.length; z++) {
+			int xCoord = cellsX[z][0];
+			int yCoord = cellsX[z][1];
+			cellGrid[xCoord][yCoord] = new WatorCell(SHARK, new Shark());
+		}
+		int[][] cellsO = map.get(FISH);
+		for (int z = 0; z < cellsO.length; z++) {
+			int xCoord = cellsO[z][0];
+			int yCoord = cellsO[z][1];
+			cellGrid[xCoord][yCoord] = new WatorCell(FISH, new Fish());
+		}
 	}
 
 	@Override
