@@ -42,6 +42,7 @@ public class GUI {
     private Button fileButton;
     private Button sliderButton;
     private Button toXMLButton;
+    private ToggleButton toroidalButton;
     private Slider slider;
     
     
@@ -150,6 +151,7 @@ public class GUI {
         addFasterButton();
         addSlowerButton();
         addXMLWriterButton();
+        addToroidalButton();
     }
 
     /**
@@ -266,6 +268,14 @@ public class GUI {
         slowerButton.setOnAction((ActionEvent event) -> mySimulator.speedDown());
     }
 
+    private void addToroidalButton() {
+        toroidalButton = new ToggleButton(myResources.getString("Toggle"));
+        toroidalButton.setLayoutX(BUTTON_X);
+        toroidalButton.setLayoutY(slowerButton.getLayoutY() + 150);
+        root.getChildren().add(toroidalButton);
+        toroidalButton.setOnAction((ActionEvent event) -> mySimulator.switchToroidal());
+    }
+
     /**
      * Adds button to write new XML file
      */
@@ -324,6 +334,7 @@ public class GUI {
         mySimulator.turnOff();
         root.getChildren().remove(slider);
         openFileChooser(stage);
+        addUserBar(stage);
         startSimulation(stage);
     }
 
@@ -363,6 +374,7 @@ public class GUI {
             
         }
         catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Incorrect type");
