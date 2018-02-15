@@ -1,5 +1,4 @@
 
-
 Design
 =======
 ## High Level Design Goals
@@ -13,4 +12,31 @@ To add a new feature within an XML file, a user would have to modify at least th
 
 ## Major Design Choices
 
+There were several major design choices we had to make. When beginning this project, our team met to discuss
+several design choices which would serve as a foundation for how we modeled our simulations. 
+After some team meetings, we quickly came to the consensus that we wanted to have a Cell class,
+and a CellController class to maintain all the Cells. However, we were unsure if we wanted to include a tertiary State class, 
+which would be contained within a Cell and hold information about the Cell's state. 
+While we thought this would be a good way to practice effective design encapsulation, 
+ultimately we decided to remove the State class from our hierarchy. We were unable to find an effective way
+to make the State class meaningful; in many of the simulations, such as Game of Life and Spreading of Fire,
+the State object would only hold information about a Color and String state type. 
+This made it no more useful than two instance variables within the Cell. 
+However, a case could be made for creating State classes for more complex models.
+In simulations like Wa-Tor, the State class could contain information about what animal was in the Cell along with its variables.
+For the majority of the simulation types, though, the State class was superfluous, 
+and as a result we decided to omit it to make the code more uniform and easy to understand.
+ Another design decision we spent a significant amount of time on was how we wanted the CellController 
+ and Cell to interact. We were unsure as to whether or not we wanted the CellController to apply the rules
+ of the simulation onto the Cell, or simply have the CellController tell the Cell to update itself. 
+ In our considerations, we used ease of implementation as our primary metric to make this choice.
+ By allowing the CellController to apply its specific rules onto the Cell, the Cell would not need to hold the rules within it, 
+ making there less of a need for Cell subclasses. In our implementations of Segregation and Spreading of Fire, there
+ are no Cells for these simulations. Instead of making unique Cells, only the basic Cell object is used. 
+
 ## Assumptions & Decisions Made
+
+Within our project, we made the assumption that all cells would have a specific number of neighbors based on its shape. We also assumed
+that the user would always want a square shaped grid for the simulation. This was done to simplify our methods for checking the neighbors of cells.
+Another assumption we made was that the user would only want structured simulations or random simulations, as described within an XML file.
+However, if a user wanted to create a half random, half structured simulation, they would be unable to do so.
