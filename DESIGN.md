@@ -1,4 +1,3 @@
-
 Design
 =======
 ## High Level Design Goals
@@ -39,4 +38,8 @@ and as a result we decided to omit it to make the code more uniform and easy to 
 Within our project, we made the assumption that all cells would have a specific number of neighbors based on its shape. We also assumed
 that the user would always want a square shaped grid for the simulation. This was done to simplify our methods for checking the neighbors of cells.
 Another assumption we made was that the user would only want structured simulations or random simulations, as described within an XML file.
-However, if a user wanted to create a half random, half structured simulation, they would be unable to do so.
+However, if a user wanted to create a half random, half structured simulation, they would be unable to do so. 
+One critical decision we made was to keep the GUI relatively consistent. Within all simulations, there is a graph display at the bottom
+of the window and a dimension slider right above it. We wanted to make a uniform GUI display for all simulations for convenience purposes.
+We considered incorporating unique sliders for each simulation, along with the option to manipulate on screen cells, but due to time constraints 
+and complexity, we decided against this idea.
